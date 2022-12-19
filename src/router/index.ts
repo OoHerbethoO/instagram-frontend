@@ -1,6 +1,6 @@
 import { AppRoutes } from '@/constants/routes.constant'
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Root from '../views/Root.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,7 +8,15 @@ const router = createRouter({
     {
       path: AppRoutes.HOME,
       name: 'home',
-      component: HomeView,
+      component: Root,
+      children: [
+        {
+          name: 'Dashboard',
+          path: '/',
+          component: () => import('../views/private/Dashboard.vue'),
+          props: true,
+        },
+      ],
     },
     {
       path: AppRoutes.LOGIN,
