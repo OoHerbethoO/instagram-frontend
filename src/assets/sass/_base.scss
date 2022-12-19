@@ -42,3 +42,9 @@ h6 {
 .Vue-Toastification__progress-bar {
   opacity: 0 !important;
 }
+
+.Vue-Toastification__toast {
+  svg {
+    @apply mr-3;
+  }
+}
