@@ -1,0 +1,25 @@
+.avatar {
+  @apply h-D w-D rounded-full;
+  &.sm {
+    @apply h-sm w-sm;
+  }
+  &.md {
+    @apply h-md w-md;
+  }
+  &.lg {
+    @apply h-[90px] w-[90px];
+  }
+}
+
+.avatar-text {
+  @apply text-fs-2 font-medium capitalize;
+  &.sm {
+    @apply text-fs-1;
+  }
+  &.md {
+    @apply text-fs-2;
+  }
+  &.lg {
+    @apply text-fs-7;
+  }
+}
