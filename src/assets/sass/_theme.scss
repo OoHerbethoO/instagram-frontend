@@ -1,0 +1,35 @@
+:root {
+  --gray-100: theme(colors.themes.light.gray.gray-100);
+  --gray-200: theme(colors.themes.light.gray.gray-200);
+  --gray-300: theme(colors.themes.light.gray.gray-300);
+  --gray-400: theme(colors.themes.light.gray.gray-400);
+  --gray-500: theme(colors.themes.light.gray.gray-500);
+  --gray-600: theme(colors.themes.light.gray.gray-600);
+  --gray-700: theme(colors.themes.light.gray.gray-700);
+  --gray-800: theme(colors.themes.light.gray.gray-800);
+  --gray-900: theme(colors.themes.light.gray.gray-900);
+  --primary-light: theme(colors.themes.light.primary.light);
+  --primary: theme(colors.themes.light.primary.primary);
+  --primary-dark: theme(colors.themes.light.primary.dark);
+  --danger-light: theme(colors.themes.light.danger.light);
+  --danger: theme(colors.themes.light.danger.danger);
+  --danger-dark: theme(colors.themes.light.danger.dark);
+}
+
+.dark {
+  --gray-100: theme(colors.themes.dark.gray.gray-900);
+  --gray-200: theme(colors.themes.dark.gray.gray-800);
+  --gray-300: theme(colors.themes.dark.gray.gray-300);
+  --gray-400: theme(colors.themes.dark.gray.gray-400);
+  --gray-500: theme(colors.themes.dark.gray.gray-500);
+  --gray-600: theme(colors.themes.dark.gray.gray-600);
+  --gray-700: theme(colors.themes.dark.gray.gray-700);
+  --gray-800: theme(colors.themes.dark.gray.gray-800);
+  --gray-900: theme(colors.themes.dark.gray.gray-900);
+  --primary-light: theme(colors.themes.dark.primary.light);
+  --primary: theme(colors.themes.dark.primary.primary);
+  --primary-dark: theme(colors.themes.dark.primary.dark);
+  --danger-light: theme(colors.themes.dark.danger.light);
+  --danger: theme(colors.themes.dark.danger.danger);
+  --danger-dark: theme(colors.themes.dark.danger.dark);
+}
