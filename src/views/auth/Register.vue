@@ -7,6 +7,7 @@ import { useRegisterMutation } from '@/types/graphql.types'
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+import { AppRoutes } from '@/constants/routes.constant'
 
 export default defineComponent({
   name: 'Register',
@@ -33,7 +34,7 @@ export default defineComponent({
 
     onDone(() => {
       toast.success('Login successful')
-      router.push('/login')
+      router.push(AppRoutes.LOGIN)
     })
 
     onError((error) => toast.error(error.message))
@@ -44,6 +45,7 @@ export default defineComponent({
       registerJson,
       handleChange,
       handleSubmit,
+      AppRoutes,
     }
   },
 })
@@ -80,7 +82,7 @@ export default defineComponent({
       <footer class="-text-fs-1 text-center">
         <span>Already have an account? </span>
         <router-link
-          to="/login"
+          :to="AppRoutes.LOGIN"
           class="font-bold ml-1"
           >Login</router-link
         >

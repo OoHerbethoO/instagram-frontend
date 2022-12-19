@@ -8,6 +8,7 @@ import Cookies from 'js-cookie'
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+import { AppRoutes } from '@/constants/routes.constant'
 
 export default defineComponent({
   name: 'Login',
@@ -34,7 +35,7 @@ export default defineComponent({
     onDone((result) => {
       Cookies.set('token', result.data?.login?.token as string)
       toast.success('User logged in successfully')
-      router.push('/')
+      router.push(AppRoutes.HOME)
     })
 
     onError((error) => toast.error(error.message))
@@ -45,6 +46,7 @@ export default defineComponent({
       loginJson,
       handleChange,
       handleSubmit,
+      AppRoutes,
     }
   },
 })
@@ -81,7 +83,7 @@ export default defineComponent({
       <footer class="-text-fs-1 text-center">
         <span>Don’t have an account? </span>
         <router-link
-          to="/register"
+          :to="AppRoutes.REGISTER"
           class="font-bold ml-1"
           >Register</router-link
         >
