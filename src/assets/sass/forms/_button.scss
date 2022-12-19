@@ -1,0 +1,198 @@
+.btn {
+  @apply bg-gray-200 min-h-D h-D px-4 rounded flex gap-x-2 justify-center items-center text-fs-base text-gray-700 font-medium;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease-out;
+  svg {
+    @apply text-fs-2;
+  }
+
+  &:hover {
+    @apply bg-gray-300;
+  }
+
+  &:focus {
+    @apply outline-gray-300;
+  }
+
+  // ripple effect
+  &:before {
+    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0 h-0 bg-white opacity-[0.25];
+    content: '';
+    border-radius: inherit;
+    transition: transform 0.4s;
+  }
+  &:active:before {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  // variants
+  &.transparent {
+    @apply bg-transparent text-gray-700;
+    &:focus {
+      @apply outline-gray-300;
+    }
+    &:hover {
+      @apply bg-gray-100;
+    }
+  }
+  &.primary {
+    @apply bg-primary text-white;
+    &:focus {
+      @apply outline-primary-dark;
+    }
+    &:hover {
+      @apply bg-primary-dark;
+    }
+  }
+  &.danger {
+    @apply bg-danger text-white;
+    &:focus {
+      @apply outline-danger-dark;
+    }
+    &:hover {
+      @apply bg-danger-dark;
+    }
+  }
+  &.disabled,
+  &:disabled {
+    @apply bg-gray-300 text-gray-400 cursor-not-allowed;
+    &:focus {
+      @apply outline-gray-300;
+    }
+    &:hover {
+      @apply bg-gray-300;
+    }
+  }
+  &.neobrutalism {
+    @apply border border-gray-900 bg-[#DACDF4];
+    box-shadow: 1.5px 3.5px 1px var(--gray-900);
+    &:focus,
+    &:active {
+      @apply border-black border outline-gray-900;
+      box-shadow: 1px 1px 1px var(--gray-900);
+    }
+  }
+
+  &.loading {
+    --spinner-height: 1.1rem;
+    --spinner-width: 1.1rem;
+    --spinner-border-color: theme('colors.gray.700');
+    pointer-events: none;
+    user-select: none;
+
+    &:after,
+    &:before {
+      @apply border-[2.2px] rounded-full border-solid animate-spin bg-transparent;
+      animation-duration: 0.7s;
+      height: var(--spinner-height);
+      border-color: var(--spinner-border-color);
+      width: var(--spinner-width);
+      content: '';
+      border-top-color: transparent;
+      border-right-color: transparent;
+    }
+
+    &:after {
+      @apply ml-1;
+    }
+
+    &:before {
+      @apply m-0 border-0;
+    }
+
+    &.left {
+      &:after {
+        @apply ml-0 border-0 h-0 w-0;
+      }
+      &:before {
+        @apply border-[2.2px] static opacity-100 bg-transparent;
+      }
+    }
+
+    &.primary,
+    &.danger {
+      &:after,
+      &:before {
+        --spinner-border-color: theme('colors.white');
+      }
+    }
+
+    &.lg {
+      --spinner-height: 1.3rem;
+      --spinner-width: 1.3rem;
+    }
+
+    &.sm {
+      --spinner-height: 0.9rem;
+      --spinner-width: 0.9rem;
+    }
+  }
+
+  // sizes
+  &.sm {
+    @apply min-h-sm h-sm px-2 -text-fs-1;
+    svg {
+      @apply text-fs-1;
+    }
+  }
+  &.md {
+    @apply min-h-md h-md px-3;
+    svg {
+      @apply text-fs-2;
+    }
+  }
+  &.lg {
+    @apply min-h-lg h-lg px-5 text-fs-1;
+    svg {
+      @apply text-fs-4;
+    }
+  }
+
+  // icons
+  &-icon {
+    &.loading {
+      @apply px-0;
+      * {
+        @apply hidden;
+      }
+    }
+    @apply min-w-[46px] w-[46px] h-[46px] px-0 gap-0;
+    svg {
+      @apply text-fs-4;
+    }
+    &.sm {
+      @apply min-w-sm w-sm h-sm;
+      svg {
+        @apply text-fs-1;
+      }
+    }
+    &.md {
+      @apply min-w-md w-md h-md;
+      svg {
+        @apply text-fs-3;
+      }
+    }
+    &.lg {
+      @apply min-w-lg w-lg h-lg;
+      svg {
+        @apply text-fs-5;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    @apply border-t;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
