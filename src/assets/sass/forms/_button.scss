@@ -1,5 +1,5 @@
 .btn {
-  @apply bg-gray-200 min-h-D h-D px-4 rounded flex gap-x-2 justify-center items-center text-fs-base text-gray-700 font-medium;
+  @apply bg-gray-200 min-h-D h-D px-4 rounded flex gap-x-3 justify-center items-center text-fs-base text-gray-700 font-medium cursor-pointer;
   position: relative;
   overflow: hidden;
   transition: all 0.4s ease-out;
@@ -49,6 +49,9 @@
     &:hover {
       @apply bg-primary-dark;
     }
+    .icon {
+      @apply text-white;
+    }
   }
   &.danger {
     @apply bg-danger text-white;
@@ -58,16 +61,13 @@
     &:hover {
       @apply bg-danger-dark;
     }
+    .icon {
+      @apply text-white;
+    }
   }
   &.disabled,
   &:disabled {
-    @apply bg-gray-300 text-gray-400 cursor-not-allowed;
-    &:focus {
-      @apply outline-gray-300;
-    }
-    &:hover {
-      @apply bg-gray-300;
-    }
+    @apply cursor-not-allowed;
   }
   &.neobrutalism {
     @apply border border-gray-900 bg-[#DACDF4];
