@@ -27,6 +27,7 @@ export default ({ mode }: any) => {
                 operationResultSuffix: 'Result',
                 flattenGeneratedTypesIncludeFragments: true,
                 dedupeOperationSuffix: true,
+                useTypeImports: true,
                 vueCompositionApiImportFrom: 'vue',
               },
             },
