@@ -3,9 +3,11 @@
 @tailwind utilities;
 
 @import './theme';
+@import './animation';
 @import './base';
 @import './app-layout';
 @import './navigation';
 @import './avatar';
+@import './modal';
 @import './forms/button';
 @import './forms/input';
