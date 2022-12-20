@@ -6,10 +6,7 @@ export default defineComponent({
   name: 'Button',
   components: { Icon },
   props: {
-    text: {
-      type: String,
-      required: true,
-    },
+    text: String,
     type: {
       type: String as () => 'button' | 'submit' | 'reset',
       default: 'button',
@@ -19,24 +16,21 @@ export default defineComponent({
       default: 'left',
     },
     variant: {
-      type: String as () => 'primary' | 'secondary' | 'danger' | 'Default' | 'neobrutalism',
+      type: String as () =>
+        | 'primary'
+        | 'secondary'
+        | 'danger'
+        | 'Default'
+        | 'transparent'
+        | 'neobrutalism',
       default: 'primary',
     },
     size: {
-      type: String as () => 'sm' | 'md' | 'lg',
-      default: 'md',
+      type: String as () => 'sm' | 'md' | 'lg' | 'default',
+      default: 'default',
     },
     radius: {
-      type: String as () =>
-        | 'rounded'
-        | 'rounded-t'
-        | 'rounded-r'
-        | 'rounded-b'
-        | 'rounded-l'
-        | 'rounded-tl'
-        | 'rounded-tr'
-        | 'rounded-br'
-        | 'rounded-bl',
+      type: String,
       default: 'rounded',
     },
     loadingDirection: {
@@ -45,14 +39,16 @@ export default defineComponent({
     },
     isLoading: Boolean,
     fullWidth: Boolean,
-    isDisabled: Boolean,
+    disabled: Boolean,
+    buttonClass: String,
+    iconClass: String,
     icon: String,
   },
 })
 </script>
 
 <template>
-  <button
+  <label
     class="btn"
     :class="{
       [`${variant}`]: variant,
@@ -62,19 +58,26 @@ export default defineComponent({
       loading: isLoading,
       [`${loadingDirection}`]: loadingDirection,
       'btn-icon': !text && icon,
+      [`${buttonClass}`]: buttonClass,
+      disabled: disabled,
     }"
-    :disabled="isDisabled"
+    :disabled="disabled"
     :type="type">
     <span>
       <Icon
         v-if="icon && iconDirection === 'left'"
-        :icon="icon" />
+        :icon="icon"
+        class="icon"
+        :class="iconClass" />
     </span>
     <span>{{ text }}</span>
     <span>
       <Icon
         v-if="icon && iconDirection === 'right'"
-        :icon="icon" />
+        :icon="icon"
+        class="icon"
+        :class="iconClass" />
     </span>
-  </button>
+    <slot></slot>
+  </label>
 </template>
