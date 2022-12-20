@@ -4,11 +4,11 @@ import Input from '@/components/reusable/Input.vue'
 import useForm from '@/hooks/useForm'
 import { loginJson } from '@/json/login.json'
 import { useLoginMutation } from '@/types/graphql.types'
-import Cookies from 'js-cookie'
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { AppRoutes } from '@/constants/routes.constant'
+import Cookies from '@/utils/cookies'
 
 export default defineComponent({
   name: 'Login',
@@ -33,7 +33,7 @@ export default defineComponent({
     }
 
     onDone((result) => {
-      Cookies.set('token', result.data?.login?.token as string)
+      Cookies.setToken(result.data?.login?.token as string)
       toast.success('User logged in successfully')
       router.push(AppRoutes.HOME)
     })
