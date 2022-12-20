@@ -4,12 +4,27 @@ import Avatar from './Avatar.vue'
 import NavLink from './NavLink.vue'
 import Button from './Button.vue'
 import navigationJson from '@/json/navigation.json'
+import { useMeQuery } from '@/types/graphql.types'
+import Cookies from '@/utils/cookies'
+import { useRouter } from 'vue-router'
+import { AppRoutes } from '@/constants/routes.constant'
+
 export default defineComponent({
   name: 'AppSidebar',
   components: { Avatar, NavLink, Button },
   setup() {
+    const router = useRouter()
+    const { result } = useMeQuery()
+
+    const handleLougout = () => {
+      Cookies.removeToken()
+      router.push(AppRoutes.LOGIN)
+    }
+
     return {
       navigationJson,
+      result,
+      handleLougout,
     }
   },
 })
@@ -20,8 +35,8 @@ export default defineComponent({
     <header class="w-full">
       <header class="bg-gray-200 p-2 py-3 w-full rounded h-max">
         <Avatar
-          src="https://res.cloudinary.com/dhewumbfe/image/upload/v1648113156/avatarsAndCover/tmp-1-1648113156237_wgdjpo.png"
-          text="Safdar Azeem" />
+          :src="result?.me?.avatar || ''"
+          :text="result?.me?.name || ''" />
       </header>
       <nav class="mt-10">
         <NavLink
@@ -37,7 +52,8 @@ export default defineComponent({
         text="Log Out"
         icon="material-symbols:logout-rounded"
         variant="secondary"
-        fullWidth />
+        fullWidth
+        @click="handleLougout" />
     </footer>
   </aside>
 </template>
