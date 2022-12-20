@@ -11,6 +11,7 @@ export default defineComponent({
     placeholder: String,
     disabled: Boolean,
     required: Boolean,
+    className: String,
     slotDirection: {
       type: String as () => 'left' | 'right',
       default: 'right',
@@ -42,7 +43,8 @@ export default defineComponent({
 <template>
   <section>
     <label
-      for="{}"
+      v-if="label"
+      :for="name"
       class="label">
       {{ label }}
     </label>
@@ -50,6 +52,7 @@ export default defineComponent({
       class="input-group"
       :class="{
         [`${variant}`]: variant,
+
         focus: isFocus,
         error: error,
       }">
@@ -62,11 +65,13 @@ export default defineComponent({
         ref="input"
         class="input"
         :name="name"
+        :id="name"
         :type="type"
         :placeholder="placeholder"
         :disabled="disabled"
         :required="required"
         @focus="onFocus"
+        :class="className"
         @blur="onBlur"
         v-model="value"
         @input="$emit('onChange', $event)" />
