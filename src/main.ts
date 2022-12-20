@@ -6,18 +6,8 @@ import './assets/sass/main.scss'
 import router from './router'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
-
-const httpLink = createHttpLink({
-  uri: 'http://localhost:4005/graphql',
-})
-
-const cache = new InMemoryCache()
-
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
-})
-
+import apolloClient from './config/graphql.config'
+import './assets/js/modal.js'
 const app = createApp({
   setup() {
     provide(DefaultApolloClient, apolloClient)
