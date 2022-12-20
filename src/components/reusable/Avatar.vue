@@ -1,8 +1,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { Icon } from '@iconify/vue'
 
 export default defineComponent({
   name: 'Avatar',
+  components: { Icon },
   props: {
     src: {
       type: String,
@@ -32,8 +34,17 @@ export default defineComponent({
 <template>
   <div class="flex gap-x-4 items-center">
     <img
+      v-if="src"
       :src="src"
       class="avatar"
+      :class="{
+        [`${size}`]: size,
+        [`${className}`]: className,
+      }" />
+    <Icon
+      v-else
+      icon="carbon:user-avatar-filled"
+      class="avatar text-gray-400"
       :class="{
         [`${size}`]: size,
         [`${className}`]: className,
