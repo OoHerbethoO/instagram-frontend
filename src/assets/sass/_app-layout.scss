@@ -2,10 +2,10 @@
   @apply flex h-screen;
 
   .app-sidebar {
-    @apply fixed w-[255px] h-full border-r border-gray-300 lg:flex hidden py-4 px-4;
+    @apply fixed w-[250px] h-full border-r border-gray-300 lg:flex hidden py-4 px-4;
   }
 
   .app-main {
-    @apply pl-9 lg:pl-[284px] pr-9 h-full py-4;
+    @apply pl-9 lg:pl-[290px] pr-9 h-full py-4;
   }
 }

@@ -12,12 +12,12 @@
 }
 
 .avatar-text {
-  @apply text-fs-2 font-medium capitalize;
+  @apply text-fs-1 font-medium capitalize;
   &.sm {
-    @apply text-fs-1;
+    @apply -text-fs-1;
   }
   &.md {
-    @apply text-fs-2;
+    @apply text-fs-1;
   }
   &.lg {
     @apply text-fs-7;
