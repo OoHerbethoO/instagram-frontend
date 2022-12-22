@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 function rem(px) {
-  return `${px / 16}rem`
+  return `${px / 16.6}rem`
 }
 
 module.exports = {
@@ -13,19 +13,19 @@ module.exports = {
         themes: {
           light: {
             gray: {
-              'gray-100': '#F7F9FA',
-              'gray-200': '#EAECED',
-              'gray-300': '#d3d5d6',
+              'gray-100': '#f5f6f7',
+              'gray-200': '#f0f1f2',
+              'gray-300': '#e6e7e8',
               'gray-400': '#abadae',
               'gray-500': '#878A8C',
-              'gray-600': '#525556',
+              'gray-600': '#7b7e80',
               'gray-700': '#37393A',
               'gray-800': '#1F1F20',
               'gray-900': '#0F0F15',
             },
             primary: {
-              light: '#E3EFEA',
-              primary: '#287B77',
+              light: '#eaf1ef',
+              primary: '#1b6e69',
               dark: '#1F6461',
             },
             danger: {
