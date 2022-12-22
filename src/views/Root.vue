@@ -29,7 +29,9 @@ export default defineComponent({
     </aside>
     <main class="app-main w-full">
       <AppHeader />
-      <router-view />
+      <section class="mt-10">
+        <router-view />
+      </section>
     </main>
   </div>
 </template>
