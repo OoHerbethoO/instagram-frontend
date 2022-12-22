@@ -21,7 +21,7 @@ export default defineComponent({
     },
     className: {
       type: String,
-      default: '',
+      default: 'bg-gray-100',
     },
     textClassName: {
       type: String,
@@ -32,7 +32,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex gap-x-4 items-center">
+  <div class="flex gap-x-3 items-center">
     <img
       v-if="src"
       :src="src"
@@ -43,8 +43,8 @@ export default defineComponent({
       }" />
     <Icon
       v-else
-      icon="carbon:user-avatar-filled"
-      class="avatar text-gray-400"
+      icon="gridicons:user"
+      class="avatar p-3 text-gray-500"
       :class="{
         [`${size}`]: size,
         [`${className}`]: className,
