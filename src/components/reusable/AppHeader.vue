@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Input from './Input.vue'
-import AddPostModal from '../modals/AddPostModal.vue'
+import CreatePostModal from '../modals/CreatePostModal.vue'
 import Button from './Button.vue'
 
 export default defineComponent({
   name: 'AppHeader',
-  components: { Input, Button, AddPostModal },
+  components: { Input, Button, CreatePostModal },
 })
 </script>
 
@@ -15,12 +15,12 @@ export default defineComponent({
     <Input
       placeholder="Search"
       slotDirection="left"
-      className="pl-1">
+      className="pl-1  w-60 ">
       <Button
         icon="charm:search"
         variant="transparent"
         size="md"
-        buttonClass="ml-2 mr-0"
+        buttonClass="ml-1 mr-0"
         iconClass="text-fs-2" />
     </Input>
     <aside class="flex gap-x-4">
@@ -36,5 +36,5 @@ export default defineComponent({
         icon="ion:add-circle" />
     </aside>
   </header>
-  <AddPostModal />
+  <CreatePostModal />
 </template>

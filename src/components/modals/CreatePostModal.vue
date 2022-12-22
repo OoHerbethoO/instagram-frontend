@@ -2,21 +2,46 @@
 import { defineComponent, toRefs, reactive } from 'vue'
 import Button from '../reusable/Button.vue'
 import Avatar from '../reusable/Avatar.vue'
+import { useCreatePostMutation } from '@/types/graphql.types'
+import { useToast } from 'vue-toastification'
 
 export default defineComponent({
-  name: 'AddPostModal',
+  name: 'CreatePostModal',
   components: { Button, Avatar },
   setup() {
+    const toast = useToast()
     const state = reactive({
       image: '',
       readAbleImage: '',
       text: '',
     })
 
+    const { mutate, onDone, onError } = useCreatePostMutation({
+      updateQueries: {
+        GetPosts: (prev, { mutationResult }) => {
+          if (!mutationResult.data) return prev
+          const newPost = mutationResult.data.createPost
+          return Object.assign({}, prev, {
+            getPosts: [newPost, ...prev.getPosts],
+          })
+        },
+        Me: (prev, { mutationResult }) => {
+          if (!mutationResult.data) return prev
+          const newPost = mutationResult.data.createPost._id
+          return Object.assign({}, prev, {
+            me: {
+              ...prev.me,
+              posts: [newPost, ...prev.me.posts],
+            },
+          })
+        },
+      },
+    })
+
     const handleImage = (e: any) => {
       const file = e.target.files[0]
-      state.image = file
       if (!file) return
+      state.image = file
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = () => {
@@ -29,10 +54,33 @@ export default defineComponent({
       state.readAbleImage = ''
     }
 
+    const handleText = (e: any) => (state.text = e.target.value)
+
+    const handlePost = () => {
+      if (!state.text) return
+      mutate({
+        content: state.text,
+        photo: state.image,
+      })
+    }
+
+    onDone((result) => {
+      toast.success('Post created successfully')
+      state.text = ''
+      state.image = ''
+      state.readAbleImage = ''
+    })
+
+    onError((error) => {
+      toast.error(error.message)
+    })
+
     return {
       ...toRefs(state),
       handleImage,
       handleRemoveImage,
+      handleText,
+      handlePost,
     }
   },
 })
@@ -56,18 +104,20 @@ export default defineComponent({
         <div class="flex-1">
           <textarea
             class="w-full h-16 text-area pt-2"
-            placeholder="What’s Happening ?" />
+            placeholder="What’s Happening ?"
+            v-model="text"
+            @input="handleText" />
           <div
             class="relative"
             v-if="readAbleImage">
             <img
               :src="readAbleImage"
-              class="w-full h-auto rounded object-cover"
+              class="w-full h-auto rounded-lg object-cover"
               alt="" />
             <Button
               icon="ion:close"
               size="sm"
-              button-class="absolute top-2 right-2 bg-black bg-opacity-40"
+              button-class="absolute top-3 right-3 bg-black bg-opacity-40"
               radius="rounded-full"
               @click="handleRemoveImage" />
           </div>
@@ -81,6 +131,7 @@ export default defineComponent({
           <input
             type="file"
             class="hidden"
+            accept="image/*"
             @change="handleImage" />
         </Button>
         <Button
@@ -90,7 +141,8 @@ export default defineComponent({
         <Button
           text="Post"
           :disabled="!text && !image"
-          size="md" />
+          size="md"
+          @click="handlePost" />
       </footer>
     </section>
   </section>
