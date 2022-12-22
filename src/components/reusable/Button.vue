@@ -22,7 +22,8 @@ export default defineComponent({
         | 'danger'
         | 'Default'
         | 'transparent'
-        | 'neobrutalism',
+        | 'neobrutalism'
+        | 'like',
       default: 'primary',
     },
     size: {
