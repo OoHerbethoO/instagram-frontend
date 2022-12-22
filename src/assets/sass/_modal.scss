@@ -4,7 +4,7 @@
     @apply flex;
   }
   .modal-content {
-    @apply bg-white rounded-lg shadow-lg max-w-[565px] mx-5 h-max w-full;
+    @apply bg-white rounded-xl shadow-lg max-w-[565px] mx-5 h-max w-full;
     .modal-header {
       @apply flex justify-between items-center border-b border-gray-200 px-4 pb-2 pt-3;
       .header-title {
@@ -15,7 +15,7 @@
       @apply p-4;
     }
     .modal-footer {
-      @apply px-4 py-3 flex;
+      @apply px-4 pb-3 pt-2 flex;
     }
   }
 }
