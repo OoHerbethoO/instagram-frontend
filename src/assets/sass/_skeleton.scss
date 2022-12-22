@@ -1,0 +1,6 @@
+.skeleton {
+  @apply bg-[#edf0f2] animate-pulse;
+  &.circle {
+    @apply rounded-full;
+  }
+}
