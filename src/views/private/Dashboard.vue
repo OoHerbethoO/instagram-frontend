@@ -1,14 +1,14 @@
 <script lang="ts">
 import { defineComponent, watch } from 'vue'
 import PostList from '@/components/post/PostList.vue'
-import { useGetPostsQuery } from '@/types/graphql.types'
+import { useGetAllPostsQuery } from '@/types/graphql.types'
 export default defineComponent({
   name: 'Dashboard',
   components: { PostList },
   setup() {
-    const { result, loading, error } = useGetPostsQuery()
+    const { result, loading, error } = useGetAllPostsQuery()
     watch(result, () => {
-      console.log(result.value?.getPosts)
+      console.log(result.value?.getAllPosts)
     })
     return { result, loading, error }
   },
@@ -18,7 +18,7 @@ export default defineComponent({
 <template>
   <div>
     <PostList
-      :posts="result?.getPosts"
+      :posts="result?.getAllPosts"
       :loading="loading" />
   </div>
 </template>
