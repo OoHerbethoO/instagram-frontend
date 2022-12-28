@@ -1,0 +1,77 @@
+<script lang="ts">
+import type { IUser } from '@/types/graphql.types'
+import { defineComponent } from 'vue'
+import { Icon } from '@iconify/vue'
+import moment from 'moment'
+
+export default defineComponent({
+  name: 'UserAbout',
+  components: { Icon },
+  props: {
+    user: {
+      type: Object as () => IUser,
+      required: true,
+    },
+  },
+  setup(props) {
+    console.log(props?.user?.dateOfBirth)
+    return { moment }
+  },
+})
+</script>
+
+<template>
+  <section class="flex flex-col gap-3 bg-gray-200 px-5 py-5 rounded">
+    <header class="h6">About</header>
+    <p>{{ user?.bio }}</p>
+    <ul class="flex flex-col gap-6">
+      <li
+        class="flex items-center gap-x-4"
+        v-if="user?.location">
+        <Icon
+          icon="mdi:map-marker"
+          class="icon text-fs-3" />
+        <span>
+          Live at
+          <span class="font-bold ml-1">{{ user?.location }} </span>
+        </span>
+      </li>
+      <li
+        class="flex items-center gap-x-4"
+        v-if="user?.dateOfBirth">
+        <Icon
+          icon="mdi:clock"
+          class="icon text-fs-3" />
+        <span> Born {{ moment(new Date(user?.dateOfBirth)).format('LL') }}</span>
+      </li>
+      <li class="flex items-center gap-x-4">
+        <Icon
+          icon="ph:bag-simple-fill"
+          class="icon text-fs-3" />
+        <span> {{ user?.profession }}</span>
+      </li>
+      <li
+        class="flex items-center gap-x-4"
+        v-if="user?.website">
+        <Icon
+          icon="ph:link-simple-bold"
+          class="icon text-fs-3" />
+        <a
+          :href="user?.website"
+          class="underline"
+          target="_blank">
+          {{ user?.website }}</a
+        >
+      </li>
+      <li
+        class="flex items-center gap-x-4"
+        v-if="user?.dateCreated">
+        <Icon
+          icon="ph:calendar-blank-fill"
+          class="icon text-fs-3" />
+
+        <span> {{ moment(new Date(user?.dateCreated)).format('MMM YYYY') }}</span>
+      </li>
+    </ul>
+  </section>
+</template>
