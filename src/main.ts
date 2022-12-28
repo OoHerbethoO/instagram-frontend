@@ -7,7 +7,10 @@ import router from './router'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 import apolloClient from './config/graphql.config'
+
 import './assets/js/modal.js'
+import './assets/js/dropdown.js'
+
 const app = createApp({
   setup() {
     provide(DefaultApolloClient, apolloClient)
