@@ -18,6 +18,11 @@ const navigationJson: NavigationJson[] = [
     icon: 'ic:round-explore',
   },
   {
+    text: 'Bookmarks',
+    to: AppRoutes.BOOKMARKS,
+    icon: 'ic:round-bookmark',
+  },
+  {
     text: 'Settings',
     to: AppRoutes.SETTINGS,
     icon: 'ic:round-settings',
