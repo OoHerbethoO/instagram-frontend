@@ -1,4 +1,5 @@
 <script lang="ts">
+import { useMeQuery } from '@/types/graphql.types'
 import type { IPost } from '@/types/graphql.types'
 import { defineComponent } from 'vue'
 import PostCard from './PostCard.vue'
@@ -17,13 +18,19 @@ export default defineComponent({
       required: true,
     },
   },
+
+  setup() {
+    const { result: meData, loading: meLoading } = useMeQuery()
+
+    return { meData, meLoading }
+  },
 })
 </script>
 
 <template>
   <div>
     <div
-      v-if="loading"
+      v-if="loading || meLoading"
       class="card-galery">
       <PostCardSkeleton
         v-for="i in 4"
@@ -35,6 +42,7 @@ export default defineComponent({
       <PostCard
         v-for="post in posts"
         :key="post._id"
+        :me="meData?.me"
         :post="post" />
     </div>
   </div>
