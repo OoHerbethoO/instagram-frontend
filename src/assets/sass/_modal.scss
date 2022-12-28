@@ -1,8 +1,6 @@
 .modal {
-  @apply fixed  top-0 pt-10 sm:pt-[62px] left-0 w-full h-full z-[1099] hidden justify-center bg-black bg-opacity-20 fadeIn;
-  &.active {
-    @apply flex;
-  }
+  @apply fixed  top-0 pt-10 sm:pt-[62px] left-0 w-full h-full z-[1099] flex justify-center bg-black bg-opacity-20 fadeIn;
+
   .modal-content {
     @apply bg-white rounded-xl shadow-lg max-w-[565px] mx-5 h-max w-full  overflow-auto max-h-[85vh] sticky top-0;
     .modal-header {
