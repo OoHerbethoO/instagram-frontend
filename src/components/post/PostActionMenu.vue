@@ -1,9 +1,8 @@
 <script lang="ts">
 import { useDeletePostMutation } from '@/types/graphql.types'
-import type { IPost } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import Button from '../reusable/Button.vue'
-
+import Dropdown from '../reusable/Dropdown.vue'
 export default defineComponent({
   name: 'PostActionMenu',
   props: {
@@ -16,58 +15,62 @@ export default defineComponent({
       required: true,
     },
   },
-  components: { Button },
+  components: { Button, Dropdown },
   setup(props) {
+    const isCopied = ref(false)
     const { mutate: deletePost } = useDeletePostMutation({
       refetchQueries: ['Me', 'GetAllPosts', 'GetPostsByUser'],
     })
 
-    const handleDeletePost = () => {
+    const handleDeletePost = () =>
       deletePost({
         postId: props.postId,
       })
-    }
 
     const handleCopyLink = () => {
       navigator.clipboard.writeText(`http://localhost:3000/post/${props.postId}`)
+      isCopied.value = true
     }
 
     return {
       handleDeletePost,
       handleCopyLink,
+      isCopied,
     }
   },
 })
 </script>
 
 <template>
-  <section class="dropdown">
-    <Button
-      icon="mdi:dots-vertical"
-      :data-dropdown-target="`#postActionMenu${postId}`"
-      radius="rounded-full"
-      size="md"
-      variant="transparent" />
-    <div
-      class="dropdown-menu"
-      :id="`postActionMenu${postId}`">
-      <div class="dropdown-content">
-        <Button
-          icon="mdi:trash-can"
-          text="Delete"
-          v-if="isCurrentUserPost"
-          button-class="justify-start font-normal"
-          size="md"
-          @click="handleDeletePost"
-          variant="transparent" />
-        <Button
-          text="Copy Link"
-          icon="material-symbols:content-copy-outline-rounded"
-          button-class="justify-start font-normal"
-          size="md"
-          @click="handleCopyLink"
-          variant="transparent" />
-      </div>
-    </div>
-  </section>
+  <Dropdown>
+    <template v-slot:trigger>
+      <Button
+        icon="mdi:dots-vertical"
+        radius="rounded-full"
+        size="md"
+        variant="transparent" />
+    </template>
+    <template v-slot:menu>
+      <Button
+        icon="mdi:trash-can"
+        text="Delete"
+        v-if="isCurrentUserPost"
+        button-class="justify-start font-normal"
+        size="md"
+        @click="handleDeletePost"
+        variant="transparent" />
+      <Button
+        :text="isCopied ? 'Copied' : 'Copy Link'"
+        :icon="
+          !isCopied
+            ? `material-symbols:content-copy-outline-rounded`
+            : `material-symbols:content-copy-rounded`
+        "
+        :button-class="`justify-start font-normal ${isCopied && 'font-bold text-primary-dark'}`"
+        :icon-class="`${isCopied && 'text-primary-dark'}`"
+        size="md"
+        @click="handleCopyLink"
+        variant="transparent" />
+    </template>
+  </Dropdown>
 </template>
