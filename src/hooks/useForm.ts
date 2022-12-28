@@ -33,10 +33,21 @@ const useForm = (formState: Form[]) => {
     return isValid
   }
 
+  const updateForm = (data: any) => {
+    Object.keys(data).forEach((key) => {
+      const value = data[key]
+      const isExist = formState.find((item) => item.name === key)
+      if (isExist) {
+        state[key].value = value
+      }
+    })
+  }
+
   return {
     state,
     handleChange,
     doValidation,
+    updateForm,
   }
 }
 
