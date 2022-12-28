@@ -41,6 +41,15 @@
       @apply bg-gray-100;
     }
   }
+  &.outline {
+    @apply bg-transparent border border-gray-300 outline-0 text-gray-700;
+    &:focus {
+      @apply outline-gray-300;
+    }
+    &:hover {
+      @apply bg-gray-200 border border-gray-200;
+    }
+  }
   &.primary {
     @apply bg-primary text-white;
     &:focus {
@@ -95,6 +104,7 @@
   }
 
   &.loading {
+    @apply cursor-wait gap-x-2;
     --spinner-height: 1.1rem;
     --spinner-width: 1.1rem;
     --spinner-border-color: theme('colors.gray.700');
@@ -114,7 +124,7 @@
     }
 
     &:after {
-      @apply ml-1;
+      @apply ml-0;
     }
 
     &:before {
