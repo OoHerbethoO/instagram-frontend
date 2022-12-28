@@ -104,6 +104,9 @@
   }
 
   &.loading {
+    animation-play-state: paused;
+    animation-duration: 0s;
+    transition: all 0s;
     @apply cursor-wait gap-x-2;
     --spinner-height: 1.1rem;
     --spinner-width: 1.1rem;
