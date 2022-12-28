@@ -27,36 +27,43 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    isLoading: Boolean,
   },
 })
 </script>
 
 <template>
   <div class="flex gap-x-3 items-center">
-    <img
-      v-if="src"
-      :src="src"
-      class="avatar"
+    <div
+      class="avatar grid place-items-center rounded-full"
       :class="{
         [`${size}`]: size,
         [`${className}`]: className,
-      }" />
-    <Icon
-      v-else
-      icon="gridicons:user"
-      class="avatar p-3 text-gray-500"
-      :class="{
-        [`${size}`]: size,
-        [`${className}`]: className,
-      }" />
-    <span
+        skeleton: isLoading,
+      }">
+      <img
+        v-if="src"
+        :src="src"
+        class="rounded-full border border-gray-200" />
+      <span v-else>
+        <Icon
+          icon="gridicons:user"
+          :class="{
+            [`${size}`]: size,
+            [`${className}`]: className,
+          }"
+          class="avatar-icon text-gray-500 rounded-full" />
+      </span>
+    </div>
+
+    <p
       v-if="text"
       class="avatar-text"
       :class="{
         [`${size}`]: size,
         [`${textClassName}`]: textClassName,
-      }"
-      >{{ text }}</span
-    >
+      }">
+      {{ text }}
+    </p>
   </div>
 </template>
