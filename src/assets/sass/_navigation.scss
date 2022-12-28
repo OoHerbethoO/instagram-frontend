@@ -1,6 +1,6 @@
 .nav-link {
   @apply flex items-center gap-x-3 p-3 text-gray-600 rounded mb-1;
-  &.router-link-active {
+  &.router-link-exact-active {
     @apply text-primary-dark bg-primary-light;
   }
   &:hover {
