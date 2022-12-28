@@ -4,4 +4,6 @@ export enum AppRoutes {
   REGISTER = '/register',
   EXPLORE = '/explore',
   SETTINGS = '/settings',
+  PROFILE = '/profile',
+  BOOKMARKS = '/bookmarks',
 }
