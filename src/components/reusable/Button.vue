@@ -23,7 +23,8 @@ export default defineComponent({
         | 'Default'
         | 'transparent'
         | 'neobrutalism'
-        | 'like',
+        | 'like'
+        | 'outline',
       default: 'primary',
     },
     size: {
