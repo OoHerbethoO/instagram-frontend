@@ -26,9 +26,11 @@ export default defineComponent({
     <aside class="flex gap-x-4">
       <Button
         icon="jam:messages-f"
+        radius="rounded-full"
         variant="transparent" />
       <Button
         icon="fa-solid:bell"
+        radius="rounded-full"
         variant="transparent" />
       <Button
         data-modal-target="#postModal"
