@@ -32,11 +32,7 @@ export default defineComponent({
         icon="fa-solid:bell"
         radius="rounded-full"
         variant="transparent" />
-      <Button
-        data-modal-target="#postModal"
-        text="Add Post"
-        icon="ion:add-circle" />
+      <CreatePostModal />
     </aside>
   </header>
-  <CreatePostModal />
 </template>

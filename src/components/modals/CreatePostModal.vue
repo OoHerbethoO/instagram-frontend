@@ -1,106 +1,83 @@
 <script lang="ts">
-import { defineComponent, toRefs, reactive } from 'vue'
-import Button from '../reusable/Button.vue'
-import Avatar from '../reusable/Avatar.vue'
-import { useCreatePostMutation } from '@/types/graphql.types'
+import useImage from '@/hooks/useImage'
+import useUploadPhoto from '@/hooks/useUploadPhoto'
+import { useCreatePostMutation, useMeQuery } from '@/types/graphql.types'
+import { defineComponent, reactive, toRefs } from 'vue'
 import { useToast } from 'vue-toastification'
+import Avatar from '../reusable/Avatar.vue'
+import Button from '../reusable/Button.vue'
+import Modal from '../reusable/Modal.vue'
 
 export default defineComponent({
   name: 'CreatePostModal',
-  components: { Button, Avatar },
-  setup() {
+  components: { Button, Avatar, Modal },
+  setup($props, { emit: $emit }) {
     const toast = useToast()
+    const { result: me } = useMeQuery()
+    const { handleUploadPhoto, uploadPhotoLoading } = useUploadPhoto()
+    const {
+      mutate: uploadPost,
+      onError: onCreatePostError,
+      loading: postLoading,
+    } = useCreatePostMutation({
+      refetchQueries: ['GetAllPosts', 'Me', 'GetPostsByUser'],
+    })
+    const { image, readAbleImage, handleImage, cancelImage } = useImage()
+
     const state = reactive({
-      image: '',
-      readAbleImage: '',
       text: '',
+      isModalOpen: false,
     })
+    const handleText = (e: any) => (state.text = e.target.value)
 
-    const { mutate, onDone, onError } = useCreatePostMutation({
-      updateQueries: {
-        GetPosts: (prev, { mutationResult }) => {
-          if (!mutationResult.data) return prev
-          const newPost = mutationResult.data.createPost
-          return Object.assign({}, prev, {
-            getPosts: [newPost, ...prev.getPosts],
-          })
-        },
-        Me: (prev, { mutationResult }) => {
-          if (!mutationResult.data) return prev
-          const newPost = mutationResult.data.createPost._id
-          return Object.assign({}, prev, {
-            me: {
-              ...prev.me,
-              posts: [newPost, ...prev.me.posts],
-            },
-          })
-        },
-      },
-    })
-
-    const handleImage = (e: any) => {
-      const file = e.target.files[0]
-      if (!file) return
-      state.image = file
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => {
-        state.readAbleImage = reader.result as string
+    const handleCreatePost = async () => {
+      const photo = await handleUploadPhoto(image.value)
+      const postResult: any = await uploadPost({
+        content: state.text,
+        photo,
+      })
+      if (postResult.data?.createPost) {
+        toast.success('Post created successfully')
+        state.text = ''
+        cancelImage()
+        state.isModalOpen = false
       }
     }
 
-    const handleRemoveImage = () => {
-      state.image = ''
-      state.readAbleImage = ''
-    }
-
-    const handleText = (e: any) => (state.text = e.target.value)
-
-    const handlePost = () => {
-      if (!state.text) return
-      mutate({
-        content: state.text,
-        photo: state.image,
-      })
-    }
-
-    onDone((result) => {
-      toast.success('Post created successfully')
-      state.text = ''
-      state.image = ''
-      state.readAbleImage = ''
-    })
-
-    onError((error) => {
-      toast.error(error.message)
-    })
+    onCreatePostError((error) => toast.error(error.message))
 
     return {
       ...toRefs(state),
+      image,
+      readAbleImage,
+      postLoading,
+      uploadPhotoLoading,
+      me,
       handleImage,
-      handleRemoveImage,
+      cancelImage,
       handleText,
-      handlePost,
+      handleCreatePost,
     }
   },
 })
 </script>
 
 <template>
-  <section
-    class="modal"
-    id="postModal">
-    <section class="modal-content">
-      <header class="modal-header">
-        <h5 class="header-title">Create Post</h5>
-        <Button
-          icon="ion:close"
-          data-close-button="#postModal"
-          variant="transparent"
-          radius="rounded-full" />
-      </header>
-      <main class="modal-body flex items-start gap-x-3">
-        <Avatar />
+  <Modal
+    title="Create Post"
+    @close="isModalOpen = false"
+    @open="isModalOpen = true"
+    :is-open="isModalOpen">
+    <template v-slot:trigger>
+      <Button
+        data-modal-target="#postModal"
+        text="Add Post"
+        @click="isModalOpen = true"
+        icon="ion:add-circle" />
+    </template>
+    <template v-slot:modal-body>
+      <main class="flex items-start gap-x-5">
+        <Avatar :src="me?.me?.avatar || ''" />
         <div class="flex-1">
           <textarea
             class="w-full h-16 text-area pt-2"
@@ -112,18 +89,20 @@ export default defineComponent({
             v-if="readAbleImage">
             <img
               :src="readAbleImage"
-              class="w-full h-auto rounded-lg object-cover"
+              class="w-full max-h-[340px] md:max-h-[360px] rounded-lg object-cover"
               alt="" />
             <Button
               icon="ion:close"
               size="sm"
               button-class="absolute top-3 right-3 bg-black bg-opacity-40"
               radius="rounded-full"
-              @click="handleRemoveImage" />
+              @click="cancelImage" />
           </div>
         </div>
       </main>
-      <footer class="modal-footer gap-x-2 justify-end">
+    </template>
+    <template v-slot:modal-footer>
+      <footer class="flex gap-x-2 justify-end">
         <Button
           icon="ph:image-square-fill"
           variant="transparent"
@@ -140,10 +119,12 @@ export default defineComponent({
           radius="rounded-full" />
         <Button
           text="Post"
-          :disabled="!text && !image"
+          :disabled="!text || !image"
+          :isLoading="postLoading || uploadPhotoLoading"
+          type="submit"
           size="md"
-          @click="handlePost" />
+          @click="handleCreatePost" />
       </footer>
-    </section>
-  </section>
+    </template>
+  </Modal>
 </template>
