@@ -1,17 +1,21 @@
 <script lang="ts">
-import { useLikePostMutation, useMeQuery } from '@/types/graphql.types'
-import type { IPost } from '@/types/graphql.types'
-import { defineComponent, reactive, watch, toRefs, onMounted } from 'vue'
+import type { IPost, IUser } from '@/types/graphql.types'
+import { defineComponent, reactive, toRefs, watch } from 'vue'
 import Avatar from '../reusable/Avatar.vue'
 import Button from '../reusable/Button.vue'
 import PostActionMenu from './PostActionMenu.vue'
+import PostCardFooter from './PostCardFooter.vue'
 
 export default defineComponent({
   name: 'PostCard',
-  components: { Avatar, Button, PostActionMenu },
+  components: { Avatar, Button, PostActionMenu, PostCardFooter },
   props: {
     post: {
       type: Object as () => IPost,
+      required: true,
+    },
+    me: {
+      type: Object as () => IUser | null,
       required: true,
     },
   },
@@ -19,31 +23,22 @@ export default defineComponent({
     const state = reactive({
       isLiked: false,
       isCurrentUserPost: false,
+      isBookmark: false,
     })
-
-    const { result: meData } = useMeQuery()
-    const { mutate: likePost } = useLikePostMutation({
-      refetchQueries: ['GetPosts'],
-    })
-
-    const handleLikePost = () => {
-      likePost({
-        postId: props.post._id,
-      })
-    }
 
     watch(
-      () => [props.post, meData.value?.me],
+      () => [props.post, props.me],
       () => {
-        if (meData.value?.me) {
-          state.isLiked = props.post.likes.includes(meData.value.me._id)
-          state.isCurrentUserPost = props.post.user._id === meData.value.me._id
+        if (props.me) {
+          state.isCurrentUserPost = props.post.user._id === props.me._id
+          state.isLiked = props.post.likes.includes(props.me._id)
+          state.isBookmark = props.me.bookmarks.includes(props.post._id)
         }
       },
       { immediate: true }
     )
 
-    return { ...toRefs(state), handleLikePost }
+    return { ...toRefs(state) }
   },
 })
 </script>
@@ -67,33 +62,12 @@ export default defineComponent({
         class="card-image"
         alt="" />
     </figure>
-    <footer class="card-footer">
-      <div class="flex gap-x-5">
-        <div class="flex items-center gap-1">
-          <Button
-            :icon="isLiked ? 'mdi:cards-heart' : 'mdi:cards-heart-outline'"
-            button-class="font-normal"
-            size="md"
-            radius="rounded-full"
-            :variant="isLiked ? 'like' : 'transparent'"
-            @click="handleLikePost" />
-          <span :class="isLiked ? 'text-danger' : ''">{{ String(post?.likes?.length) }}</span>
-        </div>
-        <div class="flex items-center gap-1">
-          <Button
-            icon="ph:chat-circle-dots-fill"
-            button-class="font-normal"
-            size="md"
-            radius="rounded-full"
-            variant="transparent" />
-          <span>{{ String(post?.comments?.length) }}</span>
-        </div>
-      </div>
-      <Button
-        icon="humbleicons:bookmark"
-        radius="rounded-full"
-        size="md"
-        variant="transparent" />
-    </footer>
+    <PostCardFooter
+      :isLiked="isLiked"
+      :totalLikes="post?.likes.length"
+      :isBookmark="isBookmark"
+      :postId="post?._id"
+      :me="me"
+      :totalComments="post?.comments.length" />
   </article>
 </template>
