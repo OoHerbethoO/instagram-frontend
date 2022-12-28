@@ -75,10 +75,13 @@ export default defineComponent({
           :type="item.type" />
         <Button
           text="Login"
-          type="submit"
           :disabled="loading"
           :isLoading="loading"
-          variant="neobrutalism" />
+          variant="neobrutalism">
+          <input
+            type="submit"
+            class="hidden" />
+        </Button>
       </form>
       <footer class="-text-fs-1 text-center">
         <span>Don’t have an account? </span>
