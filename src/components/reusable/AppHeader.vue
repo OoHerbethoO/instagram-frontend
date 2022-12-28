@@ -11,7 +11,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <header class="sticky top-0 flex items-center justify-between">
+  <header class="sticky top-0 py-3 z-[999] flex items-center justify-between bg-white">
     <Input
       placeholder="Search"
       slotDirection="left"
