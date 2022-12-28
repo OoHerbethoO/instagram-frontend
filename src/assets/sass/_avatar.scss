@@ -1,13 +1,26 @@
 .avatar {
-  @apply h-D w-D rounded-full;
+  @apply h-D w-D rounded-full object-cover;
+  img {
+    @apply h-D w-D rounded-full object-cover;
+  }
+
   &.sm {
     @apply h-sm w-sm;
+    img {
+      @apply h-sm w-sm;
+    }
   }
   &.md {
     @apply h-md w-md;
+    img {
+      @apply h-md w-md;
+    }
   }
   &.lg {
-    @apply h-[90px] w-[90px];
+    @apply h-[110px] w-[110px] min-h-[110px] max-h-[110px];
+    img {
+      @apply h-[110px] w-[110px] min-h-[110px] max-h-[110px];
+    }
   }
 }
 
@@ -20,6 +33,19 @@
     @apply text-fs-1;
   }
   &.lg {
-    @apply text-fs-7;
+    @apply text-fs-3;
+  }
+}
+
+.avatar-icon {
+  @apply h-5 w-5;
+  &.sm {
+    @apply h-3 w-3;
+  }
+  &.md {
+    @apply h-4 w-4;
+  }
+  &.lg {
+    @apply h-[50px] w-[50px];
   }
 }
