@@ -9,11 +9,13 @@ const UserFragment = gql`
     website
     cover
     bio
+    profession
     dateOfBirth
     dateCreated
     followers
     following
     posts
+    bookmarks
     totalNotifications
     totalMessages
     isVerified
