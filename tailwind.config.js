@@ -15,10 +15,10 @@ module.exports = {
             gray: {
               'gray-100': '#f5f6f7',
               'gray-200': '#f0f1f2',
-              'gray-300': '#e6e7e8',
+              'gray-300': '#e8e9ea',
               'gray-400': '#abadae',
               'gray-500': '#878A8C',
-              'gray-600': '#7b7e80',
+              'gray-600': '#787b7d',
               'gray-700': '#37393A',
               'gray-800': '#1F1F20',
               'gray-900': '#0F0F15',
