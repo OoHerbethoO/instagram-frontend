@@ -17,7 +17,7 @@ export default defineComponent({
       default: 'right',
     },
     type: {
-      type: String as () => 'text' | 'email' | 'password' | 'number' | 'date',
+      type: String as () => 'text' | 'email' | 'password' | 'number' | 'date' | 'textarea',
       default: 'text',
     },
     variant: {
@@ -52,9 +52,9 @@ export default defineComponent({
       class="input-group"
       :class="{
         [`${variant}`]: variant,
-
         focus: isFocus,
         error: error,
+        'h-24': type === 'textarea',
       }">
       <div
         v-if="slotDirection === 'left'"
@@ -64,9 +64,24 @@ export default defineComponent({
       <input
         ref="input"
         class="input"
+        v-if="type !== 'textarea'"
         :name="name"
         :id="name"
         :type="type"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :required="required"
+        @focus="onFocus"
+        :class="className"
+        @blur="onBlur"
+        v-model="value"
+        @input="$emit('onChange', $event)" />
+      <textarea
+        ref="input"
+        class="input textarea"
+        v-else
+        :name="name"
+        :id="name"
         :placeholder="placeholder"
         :disabled="disabled"
         :required="required"
