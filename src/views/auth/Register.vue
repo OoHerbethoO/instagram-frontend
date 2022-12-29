@@ -73,7 +73,7 @@ export default defineComponent({
           @onChange="handleChange"
           :type="item.type" />
         <Button
-          text="Login"
+          text="Create Account"
           :disabled="loading"
           :isLoading="loading"
           variant="neobrutalism">
