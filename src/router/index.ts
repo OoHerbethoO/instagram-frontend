@@ -28,6 +28,11 @@ const router = createRouter({
           component: () => import('../views/private/Settings.vue'),
           props: true,
         },
+        {
+          name: 'Bookmarks',
+          path: `${AppRoutes.BOOKMARKS}`,
+          component: () => import('../views/private/Bookmarks.vue'),
+        },
       ],
     },
     {
