@@ -11,7 +11,7 @@ const UserFragment = gql`
     bio
     profession
     dateOfBirth
-    dateCreated
+    createdAt
     followers
     following
     posts
