@@ -2,6 +2,7 @@
 import { useBookmarkPostMutation, useLikePostMutation } from '@/types/graphql.types'
 import { defineComponent } from 'vue'
 import Button from '../reusable/Button.vue'
+
 export default defineComponent({
   name: 'PostCardFooter',
   components: {
@@ -27,24 +28,22 @@ export default defineComponent({
   },
   setup(props) {
     const { mutate: likePost } = useLikePostMutation({
-      refetchQueries: ['GetAllPosts', 'GetPostsByUser'],
+      refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts'],
     })
 
     const { mutate: bookmarkPost, loading: bookmarkPostLoading } = useBookmarkPostMutation({
-      refetchQueries: ['Me'],
+      refetchQueries: ['GetBookmarkedPosts', 'Me'],
     })
 
-    const handleLikePost = () => {
+    const handleLikePost = () =>
       likePost({
         postId: props.postId,
       })
-    }
 
-    const handleBookmarkPost = () => {
+    const handleBookmarkPost = () =>
       bookmarkPost({
         postId: props.postId,
       })
-    }
 
     return {
       handleLikePost,
