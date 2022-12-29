@@ -1,13 +1,15 @@
 <script lang="ts">
 import { useMeQuery } from '@/types/graphql.types'
 import type { IPost } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 import PostCard from './PostCard.vue'
 import PostCardSkeleton from '../skeletons/PostCardSkeleton.vue'
+import PostModal from './PostModal.vue'
+import usePhotoGallery from '@/hooks/usePhotoGallery'
 
 export default defineComponent({
   name: 'PostList',
-  components: { PostCard, PostCardSkeleton },
+  components: { PostCard, PostCardSkeleton, PostModal },
   props: {
     posts: {
       type: Array as () => Array<IPost>,
@@ -19,10 +21,31 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  setup(props) {
     const { result: meData, loading: meLoading } = useMeQuery()
+    const { column1, column2, column3, setData } = usePhotoGallery(props.posts)
 
-    return { meData, meLoading }
+    const state = reactive({
+      isModalOpen: false,
+      selectedPost: null as IPost | null,
+    })
+
+    const handlePostClick = (post: IPost) => {
+      state.selectedPost = post
+      state.isModalOpen = true
+    }
+
+    watch(
+      () => props.posts,
+      () => {
+        if (!props.posts) return
+        setData(props.posts)
+        state.selectedPost =
+          props.posts.find((post) => post._id === state.selectedPost?._id) || null
+      }
+    )
+
+    return { ...toRefs(state), meData, meLoading, handlePostClick, column1, column2, column3 }
   },
 })
 </script>
@@ -30,20 +53,44 @@ export default defineComponent({
 <template>
   <div>
     <div
-      v-if="loading || meLoading"
-      class="card-galery">
+      v-if="meLoading"
+      class="card-gallery">
       <PostCardSkeleton
         v-for="i in 4"
         :key="i" />
     </div>
     <div
       v-else
-      class="card-galery">
-      <PostCard
-        v-for="post in posts"
-        :key="post._id"
-        :me="meData?.me"
-        :post="post" />
+      class="card-gallery">
+      <div class="gallery-item">
+        <PostCard
+          v-for="post in column1"
+          :key="post._id"
+          @openModal="handlePostClick(post)"
+          :me="meData?.me"
+          :post="post" />
+      </div>
+      <div class="gallery-item">
+        <PostCard
+          v-for="post in column2"
+          :key="post._id"
+          @openModal="handlePostClick(post)"
+          :me="meData?.me"
+          :post="post" />
+      </div>
+      <div class="gallery-item">
+        <PostCard
+          v-for="post in column3"
+          :key="post._id"
+          @openModal="handlePostClick(post)"
+          :me="meData?.me"
+          :post="post" />
+      </div>
     </div>
+    <PostModal
+      :isModalOpen="isModalOpen"
+      @close="isModalOpen = false"
+      :post="selectedPost"
+      @open="isModalOpen = true" />
   </div>
 </template>
