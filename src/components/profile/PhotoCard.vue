@@ -10,6 +10,7 @@ export default defineComponent({
     Button,
     PostCardFooter,
   },
+  emits: ['openModal'],
   props: {
     post: {
       type: Object as () => IPost,
@@ -29,28 +30,26 @@ export default defineComponent({
 </script>
 
 <template>
-  <router-link
-    :to="`/post/${post?._id}`"
-    class="post-card relative"
+  <div
+    class="post-card"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false">
-    <figure class="card-image cursor-pointer">
+    <figure class="card-image cursor-pointer relative">
       <img
-        class="w-full h-full rounded-md"
-        :src="post?.photo || ''" />
+        class="w-full h-full rounded-md object-cover aspect-square"
+        :src="post?.photo || ''"
+        @click="$emit('openModal')" />
+      <footer
+        v-if="isHovered"
+        class="overlay absolute top-0 grid place-items-center">
+        <PostCardFooter
+          :totalLikes="post?.likes.length || 0"
+          :totalComments="post?.comments.length || 0"
+          :postId="post?._id"
+          variant="white"
+          :isIconVariantSolid="true"
+          :hideBookmark="true" />
+      </footer>
     </figure>
-    <footer
-      v-if="isHovered"
-      class="overlay absolute top-0 grid place-items-center">
-      <!-- <PostCardFooter
-        :likes="post.likes"
-        :isLiked="isLiked"
-        :postId="post?._id"
-        :me="meData?.me"
-        :comments="post?.comments.length"
-        variant="white"
-        :isIconVariantSolid="true"
-        :hideBookmark="true" /> -->
-    </footer>
-  </router-link>
+  </div>
 </template>

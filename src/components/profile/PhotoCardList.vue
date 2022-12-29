@@ -1,11 +1,12 @@
 <script lang="ts">
 import type { IPost } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import PhotoCard from './PhotoCard.vue'
+import PostModal from '../post/PostModal.vue'
 
 export default defineComponent({
   name: 'PhotoCardList',
-  components: { PhotoCard },
+  components: { PhotoCard, PostModal },
   props: {
     posts: {
       type: Object as () => IPost[],
@@ -16,6 +17,19 @@ export default defineComponent({
       required: true,
     },
   },
+  setup() {
+    const state = reactive({
+      isModalOpen: false,
+      selectedPost: null as IPost | null,
+    })
+
+    const handlePostClick = (post: IPost) => {
+      state.selectedPost = post
+      state.isModalOpen = true
+    }
+
+    return { ...toRefs(state), handlePostClick }
+  },
 })
 </script>
 
@@ -24,6 +38,12 @@ export default defineComponent({
     <PhotoCard
       v-for="post in posts"
       :key="post?._id"
+      @click="handlePostClick(post)"
       :post="post" />
+    <PostModal
+      :isModalOpen="isModalOpen"
+      @close="isModalOpen = false"
+      :post="selectedPost"
+      @open="isModalOpen = true" />
   </main>
 </template>
