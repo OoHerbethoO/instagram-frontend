@@ -28,6 +28,7 @@ export default defineComponent({
       default: '',
     },
     isLoading: Boolean,
+    time: String,
   },
 })
 </script>
@@ -55,15 +56,21 @@ export default defineComponent({
           class="avatar-icon text-gray-500 rounded-full" />
       </span>
     </div>
-
-    <p
-      v-if="text"
-      class="avatar-text"
-      :class="{
-        [`${size}`]: size,
-        [`${textClassName}`]: textClassName,
-      }">
-      {{ text }}
-    </p>
+    <div>
+      <p
+        v-if="text"
+        class="avatar-text"
+        :class="{
+          [`${size}`]: size,
+          [`${textClassName}`]: textClassName,
+        }">
+        {{ text }}
+      </p>
+      <p
+        class="-text-fs-3"
+        v-if="time">
+        {{ time }}
+      </p>
+    </div>
   </div>
 </template>
