@@ -23,8 +23,8 @@ export default defineComponent({
 <template>
   <section class="flex flex-col gap-3 bg-gray-200 px-5 py-5 rounded">
     <header class="h6">About</header>
-    <p>{{ user?.bio }}</p>
-    <ul class="flex flex-col gap-6">
+    <p class="text-[14px]">{{ user?.bio }}</p>
+    <ul class="flex flex-col gap-6 mt-2">
       <li
         class="flex items-center gap-x-4"
         v-if="user?.location">
@@ -44,7 +44,9 @@ export default defineComponent({
           class="icon text-fs-3" />
         <span> Born {{ moment(new Date(user?.dateOfBirth)).format('LL') }}</span>
       </li>
-      <li class="flex items-center gap-x-4">
+      <li
+        class="flex items-center gap-x-4"
+        v-if="user?.profession">
         <Icon
           icon="ph:bag-simple-fill"
           class="icon text-fs-3" />
@@ -65,12 +67,12 @@ export default defineComponent({
       </li>
       <li
         class="flex items-center gap-x-4"
-        v-if="user?.dateCreated">
+        v-if="user?.createdAt">
         <Icon
           icon="ph:calendar-blank-fill"
           class="icon text-fs-3" />
 
-        <span> {{ moment(new Date(user?.dateCreated)).format('MMM YYYY') }}</span>
+        <span> {{ moment(new Date(user?.createdAt)).format('MMM YYYY') }}</span>
       </li>
     </ul>
   </section>
