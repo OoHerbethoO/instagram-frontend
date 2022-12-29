@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 function rem(px) {
-  return `${px / 16.6}rem`
+  return `${px / 16.7}rem`
 }
 
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
               'gray-300': '#e8e9ea',
               'gray-400': '#abadae',
               'gray-500': '#878A8C',
-              'gray-600': '#787b7d',
+              'gray-600': '#7c7f80',
               'gray-700': '#37393A',
               'gray-800': '#1F1F20',
               'gray-900': '#0F0F15',
@@ -103,10 +103,10 @@ module.exports = {
       },
     },
     fontSize: {
-      '-fs-4': rem(8),
-      '-fs-3': rem(10),
-      '-fs-2': rem(12),
-      '-fs-1': rem(14),
+      '-fs-4': rem(12),
+      '-fs-3': rem(13),
+      '-fs-2': rem(14),
+      '-fs-1': rem(15),
       'fs-base': rem(16),
       'fs-1': rem(18),
       'fs-2': rem(20),
