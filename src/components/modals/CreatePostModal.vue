@@ -67,7 +67,8 @@ export default defineComponent({
     title="Create Post"
     @close="isModalOpen = false"
     @open="isModalOpen = true"
-    :is-open="isModalOpen">
+    :is-open="isModalOpen"
+    :modalHeight="'h-max'">
     <template v-slot:trigger>
       <Button
         data-modal-target="#postModal"
@@ -89,7 +90,7 @@ export default defineComponent({
             v-if="readAbleImage">
             <img
               :src="readAbleImage"
-              class="w-full max-h-[340px] md:max-h-[360px] rounded-lg object-cover"
+              class="w-full rounded-lg object-cover"
               alt="" />
             <Button
               icon="ion:close"
