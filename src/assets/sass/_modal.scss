@@ -1,5 +1,5 @@
 .modal {
-  @apply fixed  top-0 left-0 w-full h-full z-[1099] flex justify-center bg-black bg-opacity-20 fadeIn overflow-auto;
+  @apply fixed  top-0 left-0 w-full h-full z-[1099] flex justify-center bg-black bg-opacity-30 fadeIn overflow-auto;
 
   .modal-content {
     @apply bg-white rounded-xl shadow-lg max-w-[565px] mx-5 w-full flex flex-col my-14 overflow-hidden h-max;
@@ -18,7 +18,7 @@
   }
 
   &.post-modal {
-    @apply w-screen;
+    @apply w-screen bg-opacity-40;
     .modal-content {
       @apply max-w-[1000px] my-0 md:my-14 h-screen mx-0 md:mx-5 rounded-none md:rounded-xl;
       @screen md {

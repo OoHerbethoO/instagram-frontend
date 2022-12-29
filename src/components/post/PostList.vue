@@ -23,7 +23,11 @@ export default defineComponent({
 
   setup(props) {
     const { result: meData, loading: meLoading } = useMeQuery()
-    const { column1, column2, column3, setData } = usePhotoGallery(props.posts)
+    const { column1, column2, column3, setData } = usePhotoGallery(props.posts, {
+      lgCols: 3,
+      mdCols: 2,
+      stateSuffix: 'column',
+    })
 
     const state = reactive({
       isModalOpen: false,
@@ -45,7 +49,15 @@ export default defineComponent({
       }
     )
 
-    return { ...toRefs(state), meData, meLoading, handlePostClick, column1, column2, column3 }
+    return {
+      ...toRefs(state),
+      meData,
+      meLoading,
+      handlePostClick,
+      column1: column1 as IPost,
+      column2: column2 as IPost,
+      column3: column3 as IPost,
+    }
   },
 })
 </script>

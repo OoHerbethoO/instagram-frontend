@@ -8,11 +8,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex items-start gap-x-4">
+  <div class="flex items-start gap-x-2">
     <Avatar size="md" />
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-1">
       <h6>Safdar Azeem</h6>
-      <p>
+      <p class="-text-fs-1">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque mollitia aliquam
         eligendi ab esse dol
       </p>

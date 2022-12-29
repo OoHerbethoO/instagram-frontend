@@ -66,7 +66,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <header class="-mt-5">
+  <header class="-mt-1">
     <ProfileCover
       :cover="user?.getUserById?.cover || ''"
       :isLoading="userLoading" />

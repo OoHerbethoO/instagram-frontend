@@ -29,7 +29,7 @@ export default defineComponent({
     </aside>
     <main class="app-main w-full">
       <AppHeader />
-      <section class="py-5">
+      <section class="py-6">
         <router-view />
       </section>
     </main>
