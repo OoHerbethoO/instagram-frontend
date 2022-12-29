@@ -17,6 +17,9 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    modalClass: String,
+    modalContentClass: String,
+    modalBodyClass: String,
   },
   setup(props, { emit: $emit }) {
     const modalRef = ref(null)
@@ -43,9 +46,11 @@ export default defineComponent({
   </span>
   <section
     class="modal"
+    :class="modalClass"
     v-if="isOpen">
     <section
       class="modal-content"
+      :class="modalContentClass"
       ref="modalRef"
       v-on-click-outside.bubble="modalHandler">
       <header class="modal-header">
@@ -57,12 +62,15 @@ export default defineComponent({
           variant="transparent"
           radius="rounded-full" />
       </header>
-      <main class="modal-body">
+      <main
+        class="modal-body"
+        :class="modalBodyClass">
         <slot name="modal-body"></slot>
       </main>
       <footer class="modal-footer gap-x-2 justify-end">
         <slot name="modal-footer"></slot>
       </footer>
+      <slot></slot>
     </section>
   </section>
 </template>
