@@ -19,7 +19,7 @@ export default defineComponent({
       <h1 class="h-4 w-full rounded skeleton mb-2"></h1>
       <h1 class="h-4 w-full rounded skeleton"></h1>
     </div>
-    <div class="card-image skeleton"></div>
+    <div class="card-image skeleton h-64"></div>
     <footer class="card-footer">
       <div class="flex items-center gap-5">
         <div class="avatar skeleton md"></div>
