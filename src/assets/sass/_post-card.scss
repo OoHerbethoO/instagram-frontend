@@ -1,11 +1,14 @@
-.card-galery {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10;
+.card-gallery {
+  @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10;
+  .gallery-item {
+    @apply flex flex-col gap-y-10;
+  }
 }
 
 .post-card {
-  @apply grid gap-3 fadeIn;
+  @apply flex flex-col gap-y-3 fadeIn;
   .card-image {
-    @apply w-full sm:h-72 rounded-md;
+    @apply w-full h-auto rounded-md object-cover;
   }
   .card-title {
     @apply text-fs-4 font-bold text-gray-900;
@@ -36,4 +39,14 @@
       @apply bg-white bg-opacity-20;
     }
   }
+}
+
+.card-enter-active,
+.card-leave-active {
+  @apply fadeIn;
+}
+
+.card-enter-from,
+.card-leave-to {
+  @apply fadeOut;
 }
