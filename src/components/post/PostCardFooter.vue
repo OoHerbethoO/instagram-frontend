@@ -16,7 +16,6 @@ export default defineComponent({
     },
     me: {
       type: Object as () => IPost['user'] | null,
-      required: true,
     },
     isIconVariantSolid: Boolean,
     hideBookmark: Boolean,
@@ -53,9 +52,9 @@ export default defineComponent({
         if (props.me) {
           state.isLiked = props.post.likes.includes(props.me._id)
           state.isBookmark = props.me.bookmarks.includes(props.post._id)
-          state.totalLikes = props.post.likes.length
-          state.totalComments = props.post.comments.length
         }
+        state.totalLikes = props.post.likes.length
+        state.totalComments = props.post.comments.length
       },
       { immediate: true }
     )
