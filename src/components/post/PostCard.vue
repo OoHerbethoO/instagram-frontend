@@ -70,7 +70,7 @@ export default defineComponent({
           :isCurrentUserPost="isCurrentUserPost" />
       </header>
       <p
-        class="text-gray-700"
+        class="card-title"
         v-if="post.content">
         {{ post.content }}
       </p>
