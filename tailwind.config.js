@@ -19,8 +19,8 @@ module.exports = {
               'gray-400': '#abadae',
               'gray-500': '#878A8C',
               'gray-600': '#7c7f80',
-              'gray-700': '#37393A',
-              'gray-800': '#1F1F20',
+              'gray-700': '#76797a',
+              'gray-800': '#454747',
               'gray-900': '#0F0F15',
             },
             primary: {
