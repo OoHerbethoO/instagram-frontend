@@ -127,13 +127,13 @@ export type IMutationUploadPhotoArgs = {
 
 export type IPost = {
   _id: Scalars['ID'];
-  comments: Array<Maybe<Scalars['ID']>>;
-  content: Scalars['String'];
-  createdAt: Scalars['Date'];
-  isPublic: Scalars['Boolean'];
-  likes: Array<Maybe<Scalars['ID']>>;
+  comments?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
+  isPublic?: Maybe<Scalars['Boolean']>;
+  likes?: Maybe<Array<Maybe<Scalars['ID']>>>;
   photo?: Maybe<Scalars['String']>;
-  user: IUser;
+  user?: Maybe<IUser>;
 };
 
 export type IQuery = {
@@ -198,7 +198,7 @@ export type IUser = {
 
 export type ICommentFragment = { content: string, _id: string, createdAt: any, likes: Array<string | null>, post: { _id: string }, user: { _id: string, avatar?: string | null, name: string } };
 
-export type IPostFragment = { _id: string, content: string, photo?: string | null, createdAt: any, likes: Array<string | null>, comments: Array<string | null>, isPublic: boolean, user: { name: string, _id: string, avatar?: string | null } };
+export type IPostFragment = { _id: string, content?: string | null, photo?: string | null, createdAt?: any | null, likes?: Array<string | null> | null, comments?: Array<string | null> | null, isPublic?: boolean | null, user?: { name: string, _id: string, avatar?: string | null } | null };
 
 export type IUserFragment = { _id: string, name: string, avatar?: string | null, location?: string | null, website?: string | null, cover?: string | null, bio?: string | null, profession?: string | null, dateOfBirth?: any | null, createdAt?: any | null, followers?: Array<string | null> | null, following?: Array<string | null> | null, posts?: Array<string | null> | null, bookmarks?: Array<string | null> | null, totalNotifications?: number | null, totalMessages?: number | null, isVerified?: boolean | null };
 
@@ -224,7 +224,7 @@ export type ICreatePostMutationVariables = Exact<{
 }>;
 
 
-export type ICreatePostMutationResult = { createPost: { _id: string, content: string, photo?: string | null, createdAt: any, likes: Array<string | null>, comments: Array<string | null>, isPublic: boolean, user: { name: string, _id: string, avatar?: string | null } } };
+export type ICreatePostMutationResult = { createPost: { _id: string, content?: string | null, photo?: string | null, createdAt?: any | null, likes?: Array<string | null> | null, comments?: Array<string | null> | null, isPublic?: boolean | null, user?: { name: string, _id: string, avatar?: string | null } | null } };
 
 export type IDeleteCommentMutationVariables = Exact<{
   commentId: Scalars['ID'];
@@ -295,12 +295,12 @@ export type IUploadPhotoMutationResult = { uploadPhoto: string };
 export type IGetAllPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IGetAllPostsQueryResult = { getAllPosts: Array<{ _id: string, content: string, photo?: string | null, createdAt: any, likes: Array<string | null>, comments: Array<string | null>, isPublic: boolean, user: { name: string, _id: string, avatar?: string | null } } | null> };
+export type IGetAllPostsQueryResult = { getAllPosts: Array<{ _id: string, content?: string | null, photo?: string | null, createdAt?: any | null, likes?: Array<string | null> | null, comments?: Array<string | null> | null, isPublic?: boolean | null, user?: { name: string, _id: string, avatar?: string | null } | null } | null> };
 
 export type IGetBookmarkedPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IGetBookmarkedPostsQueryResult = { getBookmarkedPosts: Array<{ _id: string, content: string, photo?: string | null, createdAt: any, likes: Array<string | null>, comments: Array<string | null>, isPublic: boolean, user: { name: string, _id: string, avatar?: string | null } } | null> };
+export type IGetBookmarkedPostsQueryResult = { getBookmarkedPosts: Array<{ _id: string, content?: string | null, photo?: string | null, createdAt?: any | null, likes?: Array<string | null> | null, comments?: Array<string | null> | null, isPublic?: boolean | null, user?: { name: string, _id: string, avatar?: string | null } | null } | null> };
 
 export type IGetCommentsQueryVariables = Exact<{
   comments: Array<Scalars['ID']> | Scalars['ID'];
@@ -321,7 +321,7 @@ export type IGetPostsByUserQueryVariables = Exact<{
 }>;
 
 
-export type IGetPostsByUserQueryResult = { getPostsByUser: Array<{ _id: string, content: string, photo?: string | null, createdAt: any, likes: Array<string | null>, comments: Array<string | null>, isPublic: boolean, user: { name: string, _id: string, avatar?: string | null } } | null> };
+export type IGetPostsByUserQueryResult = { getPostsByUser: Array<{ _id: string, content?: string | null, photo?: string | null, createdAt?: any | null, likes?: Array<string | null> | null, comments?: Array<string | null> | null, isPublic?: boolean | null, user?: { name: string, _id: string, avatar?: string | null } | null } | null> };
 
 export type IMeQueryVariables = Exact<{ [key: string]: never; }>;
 
