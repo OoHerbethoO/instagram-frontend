@@ -12,6 +12,7 @@ export default ({ mode }: any) => {
       vue(),
       vueJsx(),
       codegen({
+        runOnBuild: false,
         config: {
           schema: process.env.VITE_APP_API_URL,
           documents: 'src/**/*.ts',
