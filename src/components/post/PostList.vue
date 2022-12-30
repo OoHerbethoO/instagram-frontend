@@ -24,8 +24,8 @@ export default defineComponent({
   setup(props) {
     const { result: meData, loading: meLoading } = useMeQuery()
     const { column1, column2, column3, setData } = usePhotoGallery(props.posts, {
-      lgCols: 3,
-      mdCols: 2,
+      columnsOnLgScreens: 3,
+      columnsOnMdScreens: 2,
       stateSuffix: 'column',
     })
 
