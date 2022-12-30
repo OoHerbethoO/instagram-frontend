@@ -21,7 +21,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="flex flex-col gap-3 bg-gray-200 px-5 py-5 rounded">
+  <section class="flex flex-col gap-3 bg-gray-100 px-5 py-5 rounded">
     <header class="h6">About</header>
     <p class="text-[14px]">{{ user?.bio }}</p>
     <ul class="flex flex-col gap-6 mt-2">
