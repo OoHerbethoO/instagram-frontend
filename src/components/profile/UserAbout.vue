@@ -72,7 +72,7 @@ export default defineComponent({
           icon="ph:calendar-blank-fill"
           class="icon text-fs-3" />
 
-        <span> {{ moment(new Date(user?.createdAt)).format('MMM YYYY') }}</span>
+        <span>Joined {{ moment(new Date(user?.createdAt)).format('MMM YYYY') }}</span>
       </li>
     </ul>
   </section>
