@@ -4,12 +4,12 @@ import type { IPost } from '@/types/graphql.types'
 import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 import PostCard from './PostCard.vue'
 import PostCardSkeleton from '../skeletons/PostCardSkeleton.vue'
-import PostModal from './PostModal.vue'
-import usePhotoGallery from '@/hooks/usePhotoGallery'
+import ViewPostModal from '../modals/ViewPostModal.vue'
+import useGallery from '@/hooks/useGallery'
 
 export default defineComponent({
   name: 'PostList',
-  components: { PostCard, PostCardSkeleton, PostModal },
+  components: { PostCard, PostCardSkeleton, ViewPostModal },
   props: {
     posts: {
       type: Array as () => Array<IPost>,
@@ -23,7 +23,7 @@ export default defineComponent({
 
   setup(props) {
     const { result: meData, loading: meLoading } = useMeQuery()
-    const { column1, column2, column3, setData } = usePhotoGallery(props.posts, {
+    const { column1, column2, column3, setData } = useGallery(props.posts, {
       columnsOnLgScreens: 3,
       columnsOnMdScreens: 2,
       stateSuffix: 'column',
@@ -104,7 +104,7 @@ export default defineComponent({
           :post="post" />
       </div>
     </div>
-    <PostModal
+    <ViewPostModal
       :isModalOpen="isModalOpen"
       @close="isModalOpen = false"
       :post="selectedPost"

@@ -1,13 +1,9 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
 import navigationJson from '@/json/navigation.json'
-import { useMeQuery } from '@/types/graphql.types'
-import Cookies from '@/utils/cookies'
-import { useRouter } from 'vue-router'
-import { AppRoutes } from '@/constants/routes.constant'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'AppSidebarSkeleton',
+  name: 'PageSidebarSkeleton',
   setup() {
     return {
       navigationJson,

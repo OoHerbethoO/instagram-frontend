@@ -2,11 +2,11 @@
 import type { IPost } from '@/types/graphql.types'
 import { defineComponent, reactive, toRefs, watch } from 'vue'
 import PhotoCard from './PhotoCard.vue'
-import PostModal from '../post/PostModal.vue'
-import usePhotoGallery from '@/hooks/usePhotoGallery'
+import ViewPostModal from '../modals/ViewPostModal.vue'
+import useGallery from '@/hooks/useGallery'
 export default defineComponent({
   name: 'PhotoCardList',
-  components: { PhotoCard, PostModal },
+  components: { PhotoCard, ViewPostModal },
   props: {
     posts: {
       type: Object as () => IPost[],
@@ -18,7 +18,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { column1, column2, setData } = usePhotoGallery(props.posts, {
+    const { column1, column2, setData } = useGallery(props.posts, {
       columnsOnLgScreens: 0,
       columnsOnMdScreens: 2,
       stateSuffix: 'column',
@@ -77,7 +77,7 @@ export default defineComponent({
         :post="post" />
     </div>
   </main>
-  <PostModal
+  <ViewPostModal
     :isModalOpen="isModalOpen"
     @close="isModalOpen = false"
     :post="selectedPost"

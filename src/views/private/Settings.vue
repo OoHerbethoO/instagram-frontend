@@ -1,22 +1,22 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, watch } from 'vue'
 import { useToast } from 'vue-toastification'
-import { updateProfileJson } from '@/json/updateProfile.json'
-import ProfileCover from '@/components/profile/ProfileCover.vue'
+import { profileUpdateJson } from '@/json/profileUpdate.json'
+import CoverPhoto from '@/components/profile/CoverPhoto.vue'
 import ProfileHeader from '@/components/profile/ProfileHeader.vue'
 import Input from '@/components/reusable/Input.vue'
 import Button from '@/components/reusable/Button.vue'
 import { useMeQuery, useUpdateProfileMutation, useUploadPhotoMutation } from '@/types/graphql.types'
 import SettingActionBtns from '@/components/settings/SettingActionBtns.vue'
 import useForm from '@/hooks/useForm'
-import useUploadPhoto from '@/hooks/useUploadPhoto'
+import usePhotoUpload from '@/hooks/usePhotoUpload'
 
 export default defineComponent({
   name: 'Settings',
   components: {
     Input,
     Button,
-    ProfileCover,
+    CoverPhoto,
     ProfileHeader,
     SettingActionBtns,
   },
@@ -31,8 +31,8 @@ export default defineComponent({
     })
 
     const { result: me, loading: meLoading, error: meError } = useMeQuery()
-    const { handleUploadPhoto, uploadPhotoLoading } = useUploadPhoto()
-    const { state: formState, handleChange, doValidation, updateForm } = useForm(updateProfileJson)
+    const { handleUploadPhoto, uploadPhotoLoading } = usePhotoUpload()
+    const { state: formState, handleChange, doValidation, updateForm } = useForm(profileUpdateJson)
     const state = reactive({
       avatar: '',
       cover: '',
@@ -85,7 +85,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
-      updateProfileJson,
+      profileUpdateJson,
       me,
       meLoading,
       meError,
@@ -104,7 +104,7 @@ export default defineComponent({
 <template>
   <section class="flex gap-x-10 lg:gap-x-20">
     <section class="flex-1">
-      <ProfileCover
+      <CoverPhoto
         :cover="me?.me?.cover || ''"
         :isLoading="meLoading"
         @handleImage="handleCover"
@@ -124,7 +124,7 @@ export default defineComponent({
       </ProfileHeader>
       <form class="mt-7">
         <section class="grid md:grid-cols-2 gap-x-6 xl:gap-x-10 gap-y-7">
-          <template v-for="input in updateProfileJson">
+          <template v-for="input in profileUpdateJson">
             <Input
               v-if="input.name !== 'name'"
               :key="input.name"

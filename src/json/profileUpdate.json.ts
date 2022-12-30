@@ -1,6 +1,6 @@
 import type { Form } from '../types/form.type'
 
-export const updateProfileJson: Form[] = [
+export const profileUpdateJson: Form[] = [
   {
     name: 'name',
     placeholder: 'Add your name...',

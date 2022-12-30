@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Avatar from './Avatar.vue'
-import UserInfo from '../profile/UserInfo.vue'
+import UserStats from '../profile/UserStats.vue'
 import NavLink from './NavLink.vue'
 import Button from './Button.vue'
 import navigationJson from '@/json/navigation.json'
@@ -9,11 +9,11 @@ import { useMeQuery } from '@/types/graphql.types'
 import Cookies from '@/utils/cookies'
 import { useRouter } from 'vue-router'
 import { AppRoutes } from '@/constants/routes.constant'
-import AppSidebarSkeleton from '../skeletons/AppSidebarSkeleton.vue'
+import PageSidebarSkeleton from '../skeletons/PageSidebarSkeleton.vue'
 
 export default defineComponent({
-  name: 'AppSidebar',
-  components: { Avatar, NavLink, Button, AppSidebarSkeleton, UserInfo },
+  name: 'PageSidebar',
+  components: { Avatar, NavLink, Button, PageSidebarSkeleton, UserStats },
   setup() {
     const router = useRouter()
     const { result: MeData, loading } = useMeQuery()
@@ -35,7 +35,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <AppSidebarSkeleton v-if="!MeData && loading" />
+  <PageSidebarSkeleton v-if="!MeData && loading" />
 
   <aside
     class="w-full flex flex-col justify-between faideIn"
@@ -49,7 +49,7 @@ export default defineComponent({
             :text="MeData?.me?.name || ''" />
         </router-link>
       </header>
-      <UserInfo
+      <UserStats
         :user="MeData?.me"
         class="mt-6" />
       <nav class="mt-10">

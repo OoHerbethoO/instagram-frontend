@@ -2,14 +2,14 @@
 import { defineComponent, reactive, watch } from 'vue'
 import Modal from '../reusable/Modal.vue'
 import type { IPost } from '@/types/graphql.types'
-import PostCard from './PostCard.vue'
+import PostCard from '../post/PostCard.vue'
 import { useMeQuery } from '@/types/graphql.types'
 import CommentList from '../comments/CommentList.vue'
 import CreateComment from '../comments/CreateComment.vue'
 import Button from '../reusable/Button.vue'
 
 export default defineComponent({
-  name: 'PostModal',
+  name: 'ViewPostModal',
   components: {
     Modal,
     PostCard,

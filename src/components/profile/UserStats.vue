@@ -3,7 +3,7 @@ import type { IUser } from '@/types/graphql.types'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'UserInfo',
+  name: 'UserStats',
   props: {
     user: {
       type: Object as () => IUser | null,

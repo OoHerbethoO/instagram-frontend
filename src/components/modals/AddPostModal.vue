@@ -1,6 +1,6 @@
 <script lang="ts">
 import useImage from '@/hooks/useImage'
-import useUploadPhoto from '@/hooks/useUploadPhoto'
+import usePhotoUpload from '@/hooks/usePhotoUpload'
 import { useCreatePostMutation, useMeQuery } from '@/types/graphql.types'
 import { defineComponent, reactive, toRefs } from 'vue'
 import { useToast } from 'vue-toastification'
@@ -9,12 +9,12 @@ import Button from '../reusable/Button.vue'
 import Modal from '../reusable/Modal.vue'
 
 export default defineComponent({
-  name: 'CreatePostModal',
+  name: 'AddPostModal',
   components: { Button, Avatar, Modal },
   setup($props, { emit: $emit }) {
     const toast = useToast()
     const { result: me } = useMeQuery()
-    const { handleUploadPhoto, uploadPhotoLoading } = useUploadPhoto()
+    const { handleUploadPhoto, uploadPhotoLoading } = usePhotoUpload()
     const {
       mutate: uploadPost,
       onError: onCreatePostError,

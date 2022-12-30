@@ -1,11 +1,11 @@
 <script lang="ts">
-import { defineComponent, reactive, toRefs, watch } from 'vue'
 import Button from '@/components/reusable/Button.vue'
 import UploadBtn from '@/components/reusable/UploadBtn.vue'
 import useImage from '@/hooks/useImage'
+import { defineComponent, watch } from 'vue'
 
 export default defineComponent({
-  name: 'ProfileCover',
+  name: 'CoverPhoto',
   components: {
     Button,
     UploadBtn,

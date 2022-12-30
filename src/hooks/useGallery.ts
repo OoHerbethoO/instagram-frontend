@@ -6,7 +6,7 @@ interface Props {
   stateSuffix: string
 }
 
-const usePhotoGallery = (data: unknown[], props: Props) => {
+const useGallery = (data: unknown[], props: Props) => {
   const mdScreenWidth = 640
   const xlScreenWidth = 1280
   const maxColumns =
@@ -93,4 +93,4 @@ const usePhotoGallery = (data: unknown[], props: Props) => {
   } as any
 }
 
-export default usePhotoGallery
+export default useGallery

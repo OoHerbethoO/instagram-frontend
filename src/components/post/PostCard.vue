@@ -4,13 +4,13 @@ import type { IPost, IUser } from '@/types/graphql.types'
 import { defineComponent, reactive, toRefs, watch } from 'vue'
 import Avatar from '../reusable/Avatar.vue'
 import Button from '../reusable/Button.vue'
-import PostActionMenu from './PostActionMenu.vue'
+import PostActionsDropdown from './PostActionsDropdown.vue'
 import PostCardFooter from './PostCardFooter.vue'
 import moment from 'moment'
 
 export default defineComponent({
   name: 'PostCard',
-  components: { Avatar, Button, PostActionMenu, PostCardFooter },
+  components: { Avatar, Button, PostActionsDropdown, PostCardFooter },
   props: {
     post: {
       type: Object as () => IPost,
@@ -65,7 +65,7 @@ export default defineComponent({
             size="md"
             class="card-avatar" />
         </router-link>
-        <PostActionMenu
+        <PostActionsDropdown
           :postId="post._id"
           :isCurrentUserPost="isCurrentUserPost" />
       </header>

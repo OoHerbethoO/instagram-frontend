@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Input from './Input.vue'
-import CreatePostModal from '../modals/CreatePostModal.vue'
+import AddPostModal from '../modals/AddPostModal.vue'
 import Button from './Button.vue'
 
 export default defineComponent({
-  name: 'AppHeader',
-  components: { Input, Button, CreatePostModal },
+  name: 'PageHeader',
+  components: { Input, Button, AddPostModal },
 })
 </script>
 
@@ -32,7 +32,7 @@ export default defineComponent({
         icon="fa-solid:bell"
         radius="rounded-full"
         variant="transparent" />
-      <CreatePostModal />
+      <AddPostModal />
     </aside>
   </header>
 </template>

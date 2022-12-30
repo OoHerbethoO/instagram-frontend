@@ -1,14 +1,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import AppSidebar from '@/components/reusable/AppSidebar.vue'
-import AppHeader from '@/components/reusable/AppHeader.vue'
+import PageSidebar from '@/components/reusable/PageSidebar.vue'
+import PageHeader from '@/components/reusable/PageHeader.vue'
 import { useMeQuery } from '@/types/graphql.types'
 
 export default defineComponent({
   name: 'Root',
   components: {
-    AppSidebar,
-    AppHeader,
+    PageSidebar,
+    PageHeader,
   },
 
   setup() {
@@ -25,10 +25,10 @@ export default defineComponent({
 <template>
   <div class="app-layout">
     <aside class="app-sidebar">
-      <AppSidebar />
+      <PageSidebar />
     </aside>
     <main class="app-main w-full">
-      <AppHeader />
+      <PageHeader />
       <section class="py-6">
         <router-view />
       </section>

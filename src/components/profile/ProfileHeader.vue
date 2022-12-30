@@ -1,10 +1,11 @@
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
 import Avatar from '@/components/reusable/Avatar.vue'
 import Button from '@/components/reusable/Button.vue'
 import UploadBtn from '@/components/reusable/UploadBtn.vue'
 import { AppRoutes } from '@/constants/routes.constant'
 import useImage from '@/hooks/useImage'
+import { defineComponent, watch } from 'vue'
+
 export default defineComponent({
   name: 'ProfileHeader',
   components: {

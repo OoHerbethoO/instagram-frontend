@@ -1,22 +1,22 @@
 <script lang="ts">
 import Avatar from '@/components/reusable/Avatar.vue'
-import ProfileCover from '@/components/profile/ProfileCover.vue'
+import CoverPhoto from '@/components/profile/CoverPhoto.vue'
 import ProfileHeader from '@/components/profile/ProfileHeader.vue'
-import UserInfo from '@/components/profile/UserInfo.vue'
+import UserStats from '@/components/profile/UserStats.vue'
 import UserAbout from '@/components/profile/UserAbout.vue'
 import Button from '@/components/reusable/Button.vue'
 import { useGetPostsByUserQuery, useGetUserByIdQuery, useMeQuery } from '@/types/graphql.types'
 import type { IPost } from '@/types/graphql.types'
 import { defineComponent, reactive, toRefs, watch } from 'vue'
-import PhotoCardList from '@/components/profile/PhotoCardList.vue'
+import PhotoCardList from '@/components/photo/PhotoCardList.vue'
 import { AppRoutes } from '@/constants/routes.constant'
 export default defineComponent({
   components: {
     Avatar,
     Button,
-    UserInfo,
+    UserStats,
     UserAbout,
-    ProfileCover,
+    CoverPhoto,
     ProfileHeader,
     PhotoCardList,
   },
@@ -67,7 +67,7 @@ export default defineComponent({
 
 <template>
   <header class="-mt-1">
-    <ProfileCover
+    <CoverPhoto
       :cover="user?.getUserById?.cover || ''"
       :isLoading="userLoading" />
     <ProfileHeader
@@ -87,7 +87,7 @@ export default defineComponent({
   </header>
   <section class="profile-section-grid">
     <aside>
-      <UserInfo
+      <UserStats
         :user="user?.getUserById"
         variant="bg"
         class="mb-6" />

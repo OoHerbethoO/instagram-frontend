@@ -4,7 +4,7 @@ import { defineComponent, ref } from 'vue'
 import Button from '../reusable/Button.vue'
 import Dropdown from '../reusable/Dropdown.vue'
 export default defineComponent({
-  name: 'PostActionMenu',
+  name: 'PostActionsDropdown',
   props: {
     postId: {
       type: String,
