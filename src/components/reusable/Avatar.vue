@@ -67,7 +67,7 @@ export default defineComponent({
         {{ text }}
       </p>
       <p
-        class="-text-fs-3 text-gray-600"
+        class="text-[12px] text-gray-600"
         v-if="time">
         {{ time }}
       </p>
