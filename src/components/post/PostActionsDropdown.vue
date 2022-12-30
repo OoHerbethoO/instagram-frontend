@@ -45,7 +45,7 @@ export default defineComponent({
   <Dropdown>
     <template v-slot:trigger>
       <Button
-        icon="mdi:dots-vertical"
+        icon="mdi:dots-horizontal"
         radius="rounded-full"
         size="md"
         variant="transparent" />
@@ -55,7 +55,7 @@ export default defineComponent({
         icon="mdi:trash-can"
         text="Delete"
         v-if="isCurrentUserPost"
-        button-class="justify-start font-normal"
+        button-class="justify-start font-normal -text-fs-1"
         size="md"
         @click="handleDeletePost"
         variant="transparent" />
@@ -66,7 +66,9 @@ export default defineComponent({
             ? `material-symbols:content-copy-outline-rounded`
             : `material-symbols:content-copy-rounded`
         "
-        :button-class="`justify-start font-normal ${isCopied && 'font-bold text-primary-dark'}`"
+        :button-class="`justify-start font-normal -text-fs-1 ${
+          isCopied && 'font-bold text-primary-dark'
+        }`"
         :icon-class="`${isCopied && 'text-primary-dark'}`"
         size="md"
         @click="handleCopyLink"
