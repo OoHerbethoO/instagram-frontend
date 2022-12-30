@@ -5,12 +5,23 @@ import { defineComponent, reactive, toRefs, watch } from 'vue'
 import Avatar from '../reusable/Avatar.vue'
 import Button from '../reusable/Button.vue'
 import PostActionsDropdown from './PostActionsDropdown.vue'
+import PostContent from './PostContent.vue'
+import PostImage from './PostImage.vue'
 import PostCardFooter from './PostCardFooter.vue'
+import PostCardHeader from './PostCardHeader.vue'
 import moment from 'moment'
 
 export default defineComponent({
   name: 'PostCard',
-  components: { Avatar, Button, PostActionsDropdown, PostCardFooter },
+  components: {
+    Avatar,
+    Button,
+    PostActionsDropdown,
+    PostCardFooter,
+    PostCardHeader,
+    PostContent,
+    PostImage,
+  },
   props: {
     post: {
       type: Object as () => IPost,
@@ -21,12 +32,14 @@ export default defineComponent({
       required: true,
     },
     height: String,
+    trimText: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     const state = reactive({
-      isLiked: false,
       isCurrentUserPost: false,
-      isBookmark: false,
     })
 
     watch(
@@ -34,8 +47,6 @@ export default defineComponent({
       () => {
         if (props.me) {
           state.isCurrentUserPost = props.post.user._id === props.me._id
-          state.isLiked = props.post.likes.includes(props.me._id)
-          state.isBookmark = props.me.bookmarks.includes(props.post._id)
         }
       },
       { immediate: true }
@@ -43,51 +54,24 @@ export default defineComponent({
 
     return { ...toRefs(state), AppRoutes, moment }
   },
-
-  computed: {
-    time() {
-      console.log(this.post.createdAt)
-      return moment(this.post.createdAt).fromNow()
-    },
-  },
 })
 </script>
 
 <template>
   <Transition name="card">
     <article class="post-card">
-      <header class="card-header mb-1">
-        <router-link :to="`${AppRoutes.PROFILE}/${post?.user?._id}`">
-          <Avatar
-            :src="post?.user?.avatar || ''"
-            :text="post?.user.name"
-            :time="time"
-            size="md"
-            class="card-avatar" />
-        </router-link>
-        <PostActionsDropdown
-          :postId="post._id"
-          :isCurrentUserPost="isCurrentUserPost" />
-      </header>
-      <p
-        class="card-title"
-        v-if="post.content">
-        {{ post.content }}
-      </p>
-      <figure>
-        <img
-          :src="post?.photo || ''"
-          class="card-image"
-          @click="$emit('openModal')"
-          alt="" />
-      </figure>
+      <PostCardHeader
+        :post="post"
+        :me="me" />
+      <PostContent
+        :content="post.content"
+        :trimText="trimText" />
+      <PostImage
+        :photo="post?.photo"
+        @click="$emit('openModal')" />
       <PostCardFooter
-        :isLiked="isLiked"
-        :totalLikes="post?.likes.length"
-        :isBookmark="isBookmark"
-        :postId="post?._id"
-        :me="me"
-        :totalComments="post?.comments.length" />
+        :post="post"
+        :me="me" />
     </article>
   </Transition>
 </template>
