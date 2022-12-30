@@ -23,7 +23,7 @@ export default defineComponent({
 <template>
   <section
     class="flex justify-between text-center gap-x-3"
-    :class="{ 'bg-gray-200 px-5 py-6 rounded': variant === 'bg' }">
+    :class="{ 'bg-gray-100 px-5 py-6 rounded': variant === 'bg' }">
     <div>
       <p>{{ user?.posts?.length }}</p>
       <p class="-text-fs-1 text-gray-500 mt-1 font-medium">Posts</p>
