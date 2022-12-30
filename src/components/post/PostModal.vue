@@ -28,8 +28,17 @@ export default defineComponent({
     },
   },
   emits: ['close', 'open'],
-  setup(props) {
+  setup(props, { emit }) {
     const { result: meData, loading: meLoading } = useMeQuery()
+
+    watch(
+      () => props.post,
+      () => {
+        if (!props.post) {
+          emit('close')
+        }
+      }
+    )
 
     return { meData }
   },
