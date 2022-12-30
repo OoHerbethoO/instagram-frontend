@@ -8,14 +8,16 @@
 .post-card {
   @apply flex flex-col gap-y-3 fadeIn;
   .card-image {
-    @apply w-full h-auto rounded-md object-cover;
+    @apply w-full h-auto  rounded-md object-cover;
   }
   .card-title {
-    @apply text-gray-800 mt-1 text-[14.5px];
-    @apply overflow-hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    @apply text-gray-800  text-[14.5px];
+    &.trim-text {
+      @apply overflow-hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
   }
   .card-header,
   .card-footer {
