@@ -12,7 +12,7 @@ export default defineComponent({
     <Avatar size="md" />
     <div class="flex flex-col gap-1">
       <h6>Safdar Azeem</h6>
-      <p class="-text-fs-1">
+      <p class="text-[14px]">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque mollitia aliquam
         eligendi ab esse dol
       </p>
