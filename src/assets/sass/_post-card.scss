@@ -1,5 +1,5 @@
 .card-gallery {
-  @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10;
+  @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-8;
   .gallery-item {
     @apply flex flex-col gap-y-7;
   }
@@ -8,7 +8,7 @@
 .post-card {
   @apply flex flex-col gap-y-3 fadeIn;
   .card-image {
-    @apply w-full h-auto  rounded-md object-cover;
+    @apply w-full h-full  rounded-md object-cover border border-gray-100 border-opacity-20;
   }
   .card-title {
     @apply text-gray-800  text-[14.5px];
