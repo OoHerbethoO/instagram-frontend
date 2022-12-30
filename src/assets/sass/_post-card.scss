@@ -1,7 +1,7 @@
 .card-gallery {
-  @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10;
+  @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10;
   .gallery-item {
-    @apply flex flex-col gap-y-10;
+    @apply flex flex-col gap-y-7;
   }
 }
 
@@ -11,7 +11,7 @@
     @apply w-full h-auto rounded-md object-cover;
   }
   .card-title {
-    @apply text-fs-4 font-bold text-gray-900;
+    @apply text-gray-800 mt-1 text-[14.5px];
     @apply overflow-hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -20,6 +20,9 @@
   .card-header,
   .card-footer {
     @apply flex items-center justify-between;
+  }
+  .card-footer {
+    @apply -mt-1;
   }
 }
 
