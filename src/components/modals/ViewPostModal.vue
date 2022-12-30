@@ -63,8 +63,12 @@ export default defineComponent({
           :trimText="false"
           :post="post" />
         <aside class="flex-1 flex flex-col justify-between mt-5 md:mt-0">
-          <CommentList class="mb-3" />
-          <CreateComment class="sticky bottom-0 bg-white" />
+          <CommentList
+            class="mb-3"
+            :post="post" />
+          <CreateComment
+            class="sticky bottom-0 bg-white"
+            :postId="post?._id" />
         </aside>
       </section>
     </template>
