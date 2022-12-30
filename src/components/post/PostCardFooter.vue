@@ -1,6 +1,7 @@
 <script lang="ts">
 import { useBookmarkPostMutation, useLikePostMutation } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
+import type { IPost } from '@/types/graphql.types'
+import { defineComponent, reactive, watch, toRefs } from 'vue'
 import Button from '../reusable/Button.vue'
 
 export default defineComponent({
@@ -9,24 +10,25 @@ export default defineComponent({
     Button,
   },
   props: {
-    postId: {
-      type: String,
+    post: {
+      type: Object as () => IPost,
       required: true,
     },
-    totalLikes: {
-      type: Number,
+    me: {
+      type: Object as () => IPost['user'] | null,
       required: true,
     },
-    totalComments: {
-      type: Number,
-      required: true,
-    },
-    isLiked: Boolean,
-    isBookmark: Boolean,
     isIconVariantSolid: Boolean,
     hideBookmark: Boolean,
   },
   setup(props) {
+    const state = reactive({
+      isLiked: false,
+      isBookmark: false,
+      totalLikes: 0,
+      totalComments: 0,
+    })
+
     const { mutate: likePost } = useLikePostMutation({
       refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts'],
     })
@@ -37,15 +39,29 @@ export default defineComponent({
 
     const handleLikePost = () =>
       likePost({
-        postId: props.postId,
+        postId: props.post._id,
       })
 
     const handleBookmarkPost = () =>
       bookmarkPost({
-        postId: props.postId,
+        postId: props.post._id,
       })
 
+    watch(
+      () => [props.post, props.me],
+      () => {
+        if (props.me) {
+          state.isLiked = props.post.likes.includes(props.me._id)
+          state.isBookmark = props.me.bookmarks.includes(props.post._id)
+          state.totalLikes = props.post.likes.length
+          state.totalComments = props.post.comments.length
+        }
+      },
+      { immediate: true }
+    )
+
     return {
+      ...toRefs(state),
       handleLikePost,
       handleBookmarkPost,
       bookmarkPostLoading,
