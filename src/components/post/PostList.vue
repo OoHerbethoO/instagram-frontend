@@ -42,7 +42,12 @@ export default defineComponent({
     watch(
       () => props.posts,
       () => {
-        if (!props.posts) return
+        if (!props.posts) {
+          state.selectedPost = null
+          state.isModalOpen = false
+          return
+        }
+
         setData(props.posts)
         state.selectedPost =
           props.posts.find((post) => post._id === state.selectedPost?._id) || null
