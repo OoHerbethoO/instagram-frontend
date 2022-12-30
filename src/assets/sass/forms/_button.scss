@@ -1,5 +1,5 @@
 .btn {
-  @apply bg-gray-200 min-h-D h-D px-4 rounded flex gap-x-3 justify-center items-center text-fs-base text-gray-700 font-medium cursor-pointer;
+  @apply bg-gray-200 min-h-D h-D px-4 rounded flex gap-x-3 justify-center items-center text-fs-base text-gray-800 font-medium cursor-pointer;
   position: relative;
   overflow: hidden;
   transition: all 0.4s ease-out;
@@ -94,7 +94,7 @@
     @apply cursor-not-allowed;
   }
   &.neobrutalism {
-    @apply border border-gray-900 bg-[#DACDF4];
+    @apply border border-gray-900 bg-[#DACDF4] text-gray-900;
     box-shadow: 1.5px 3.5px 1px var(--gray-900);
     &:focus,
     &:active {
@@ -110,7 +110,7 @@
     @apply cursor-wait gap-x-2;
     --spinner-height: 1.1rem;
     --spinner-width: 1.1rem;
-    --spinner-border-color: theme('colors.gray.700');
+    --spinner-border-color: theme('colors.gray.800');
     pointer-events: none;
     user-select: none;
 
@@ -166,7 +166,7 @@
   &.sm {
     @apply min-h-sm h-sm px-2 -text-fs-1;
     svg {
-      @apply text-fs-1;
+      @apply text-fs-base;
     }
   }
   &.md {
