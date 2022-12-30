@@ -11,7 +11,9 @@ export default defineComponent({
 
 <template>
   <div class="relative">
-    <Input type="textarea" />
+    <Input
+      type="textarea"
+      placeholder="Write a comment..." />
     <section class="bottom-right absolute bottom-2 right-2 flex items-center">
       <Button
         icon="fluent:emoji-48-filled"
