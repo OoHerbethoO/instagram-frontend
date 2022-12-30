@@ -1,7 +1,7 @@
 .dropdown {
   @apply relative inline-block;
   .dropdown-menu {
-    @apply absolute min-w-[170px] right-0 mt-2  rounded-lg p-2 bg-white z-50 border border-gray-100;
+    @apply absolute min-w-[160px] right-0 mt-2  rounded-lg p-2 bg-white z-50 border border-gray-100;
     box-shadow: 0px 4px 16px -4px rgba(97, 101, 107, 0.15);
     * {
       @apply text-gray-800;
