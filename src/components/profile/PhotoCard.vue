@@ -36,7 +36,7 @@ export default defineComponent({
     @mouseleave="isHovered = false">
     <figure class="card-image cursor-pointer relative">
       <img
-        class="w-full h-full rounded-md object-cover aspect-square"
+        class="w-full h-full rounded-md object-cover"
         :src="post?.photo || ''"
         @click="$emit('openModal')" />
       <footer
