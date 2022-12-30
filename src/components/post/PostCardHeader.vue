@@ -38,7 +38,7 @@ export default defineComponent({
     return { ...toRefs(state), AppRoutes }
   },
   computed: {
-    time() {
+    timeAgo() {
       return moment(this.post.createdAt).fromNow()
     },
   },
@@ -51,7 +51,7 @@ export default defineComponent({
       <Avatar
         :src="post?.user?.avatar || ''"
         :text="post?.user.name"
-        :time="time"
+        :time="timeAgo"
         size="md"
         class="card-avatar" />
     </router-link>
