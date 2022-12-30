@@ -10,6 +10,8 @@ import { useMeQuery, useUpdateProfileMutation, useUploadPhotoMutation } from '@/
 import SettingActionBtns from '@/components/settings/SettingActionBtns.vue'
 import useForm from '@/hooks/useForm'
 import usePhotoUpload from '@/hooks/usePhotoUpload'
+import { useRouter } from 'vue-router'
+import { AppRoutes } from '@/constants/routes.constant'
 
 export default defineComponent({
   name: 'Settings',
@@ -22,6 +24,7 @@ export default defineComponent({
   },
   setup() {
     const toast = useToast()
+    const router = useRouter()
     const {
       mutate: updateProfile,
       onError: onUpdateProfileError,
@@ -78,6 +81,7 @@ export default defineComponent({
       const result: any = await updateProfile(data)
       if (result.data?.updateProfile) {
         toast.success('Profile updated successfully')
+        router.push(`${AppRoutes.PROFILE}/${me.value?.me?._id}`)
       }
     }
 
