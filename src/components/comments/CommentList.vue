@@ -9,7 +9,7 @@ export default defineComponent({
 
 <template>
   <div class="md:max-h pb-5 overflow-auto">
-    <header class="h5 mb-3 pb-2 sticky top-0 bg-white w-full">Comments</header>
+    <header class="h4 font-medium mb-3 pb-2 sticky top-0 bg-white w-full">Comments</header>
     <section class="flex flex-col items-start gap-6">
       <CommentItem />
       <CommentItem />
