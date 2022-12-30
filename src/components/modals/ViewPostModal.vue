@@ -54,15 +54,17 @@ export default defineComponent({
     class="relative"
     :is-open="isModalOpen">
     <template v-slot:modal-body>
-      <section class="md:flex h-full gap-10">
+      <section class="md:flex h-full gap-8">
         <PostCard
           class="flex-1 overflow-auto"
           height="100%"
+          :key="post._id"
           :me="meData?.me"
+          :trimText="false"
           :post="post" />
-        <aside class="flex-1 flex flex-col justify-between mt-6 md:mt-0">
+        <aside class="flex-1 flex flex-col justify-between mt-5 md:mt-0">
           <CommentList class="mb-3" />
-          <CreateComment />
+          <CreateComment class="sticky bottom-0 bg-white" />
         </aside>
       </section>
     </template>
