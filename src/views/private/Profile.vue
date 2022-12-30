@@ -85,8 +85,8 @@ export default defineComponent({
       </router-link>
     </ProfileHeader>
   </header>
-  <section class="flex flex-col md:flex-row mt-12 gap-x-14 gap-y-10">
-    <aside class="md:w-[300px]">
+  <section class="profile-section-grid">
+    <aside>
       <UserInfo
         :user="user?.getUserById"
         variant="bg"
