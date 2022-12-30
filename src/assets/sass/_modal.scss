@@ -18,9 +18,9 @@
   }
 
   &.post-modal {
-    @apply w-screen bg-opacity-40;
+    @apply w-screen bg-opacity-40 overflow-hidden;
     .modal-content {
-      @apply max-w-[1000px] my-0 md:my-10 h-screen mx-0 md:mx-5 rounded-none md:rounded-xl;
+      @apply max-w-[1000px] my-0 md:my-10 h-screen mx-0 md:mx-5 rounded-none md:rounded-xl overflow-hidden;
       @screen md {
         height: calc(100% - 43px * 1.5);
       }
