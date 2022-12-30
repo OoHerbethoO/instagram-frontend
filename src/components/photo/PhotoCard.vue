@@ -43,9 +43,7 @@ export default defineComponent({
         v-if="isHovered"
         class="overlay absolute top-0 grid place-items-center">
         <PostCardFooter
-          :totalLikes="post?.likes.length || 0"
-          :totalComments="post?.comments.length || 0"
-          :postId="post?._id"
+          :post="post"
           variant="white"
           :isIconVariantSolid="true"
           :hideBookmark="true" />
