@@ -1,6 +1,6 @@
 <script lang="ts">
-import { useGetCommentsQuery, useMeQuery } from '@/types/graphql.types'
 import type { IPost } from '@/types/graphql.types'
+import { useGetCommentsQuery, useMeQuery } from '@/types/graphql.types'
 import { defineComponent, watch } from 'vue'
 import CommentItem from './CommentItem.vue'
 
@@ -46,11 +46,13 @@ export default defineComponent({
   <div class="md:max-h pb-5 overflow-auto">
     <header class="h4 font-medium mb-3 pb-2 sticky top-0 bg-white w-full">Comments</header>
     <section class="flex flex-col items-start gap-6">
-      <CommentItem
-        v-for="comment in commentsData?.getComments"
-        :key="comment._id"
-        :comment="comment"
-        :me="meData?.me" />
+      <template v-if="commentsData?.getComments">
+        <CommentItem
+          v-for="comment in commentsData?.getComments"
+          :key="comment?._id"
+          :comment="comment"
+          :me="meData?.me" />
+      </template>
     </section>
   </div>
 </template>
