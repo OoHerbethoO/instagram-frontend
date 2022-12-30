@@ -71,13 +71,12 @@ export default defineComponent({
     :modalHeight="'h-max'">
     <template v-slot:trigger>
       <Button
-        data-modal-target="#postModal"
         text="Add Post"
         @click="isModalOpen = true"
         icon="ion:add-circle" />
     </template>
     <template v-slot:modal-body>
-      <main class="flex items-start gap-x-5">
+      <main class="flex items-start gap-x-2">
         <Avatar :src="me?.me?.avatar || ''" />
         <div class="flex-1">
           <textarea
