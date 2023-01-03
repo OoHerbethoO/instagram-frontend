@@ -8,8 +8,10 @@ import Button from '@/components/reusable/Button.vue'
 import { useGetPostsByUserQuery, useGetUserByIdQuery, useMeQuery } from '@/types/graphql.types'
 import type { IPost } from '@/types/graphql.types'
 import { defineComponent, reactive, toRefs, watch } from 'vue'
-import PhotoCardList from '@/components/photo/PhotoCardList.vue'
 import { AppRoutes } from '@/constants/routes.constant'
+import EmptyState from '@/components/reusable/EmptyState.vue'
+import PostCardList from '@/components/post/PostList.vue'
+
 export default defineComponent({
   components: {
     Avatar,
@@ -18,7 +20,8 @@ export default defineComponent({
     UserAbout,
     CoverPhoto,
     ProfileHeader,
-    PhotoCardList,
+    EmptyState,
+    PostCardList,
   },
   name: 'Profile',
   props: ['id'],
@@ -80,7 +83,7 @@ export default defineComponent({
           text="Edit Profile"
           variant="outline"
           v-if="isOwner"
-          buttonClass="px-1 -text-fs-1"
+          buttonClass="-text-fs-1"
           class="mt-11" />
       </router-link>
     </ProfileHeader>
@@ -95,9 +98,20 @@ export default defineComponent({
         :user="user?.getUserById"
         variant="bg" />
     </aside>
-    <PhotoCardList
-      :posts="posts?.getPostsByUser"
-      :loading="postLoading"
-      v-if="posts?.getPostsByUser" />
+    <div>
+      <PostCardList
+        :posts="posts?.getPostsByUser"
+        :loading="postLoading"
+        :columnsOnLgScreens="2"
+        :columnsOnMdScreens="2"
+        :isPostForProfile="true"
+        v-if="posts?.getPostsByUser" />
+      <EmptyState
+        v-if="posts?.getPostsByUser.length === 0"
+        title="You haven't made any posts yet"
+        height="h-80"
+        description="Click the 'Add Post' button to share something with your followers."
+        icon="/emptyFeed.svg" />
+    </div>
   </section>
 </template>
