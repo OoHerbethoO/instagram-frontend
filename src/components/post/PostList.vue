@@ -2,14 +2,14 @@
 import { useMeQuery } from '@/types/graphql.types'
 import type { IPost } from '@/types/graphql.types'
 import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
-import PostCard from './PostCard.vue'
-import PostCardSkeleton from '../skeletons/PostCardSkeleton.vue'
+import Post from './Post.vue'
+import PostSkeleton from '../skeletons/PostSkeleton.vue'
 import ViewPostModal from '../modals/ViewPostModal.vue'
 import useGallery from '@/hooks/useGallery'
 
 export default defineComponent({
   name: 'PostList',
-  components: { PostCard, PostCardSkeleton, ViewPostModal },
+  components: { Post, PostSkeleton, ViewPostModal },
   props: {
     posts: {
       type: Array as () => Array<IPost>,
@@ -19,13 +19,25 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    isPostForProfile: {
+      type: Boolean,
+      default: false,
+    },
+    columnsOnLgScreens: {
+      type: Number,
+      default: 3,
+    },
+    columnsOnMdScreens: {
+      type: Number,
+      default: 2,
+    },
   },
 
   setup(props) {
     const { result: meData, loading: meLoading } = useMeQuery()
     const { column1, column2, column3, setData } = useGallery(props.posts, {
-      columnsOnLgScreens: 3,
-      columnsOnMdScreens: 2,
+      columnsOnLgScreens: props.columnsOnLgScreens,
+      columnsOnMdScreens: props.columnsOnMdScreens,
       stateSuffix: 'column',
     })
 
@@ -71,36 +83,47 @@ export default defineComponent({
   <div>
     <div
       v-if="meLoading"
-      class="card-gallery">
-      <PostCardSkeleton
+      class="card-gallery"
+      :class="{
+        'profile-page-gallery': columnsOnLgScreens === 2,
+      }">
+      <PostSkeleton
         v-for="i in 4"
         :key="i" />
     </div>
     <div
       v-else
-      class="card-gallery">
+      class="card-gallery"
+      :class="{
+        'profile-page-gallery': columnsOnLgScreens === 2,
+      }">
       <div class="gallery-item">
-        <PostCard
+        <Post
           v-for="post in column1"
           :key="post._id"
           @openModal="handlePostClick(post)"
+          :isPostForProfile="isPostForProfile"
           :me="meData?.me"
           :post="post" />
       </div>
       <div class="gallery-item">
-        <PostCard
+        <Post
           v-for="post in column2"
           :key="post._id"
           @openModal="handlePostClick(post)"
           :me="meData?.me"
+          :isPostForProfile="isPostForProfile"
           :post="post" />
       </div>
-      <div class="gallery-item">
-        <PostCard
+      <div
+        class="gallery-item"
+        v-if="columnsOnLgScreens === 3">
+        <Post
           v-for="post in column3"
           :key="post._id"
           @openModal="handlePostClick(post)"
           :me="meData?.me"
+          :isPostForProfile="isPostForProfile"
           :post="post" />
       </div>
     </div>
