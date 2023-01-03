@@ -10,8 +10,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        white: 'var(--white)',
+        black: 'var(--black)',
         themes: {
           light: {
+            white: '#FFFFFF',
+            black: '#0F0F15',
             gray: {
               'gray-100': '#f5f6f7',
               'gray-200': '#f0f1f2',
@@ -25,7 +29,7 @@ module.exports = {
             },
             primary: {
               light: '#eaf1ef',
-              primary: '#1b6e69',
+              primary: '#2f786b',
               dark: '#1F6461',
             },
             danger: {
@@ -35,16 +39,18 @@ module.exports = {
             },
           },
           dark: {
+            white: '#0F0F15',
+            black: '#f5f6f7',
             gray: {
-              'gray-100': '#F7F9FA',
-              'gray-200': '#EAECED',
-              'gray-300': '#D6D8D9',
-              'gray-400': '#B6B8B8',
+              'gray-800': '#EAECED',
+              'gray-700': '#D6D8D9',
+              'gray-600': '#B6B8B8',
               'gray-500': '#878A8C',
-              'gray-600': '#525556',
-              'gray-700': '#37393A',
-              'gray-800': '#1F1F20',
-              'gray-900': '#0F0F15',
+              'gray-400': '#525556',
+              'gray-300': '#37393A',
+              'gray-200': '#1F1F20',
+              'gray-100': '#0F0F15',
+              'gray-900': '#F7F9FA',
             },
             primary: {
               light: '#E3EFEA',
