@@ -8,7 +8,7 @@ import Button from '../reusable/Button.vue'
 import PostActionsDropdown from './PostActionsDropdown.vue'
 
 export default defineComponent({
-  name: 'PostCardHeader',
+  name: 'PostHeader',
   components: { Avatar, Button, PostActionsDropdown },
   props: {
     post: {
