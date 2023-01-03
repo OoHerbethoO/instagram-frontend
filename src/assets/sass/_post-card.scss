@@ -105,7 +105,7 @@
       @apply bg-[#d3c7ed] leading-7 text-black;
 
       &::placeholder {
-        @apply text-gray-700 text-black;
+        @apply text-gray-700;
       }
     }
   }
