@@ -124,6 +124,7 @@ export default defineComponent({
         <SettingActionBtns
           class="hidden lg:flex"
           :loading="uploadPhotoLoading || updateProfileLoading"
+          :disabled="uploadPhotoLoading || updateProfileLoading"
           @handleSubmit="handleSubmit" />
       </ProfileHeader>
       <form class="mt-7">
