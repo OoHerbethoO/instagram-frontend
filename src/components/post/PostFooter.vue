@@ -5,10 +5,11 @@ import { defineComponent, reactive, watch, toRefs } from 'vue'
 import Button from '../reusable/Button.vue'
 
 export default defineComponent({
-  name: 'PostCardFooter',
+  name: 'PostFooter',
   components: {
     Button,
   },
+  emits: ['openModal'],
   props: {
     post: {
       type: Object as () => IPost,
@@ -28,7 +29,7 @@ export default defineComponent({
       totalComments: 0,
     })
 
-    const { mutate: likePost } = useLikePostMutation({
+    const { mutate: likePost, loading: likePostLoading } = useLikePostMutation({
       refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts'],
     })
 
@@ -64,6 +65,7 @@ export default defineComponent({
       handleLikePost,
       handleBookmarkPost,
       bookmarkPostLoading,
+      likePostLoading,
     }
   },
 })
@@ -84,11 +86,14 @@ export default defineComponent({
           button-class="font-normal"
           size="md"
           radius="rounded-full"
+          :disabled="likePostLoading"
           :variant="isLiked ? 'like' : 'transparent'"
           @click="handleLikePost" />
         <span :class="isLiked ? 'text-danger' : 'btn-text'">{{ totalLikes }}</span>
       </div>
-      <div class="flex items-center gap-1">
+      <div
+        class="flex items-center gap-1"
+        @click="$emit('openModal')">
         <Button
           icon="ph:chat-circle-dots-fill"
           button-class="font-normal"
@@ -104,6 +109,7 @@ export default defineComponent({
       radius="rounded-full"
       size="md"
       :loading="bookmarkPostLoading"
+      :disabled="bookmarkPostLoading"
       @click="handleBookmarkPost"
       variant="transparent" />
   </footer>
