@@ -3,6 +3,13 @@
   .gallery-item {
     @apply flex flex-col gap-y-7;
   }
+
+  &.profile-page-gallery {
+    @apply gap-6 xl:gap-8 grid-cols-1 md:grid-cols-2;
+    .gallery-item {
+      @apply gap-y-6  md:gap-y-4;
+    }
+  }
 }
 
 .post-card {
@@ -33,7 +40,7 @@
   pointer-events: none;
   &:before {
     content: '';
-    @apply absolute top-0 left-0 w-full h-full bg-black bg-opacity-30 text-white overflow-hidden rounded-md z-0;
+    @apply absolute top-0 left-0 w-full h-full bg-[#19191c56]  text-white overflow-hidden rounded-md z-0;
   }
   * {
     z-index: 1;
@@ -54,4 +61,52 @@
 .card-enter-from,
 .card-leave-to {
   @apply fadeOut;
+}
+
+.post-card {
+  .card-content {
+    @apply px-5 py-5 min-h-[120px] flex  justify-center items-center rounded-md;
+    .card-title {
+      @apply text-fs-base;
+    }
+    .trim-text {
+      @apply overflow-hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 7;
+      -webkit-box-orient: vertical;
+    }
+    &.yellow {
+      @apply bg-[#ede5c7] leading-7 text-black;
+      &::placeholder {
+        @apply text-gray-700;
+      }
+    }
+    &.green {
+      @apply bg-[#d1edc7] leading-7 text-black;
+
+      &::placeholder {
+        @apply text-gray-700;
+      }
+    }
+    &.blue {
+      @apply bg-[#c7dded] leading-7 text-black;
+      &::placeholder {
+        @apply text-gray-700;
+      }
+    }
+    &.gray {
+      @apply bg-[#e8e8e8] leading-7 text-black;
+
+      &::placeholder {
+        @apply text-gray-700;
+      }
+    }
+    &.purple {
+      @apply bg-[#d3c7ed] leading-7 text-black;
+
+      &::placeholder {
+        @apply text-gray-700 text-black;
+      }
+    }
+  }
 }

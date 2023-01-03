@@ -91,7 +91,7 @@
 
   &.disabled,
   &:disabled {
-    @apply cursor-not-allowed;
+    @apply cursor-not-allowed opacity-50;
   }
   &.neobrutalism {
     @apply border border-gray-900 bg-[#DACDF4] text-gray-900;
@@ -164,19 +164,19 @@
 
   // sizes
   &.sm {
-    @apply min-h-sm h-sm px-2 -text-fs-1;
+    @apply min-h-sm h-sm  -text-fs-1;
     svg {
       @apply text-fs-base;
     }
   }
   &.md {
-    @apply min-h-md h-md px-3;
+    @apply min-h-md h-md;
     svg {
       @apply text-fs-2;
     }
   }
   &.lg {
-    @apply min-h-lg h-lg px-5 text-fs-1;
+    @apply min-h-lg h-lg px-6 text-fs-1;
     svg {
       @apply text-fs-4;
     }

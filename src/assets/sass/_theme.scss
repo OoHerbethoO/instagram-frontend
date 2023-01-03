@@ -14,11 +14,13 @@
   --danger-light: theme(colors.themes.light.danger.light);
   --danger: theme(colors.themes.light.danger.danger);
   --danger-dark: theme(colors.themes.light.danger.dark);
+  --black: theme(colors.themes.light.black);
+  --white: theme(colors.themes.light.white);
 }
 
 .dark {
-  --gray-100: theme(colors.themes.dark.gray.gray-900);
-  --gray-200: theme(colors.themes.dark.gray.gray-800);
+  --gray-100: theme(colors.themes.dark.gray.gray-100);
+  --gray-200: theme(colors.themes.dark.gray.gray-200);
   --gray-300: theme(colors.themes.dark.gray.gray-300);
   --gray-400: theme(colors.themes.dark.gray.gray-400);
   --gray-500: theme(colors.themes.dark.gray.gray-500);
@@ -32,4 +34,6 @@
   --danger-light: theme(colors.themes.dark.danger.light);
   --danger: theme(colors.themes.dark.danger.danger);
   --danger-dark: theme(colors.themes.dark.danger.dark);
+  --black: theme(colors.themes.dark.black);
+  --white: theme(colors.themes.dark.white);
 }
