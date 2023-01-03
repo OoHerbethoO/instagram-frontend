@@ -26,9 +26,20 @@ export default defineComponent({
       loading: createCommentLoading,
     } = useCreateCommentMutation({
       refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts'],
+      updateQueries: {
+        GetComments: (prev, { mutationResult }) => {
+          if (!mutationResult.data) return prev
+          const newComment = mutationResult.data.createComment
+          return {
+            ...prev,
+            getComments: [...prev.getComments, newComment],
+          }
+        },
+      },
     })
 
     const handleCreateComment = async () => {
+      if (!state.comment) return
       const result = await createComment({
         content: state.comment,
         postId: props.postId,
@@ -59,7 +70,7 @@ export default defineComponent({
       :value="comment"
       @input="comment = $event.target.value"
       placeholder="Write a comment..." />
-    <section class="bottom-right absolute bottom-2 right-2 flex items-center">
+    <section class="bottom-right absolute bottom-2 right-2 flex items-center gap-x-1">
       <Button
         icon="fluent:emoji-48-filled"
         variant="transparent"
@@ -68,6 +79,7 @@ export default defineComponent({
       <Button
         text="Comment"
         :loading="createCommentLoading"
+        :disabled="comment.length === 0"
         @click="handleCreateComment"
         size="sm" />
     </section>
