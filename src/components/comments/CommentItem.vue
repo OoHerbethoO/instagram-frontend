@@ -6,7 +6,7 @@ import { useLikeCommentMutation, useDeleteCommentMutation } from '@/types/graphq
 import type { IComment, IUser } from '@/types/graphql.types'
 import { useToast } from 'vue-toastification'
 import moment from 'moment'
-
+import { AppRoutes } from '@/constants/routes.constant'
 export default defineComponent({
   name: 'CommentItem',
   components: { Avatar, Button },
@@ -22,16 +22,35 @@ export default defineComponent({
   },
 
   setup(props) {
+    const toast = useToast()
     const state = reactive({
       isHovered: false,
     })
-    const toast = useToast()
+
     const {
       mutate: likeComment,
       onError: likeCommentOnError,
       loading: likeCommentLoading,
     } = useLikeCommentMutation({
-      refetchQueries: ['GetComments'],
+      updateQueries: {
+        GetComments: (prev, { mutationResult }) => {
+          if (!mutationResult.data) return prev
+          return {
+            ...prev,
+            getComments: prev.getComments.map((comment) => {
+              if (comment._id === props.comment._id) {
+                return {
+                  ...comment,
+                  likes: mutationResult.data.likeComment
+                    ? [...comment.likes, props.me._id]
+                    : comment.likes.filter((like) => like !== props.me._id),
+                }
+              }
+              return comment
+            }),
+          }
+        },
+      },
     })
 
     const {
@@ -40,18 +59,26 @@ export default defineComponent({
       loading: deleteCommentLoading,
     } = useDeleteCommentMutation({
       refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts'],
+      updateQueries: {
+        GetComments: (prev, { mutationResult }) => {
+          if (!mutationResult.data) return prev
+          return {
+            ...prev,
+            getComments: prev.getComments.filter((comment) => comment._id !== props.comment._id),
+          }
+        },
+      },
     })
 
-    const handleDeleteComment = () => {
-      deleteComment({
-        commentId: props.comment._id,
-      })
-    }
-
-    const handleLikeComment = async () => {
-      await likeComment({
-        commentId: props.comment._id,
-      })
+    const actions = {
+      deleteComment: () =>
+        deleteComment({
+          commentId: props.comment._id,
+        }),
+      likeComment: () =>
+        likeComment({
+          commentId: props.comment._id,
+        }),
     }
 
     likeCommentOnError((error) => {
@@ -63,9 +90,8 @@ export default defineComponent({
     })
 
     return {
-      handleLikeComment,
+      actions,
       likeCommentLoading,
-      handleDeleteComment,
       deleteCommentLoading,
       ...toRefs(state),
     }
@@ -85,6 +111,9 @@ export default defineComponent({
     timeAgo() {
       return moment(this.comment.createdAt).fromNow()
     },
+    profileLink() {
+      return `${AppRoutes.PROFILE}/${this.comment.user._id}`
+    },
   },
 })
 </script>
@@ -94,13 +123,17 @@ export default defineComponent({
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
     class="flex items-start gap-x-2 w-full flex-shrink-0">
-    <Avatar
-      size="md"
-      :src="comment.user.avatar" />
+    <router-link :to="profileLink">
+      <Avatar
+        size="md"
+        :src="comment.user.avatar" />
+    </router-link>
     <div class="flex-1">
       <div class="flex justify-between items-center">
         <div>
-          <h6>{{ comment.user.name }}</h6>
+          <router-link :to="profileLink">
+            <h6>{{ comment.user.name }}</h6>
+          </router-link>
           <p
             class="text-[12px] text-gray-600"
             v-if="timeAgo">
@@ -115,7 +148,7 @@ export default defineComponent({
             button-class="justify-start font-normal -text-fs-1"
             size="sm"
             radius="rounded-full"
-            @click="handleDeleteComment"
+            @click="actions.deleteComment"
             variant="transparent" />
           <div class="flex items-center gap-x-1">
             <Button
@@ -123,7 +156,8 @@ export default defineComponent({
               button-class="font-normal"
               size="sm"
               :loading="likeCommentLoading"
-              @click="handleLikeComment"
+              :disabled="likeCommentLoading"
+              @click="actions.likeComment"
               radius="rounded-full"
               :variant="isLiked ? 'like' : 'transparent'" />
             <span :class="'btn-text -text-fs-2 text-gray-500'">{{ totalLikes || 0 }}</span>
