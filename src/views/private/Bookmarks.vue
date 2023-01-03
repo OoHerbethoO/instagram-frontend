@@ -2,10 +2,10 @@
 import { useGetBookmarkedPostsQuery } from '@/types/graphql.types'
 import { defineComponent } from 'vue'
 import PostList from '@/components/post/PostList.vue'
-
+import EmptyState from '@/components/reusable/EmptyState.vue'
 export default defineComponent({
   name: 'Bookmarks',
-  components: { PostList },
+  components: { PostList, EmptyState },
   setup() {
     const { result, loading: bookmarksLoading } = useGetBookmarkedPostsQuery()
     return {
@@ -17,10 +17,19 @@ export default defineComponent({
 </script>
 
 <template>
-  <header class="h5 font-medium">My Bookmarked ({{ result?.getBookmarkedPosts.length }})</header>
+  <header
+    class="h4 font-medium"
+    v-if="result?.getBookmarkedPosts.length">
+    My Bookmarks
+  </header>
   <section class="mt-8">
     <PostList
       :posts="result?.getBookmarkedPosts"
       :loading="bookmarksLoading" />
   </section>
+  <EmptyState
+    v-if="result?.getBookmarkedPosts.length === 0"
+    title="You have no bookmarks saved"
+    description="Bookmark posts you like to read later"
+    icon="/emptyBookmark.svg" />
 </template>
