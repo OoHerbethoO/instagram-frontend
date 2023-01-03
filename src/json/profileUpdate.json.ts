@@ -9,7 +9,13 @@ export const profileUpdateJson: Form[] = [
     value: '',
     cols: 'md:col-span-2',
     validation(value: string) {
-      return value.length > 0 ? '' : 'Name is required'
+      return value.length < 0
+        ? 'Name is required'
+        : value.length > 18
+        ? 'Name is too long'
+        : value.length < 3
+        ? 'Name is too short'
+        : ''
     },
   },
   {
