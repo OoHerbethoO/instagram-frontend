@@ -12,6 +12,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 })
 </script>
@@ -20,10 +24,10 @@ export default defineComponent({
   <div class="flex gap-x-3">
     <Button
       class="mt-10"
-      buttonClass="px-4 -text-fs-1"
+      buttonClass="lg:px-7 px-10 -text-fs-1"
       text="Update"
       :isLoading="loading"
-      :disabled="loading"
+      :disabled="disabled"
       @click="$emit('handleSubmit')"
       variant="primary" />
   </div>
