@@ -50,7 +50,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <label
+  <button
     class="btn"
     :class="{
       [`${variant}`]: variant,
@@ -65,21 +65,18 @@ export default defineComponent({
     }"
     :disabled="disabled"
     :type="type">
-    <span>
+    <span v-if="icon && iconDirection === 'left'">
       <Icon
-        v-if="icon && iconDirection === 'left'"
         :icon="icon"
         class="icon"
         :class="iconClass" />
     </span>
-    <span>{{ text }}</span>
-    <span>
+    <span v-if="text">{{ text }}</span>
+    <span v-if="icon && iconDirection === 'right'">
       <Icon
-        v-if="icon && iconDirection === 'right'"
         :icon="icon"
         class="icon"
         :class="iconClass" />
     </span>
-    <slot></slot>
-  </label>
+  </button>
 </template>
