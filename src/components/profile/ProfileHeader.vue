@@ -4,7 +4,7 @@ import Button from '@/components/reusable/Button.vue'
 import UploadBtn from '@/components/reusable/UploadBtn.vue'
 import { AppRoutes } from '@/constants/routes.constant'
 import useImage from '@/hooks/useImage'
-import { defineComponent, watch } from 'vue'
+import { defineComponent, watch, reactive } from 'vue'
 
 export default defineComponent({
   name: 'ProfileHeader',
@@ -37,6 +37,9 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const state = reactive({
+      name: props.name,
+    })
     const { image, readAbleImage, handleImage, cancelImage } = useImage()
 
     watch(
@@ -50,10 +53,12 @@ export default defineComponent({
       () => props.name,
       (newVal) => {
         if (newVal) emit('handleName', { target: { value: newVal, name: 'name' } })
+        state.name = newVal
+        return newVal
       }
     )
 
-    return { AppRoutes, image, readAbleImage, handleImage, cancelImage }
+    return { state, AppRoutes, image, readAbleImage, handleImage, cancelImage }
   },
 })
 </script>
@@ -69,7 +74,8 @@ export default defineComponent({
           :text="!edit ? name : ''"
           textClassName="pt-10" />
         <UploadBtn
-          class="bottom-right"
+          class="bottom-right outline bg-white"
+          buttonClass="absolute"
           @handleImage="handleImage"
           @cancelImage="cancelImage"
           :image="image"
@@ -78,7 +84,7 @@ export default defineComponent({
       <div>
         <input
           v-if="edit"
-          v-model="name"
+          v-model="state.name"
           @input="$emit('handleName', $event)"
           name="name"
           placeholder="Please enter your name"
