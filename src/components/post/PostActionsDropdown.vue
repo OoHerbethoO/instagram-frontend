@@ -55,7 +55,7 @@ export default defineComponent({
         icon="mdi:trash-can"
         text="Delete"
         v-if="isCurrentUserPost"
-        button-class="justify-start font-normal -text-fs-1"
+        button-class="justify-start font-normal -text-fs-1 w-full"
         size="md"
         @click="handleDeletePost"
         variant="transparent" />
@@ -66,7 +66,7 @@ export default defineComponent({
             ? `material-symbols:content-copy-outline-rounded`
             : `material-symbols:content-copy-rounded`
         "
-        :button-class="`justify-start font-normal -text-fs-1 ${
+        :button-class="`w-full justify-start font-normal -text-fs-1 ${
           isCopied && 'font-bold text-primary-dark'
         }`"
         :icon-class="`${isCopied && 'text-primary-dark'}`"
