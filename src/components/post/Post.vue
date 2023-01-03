@@ -7,18 +7,18 @@ import Button from '../reusable/Button.vue'
 import PostActionsDropdown from './PostActionsDropdown.vue'
 import PostContent from './PostContent.vue'
 import PostImage from './PostImage.vue'
-import PostCardFooter from './PostCardFooter.vue'
-import PostCardHeader from './PostCardHeader.vue'
+import PostFooter from './PostFooter.vue'
+import PostHeader from './PostHeader.vue'
 import moment from 'moment'
 
 export default defineComponent({
-  name: 'PostCard',
+  name: 'Post',
   components: {
     Avatar,
     Button,
     PostActionsDropdown,
-    PostCardFooter,
-    PostCardHeader,
+    PostFooter,
+    PostHeader,
     PostContent,
     PostImage,
   },
@@ -36,10 +36,19 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    isPostForProfile: {
+      type: Boolean,
+      default: false,
+    },
+    isModalOpen: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const state = reactive({
       isCurrentUserPost: false,
+      isHovered: false,
     })
 
     watch(
@@ -58,18 +67,42 @@ export default defineComponent({
 </script>
 
 <template>
-  <Transition name="card">
-    <article class="post-card">
-      <PostCardHeader
+  <Transition
+    name="card"
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false">
+    <article
+      class="post-card"
+      :class="{
+        'gap-0': isPostForProfile && !post?.photo,
+        'gap-3': isPostForProfile && post?.photo,
+      }">
+      <PostHeader
         :post="post"
+        v-if="!isPostForProfile"
         :me="me" />
       <PostContent
-        :content="post.content"
+        @openModal="$emit('openModal')"
+        :post="post"
+        :isModalOpen="isModalOpen"
         :trimText="trimText" />
-      <PostImage
-        :photo="post?.photo"
-        @click="$emit('openModal')" />
-      <PostCardFooter
+      <figure class="cursor-pointer relative">
+        <PostImage
+          :photo="post?.photo"
+          @click="$emit('openModal')" />
+        <footer
+          v-if="isHovered && isPostForProfile"
+          class="overlay absolute top-0 grid place-items-center">
+          <PostFooter
+            :post="post"
+            variant="white"
+            :isIconVariantSolid="true"
+            :hideBookmark="true" />
+        </footer>
+      </figure>
+      <PostFooter
+        v-if="!isPostForProfile"
+        @openModal="$emit('openModal')"
         :post="post"
         :me="me" />
     </article>

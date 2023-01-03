@@ -2,7 +2,7 @@
 import { defineComponent, reactive, watch } from 'vue'
 import Modal from '../reusable/Modal.vue'
 import type { IPost } from '@/types/graphql.types'
-import PostCard from '../post/PostCard.vue'
+import Post from '../post/Post.vue'
 import { useMeQuery } from '@/types/graphql.types'
 import CommentList from '../comments/CommentList.vue'
 import CreateComment from '../comments/CreateComment.vue'
@@ -12,7 +12,7 @@ export default defineComponent({
   name: 'ViewPostModal',
   components: {
     Modal,
-    PostCard,
+    Post,
     CommentList,
     CreateComment,
     Button,
@@ -55,10 +55,11 @@ export default defineComponent({
     :is-open="isModalOpen">
     <template v-slot:modal-body>
       <section class="md:flex h-full gap-8">
-        <PostCard
+        <Post
           class="flex-1 overflow-auto"
           height="100%"
           :key="post._id"
+          :isModalOpen="isModalOpen"
           :me="meData?.me"
           :trimText="false"
           :post="post" />
