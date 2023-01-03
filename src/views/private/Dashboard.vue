@@ -2,10 +2,10 @@
 import PostList from '@/components/post/PostList.vue'
 import { useGetAllPostsQuery } from '@/types/graphql.types'
 import { defineComponent } from 'vue'
-
+import EmptyState from '@/components/reusable/EmptyState.vue'
 export default defineComponent({
   name: 'Dashboard',
-  components: { PostList },
+  components: { PostList, EmptyState },
   setup() {
     const { result, loading, error } = useGetAllPostsQuery()
     return { result, loading, error }
@@ -18,6 +18,10 @@ export default defineComponent({
     <PostList
       :posts="result?.getAllPosts"
       :loading="loading" />
-    <br />
+    <EmptyState
+      v-if="result?.getAllPosts.length === 0"
+      title="Looks like there's nothing new here"
+      description="Follow some more users or groups to fill up your feed"
+      icon="/emptyFeed.svg" />
   </div>
 </template>
