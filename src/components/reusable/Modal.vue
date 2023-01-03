@@ -20,6 +20,7 @@ export default defineComponent({
     modalClass: String,
     modalContentClass: String,
     modalBodyClass: String,
+    modalFooterClass: String,
   },
   setup(props, { emit: $emit }) {
     const modalRef = ref(null)
@@ -36,6 +37,11 @@ export default defineComponent({
       modalRef,
       modalHandler,
     }
+  },
+  computed: {
+    hasFooterSlot() {
+      return !this.$slots['modal-footer']
+    },
   },
 })
 </script>
@@ -67,7 +73,10 @@ export default defineComponent({
         :class="modalBodyClass">
         <slot name="modal-body"></slot>
       </main>
-      <footer class="modal-footer gap-x-2 justify-end">
+      <footer
+        v-if="!hasFooterSlot"
+        class="modal-footer gap-x-2 justify-end"
+        :class="modalFooterClass">
         <slot name="modal-footer"></slot>
       </footer>
       <slot></slot>
