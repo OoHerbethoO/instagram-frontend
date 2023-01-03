@@ -1,42 +1,58 @@
 <script lang="ts">
-import Button from '@/components/reusable/Button.vue'
 import { defineComponent } from 'vue'
+import { Icon } from '@iconify/vue'
+
 export default defineComponent({
   name: 'UploadBtn',
-  components: {
-    Button,
-  },
+  components: { Icon },
   emits: ['handleImage', 'cancelImage'],
   props: {
     image: {
       type: String || null,
-      required: true,
+    },
+    icon: {
+      type: String,
+      default: 'material-symbols:edit',
+    },
+    buttonClass: String,
+    size: {
+      type: String,
+      default: 'sm',
     },
   },
 })
 </script>
 
 <template>
-  <Button
-    v-if="!image"
-    icon="material-symbols:edit"
-    variant="outline"
-    size="sm"
-    class="absolute bg-black bg-opacity-20 border-0"
-    icon-class="text-white"
-    radius="rounded-full">
+  <label
+    class="btn transparent rounded-full btn-icon"
+    :class="{
+      [`${size}`]: size,
+      [`${buttonClass}`]: buttonClass,
+    }"
+    v-if="!image">
+    <span>
+      <Icon
+        :icon="icon"
+        class="icon" />
+    </span>
     <input
       type="file"
       @change="$emit('handleImage', $event)"
       class="hidden" />
-  </Button>
-  <Button
-    v-else
-    icon="iconoir:cancel"
+  </label>
+  <button
+    class="btn transparent rounded-full btn-icon"
     @click="$emit('cancelImage')"
-    variant="outline"
-    size="sm"
-    class="absolute bg-black bg-opacity-20 border-0"
-    icon-class="text-white"
-    radius="rounded-full" />
+    :class="{
+      [`${size}`]: size,
+      [`${buttonClass}`]: buttonClass,
+    }"
+    v-else>
+    <span>
+      <Icon
+        icon="maki:cross"
+        class="icon -text-fs-1" />
+    </span>
+  </button>
 </template>
