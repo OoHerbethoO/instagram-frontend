@@ -72,15 +72,17 @@ export default defineComponent({
           :error="state[item.name].error"
           @onChange="handleChange"
           :type="item.type" />
-        <Button
-          text="Create Account"
-          :disabled="loading"
-          :isLoading="loading"
-          variant="neobrutalism">
+        <button
+          class="btn neobrutalism left"
+          :class="{
+            'w-full': true,
+            loading: loading,
+          }">
+          Create Account
           <input
             type="submit"
             class="hidden" />
-        </Button>
+        </button>
       </form>
       <footer class="-text-fs-1 text-center">
         <span>Already have an account? </span>
