@@ -20,7 +20,7 @@ export const registerJson: Form[] = [
   },
   {
     name: 'email',
-    placeholder: 'Email',
+    placeholder: 'Please enter your email',
     label: 'Email',
     type: 'email',
     value: '',
@@ -37,7 +37,7 @@ export const registerJson: Form[] = [
   },
   {
     name: 'password',
-    placeholder: 'Password',
+    placeholder: 'Create a password',
     label: 'Password',
     type: 'password',
     value: '',

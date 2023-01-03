@@ -3,7 +3,7 @@ import type { Form } from '../types/form.type'
 export const loginJson: Form[] = [
   {
     name: 'email',
-    placeholder: 'Email',
+    placeholder: 'Please enter your email',
     label: 'Email',
     type: 'email',
     value: '',
@@ -20,7 +20,7 @@ export const loginJson: Form[] = [
   },
   {
     name: 'password',
-    placeholder: 'Password',
+    placeholder: 'Please enter your password',
     label: 'Password',
     type: 'password',
     value: '',
