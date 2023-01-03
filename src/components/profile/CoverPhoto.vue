@@ -41,7 +41,7 @@ export default defineComponent({
 
 <template>
   <figure
-    class="h-52 w-full rounded-md relative"
+    class="h-52 w-full rounded-md relative border border-gray-100"
     :class="isLoading ? 'skeleton' : 'bg-gray-200'">
     <img
       v-if="cover || readAbleImage"
@@ -50,7 +50,7 @@ export default defineComponent({
       alt="" />
     <UploadBtn
       v-if="edit"
-      class="top-right top-3 right-3"
+      buttonClass="absolute top-2 right-2 outline bg-white"
       @handleImage="handleImage"
       @cancelImage="cancelImage"
       :image="image" />
