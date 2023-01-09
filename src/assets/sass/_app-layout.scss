@@ -2,10 +2,17 @@
   @apply flex h-screen;
 
   .app-sidebar {
-    @apply fixed w-[250px] h-full border-r border-gray-300 lg:flex hidden py-4 px-4;
+    @apply fixed w-[250px] h-full border-r border-gray-300 lg:flex hidden py-4 px-4 z-[9299] bg-white;
+  }
+
+  .app-header {
+    @apply fixed lg:left-[280px] left-0 px-6 lg:pl-0 w-full top-0 py-3 z-[999] flex items-center justify-between bg-white;
+    @screen lg {
+      width: calc(100% - 280px);
+    }
   }
 
   .app-main {
-    @apply pl-9 lg:pl-[280px] pr-9 h-full py-2;
+    @apply pl-6 pr-6 lg:pl-[280px] h-full pt-[60px] pb-2;
   }
 }
