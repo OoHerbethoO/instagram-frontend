@@ -22,13 +22,6 @@ export default defineComponent({
     hideBookmark: Boolean,
   },
   setup(props) {
-    const state = reactive({
-      isLiked: false,
-      isBookmark: false,
-      totalLikes: 0,
-      totalComments: 0,
-    })
-
     const { mutate: likePost, loading: likePostLoading } = useLikePostMutation({
       refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts'],
     })
@@ -47,26 +40,26 @@ export default defineComponent({
         postId: props.post._id,
       })
 
-    watch(
-      () => [props.post, props.me],
-      () => {
-        if (props.me) {
-          state.isLiked = props.post.likes.includes(props.me._id)
-          state.isBookmark = props.me.bookmarks.includes(props.post._id)
-        }
-        state.totalLikes = props.post.likes.length
-        state.totalComments = props.post.comments.length
-      },
-      { immediate: true }
-    )
-
     return {
-      ...toRefs(state),
       handleLikePost,
       handleBookmarkPost,
       bookmarkPostLoading,
       likePostLoading,
     }
+  },
+  computed: {
+    isPostLikedByMe() {
+      return this.post.likes.includes(this.me?._id)
+    },
+    isBookmark() {
+      return this.me?.bookmarks.includes(this.post._id)
+    },
+    totalLikes() {
+      return this.post.likes.length
+    },
+    totalComments() {
+      return this.post.comments.length
+    },
   },
 })
 </script>
@@ -79,7 +72,7 @@ export default defineComponent({
           :icon="
             isIconVariantSolid
               ? 'mdi:cards-heart'
-              : isLiked
+              : isPostLikedByMe
               ? 'mdi:cards-heart'
               : 'mdi:cards-heart-outline'
           "
@@ -87,9 +80,9 @@ export default defineComponent({
           size="md"
           radius="rounded-full"
           :disabled="likePostLoading"
-          :variant="isLiked ? 'like' : 'transparent'"
+          :variant="isPostLikedByMe ? 'like' : 'transparent'"
           @click="handleLikePost" />
-        <span :class="isLiked ? 'text-danger' : 'btn-text'">{{ totalLikes }}</span>
+        <span :class="isPostLikedByMe ? 'text-danger' : 'btn-text'">{{ totalLikes }}</span>
       </div>
       <div
         class="flex items-center gap-1"

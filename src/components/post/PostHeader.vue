@@ -20,24 +20,13 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    const state = reactive({
-      isCurrentUserPost: false,
-    })
-
-    watch(
-      () => [props.post, props.me],
-      () => {
-        if (props.me) {
-          state.isCurrentUserPost = props.post.user._id === props.me._id
-        }
-      },
-      { immediate: true }
-    )
-
-    return { ...toRefs(state), AppRoutes }
+  setup() {
+    return { AppRoutes }
   },
   computed: {
+    isCurrentUserPost() {
+      return this.post.user._id === this.me?._id
+    },
     timeAgo() {
       return moment(this.post.createdAt).fromNow()
     },
