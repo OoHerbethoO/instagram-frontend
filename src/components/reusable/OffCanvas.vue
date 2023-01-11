@@ -9,26 +9,38 @@ export default defineComponent({
   components: {
     Button,
   },
+  emits: ['open', 'close'],
   props: {
     title: {
       type: String,
       required: true,
     },
   },
-  setup() {
+  setup(props, { emit: $emit }) {
     const offcanvasRef = ref(null)
     const isoffcanvasOpen = ref(false)
 
-    const offcanvasHandler: OnClickOutsideHandler = (event) => (isoffcanvasOpen.value = false)
-    onClickOutside(offcanvasRef, (event) => (isoffcanvasOpen.value = false))
+    const offcanvasHandler: OnClickOutsideHandler = (event) => {
+      isoffcanvasOpen.value = false
+      $emit('close')
+    }
+    onClickOutside(offcanvasRef, (event) => {
+      isoffcanvasOpen.value = false
+      $emit('close')
+    })
 
-    return { offcanvasRef, isoffcanvasOpen, offcanvasHandler }
+    const openOffcanvas = () => {
+      isoffcanvasOpen.value = true
+      $emit('open')
+    }
+
+    return { offcanvasRef, isoffcanvasOpen, offcanvasHandler, openOffcanvas }
   },
 })
 </script>
 
 <template>
-  <span @click="isoffcanvasOpen = !isoffcanvasOpen">
+  <span @click="openOffcanvas">
     <slot name="trigger"></slot>
   </span>
   <div
