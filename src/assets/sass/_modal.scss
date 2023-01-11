@@ -1,10 +1,10 @@
 .modal {
-  @apply fixed  top-0 left-0 w-full h-full z-[1099] flex justify-center bg-[#19191c7b]  fadeIn overflow-auto;
+  @apply fixed  top-0 left-0 w-screen h-full z-[1199] flex justify-center bg-[#19191c7b]  fadeIn overflow-auto;
 
   .modal-content {
-    @apply bg-white rounded-xl shadow-lg max-w-[565px] mx-5 w-full flex flex-col my-14 overflow-hidden h-max;
+    @apply bg-white rounded-xl shadow-lg max-w-[565px] mx-5 w-full flex flex-col my-14 h-max;
     .modal-header {
-      @apply flex justify-between items-center border-b border-gray-200 px-5 pb-1 pt-2 sticky top-0 bg-white z-[1];
+      @apply flex justify-between items-center border-b border-gray-200 px-5 pb-2 pt-3 sticky top-0 bg-white z-[1] rounded-t-xl overflow-hidden;
       .header-title {
         @apply text-fs-3 font-medium;
       }
@@ -20,7 +20,7 @@
   &.post-modal {
     @apply w-screen  overflow-hidden bg-[#19191c7b];
     .modal-content {
-      @apply max-w-[1000px] my-0 md:my-10 h-screen mx-0 md:mx-5 rounded-none md:rounded-xl overflow-hidden;
+      @apply max-w-[1000px] my-0 md:my-10 h-screen mx-0 md:mx-5 rounded-none md:rounded-xl;
       @screen md {
         height: calc(100% - 43px * 1.5);
       }
