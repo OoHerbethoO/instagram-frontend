@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue'
 import Input from './Input.vue'
-import AddPostModal from '../modals/AddPostModal.vue'
+import AddPostModal from '../post/AddPostModal.vue'
 import Button from './Button.vue'
 import UserSearchInput from '../search/UserSearchInput.vue'
 import NotificationOffCanvas from '../notifications/NotificationnOffCanvas.vue'
