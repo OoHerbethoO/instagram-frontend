@@ -5,12 +5,18 @@ import ProfileHeader from '@/components/profile/ProfileHeader.vue'
 import UserStats from '@/components/profile/UserStats.vue'
 import UserAbout from '@/components/profile/UserAbout.vue'
 import Button from '@/components/reusable/Button.vue'
-import { useGetPostsByUserQuery, useGetUserByIdQuery, useMeQuery } from '@/types/graphql.types'
+import FollowOrUnfollowBtn from '@/components/reusable/FollowOrUnfollowBtn.vue'
+import {
+  useGetPostsByUserQuery,
+  useGetUserByIdQuery,
+  useMeQuery,
+  useFollowOrUnfollowUserMutation,
+} from '@/types/graphql.types'
 import type { IPost } from '@/types/graphql.types'
 import { defineComponent, reactive, toRefs, watch } from 'vue'
 import { AppRoutes } from '@/constants/routes.constant'
 import EmptyState from '@/components/reusable/EmptyState.vue'
-import PostCardList from '@/components/post/PostList.vue'
+import PostList from '@/components/post/PostList.vue'
 
 export default defineComponent({
   components: {
@@ -21,15 +27,12 @@ export default defineComponent({
     CoverPhoto,
     ProfileHeader,
     EmptyState,
-    PostCardList,
+    PostList,
+    FollowOrUnfollowBtn,
   },
   name: 'Profile',
   props: ['id'],
   setup(props) {
-    const state = reactive({
-      isOwner: false,
-    })
-
     const { result: me, loading: meLoading, error: meError } = useMeQuery()
 
     const {
@@ -48,14 +51,7 @@ export default defineComponent({
       userId: props.id,
     })
 
-    watch(me, (val) => {
-      if (val?.me?._id === props.id) {
-        state.isOwner = true
-      }
-    })
-
     return {
-      ...toRefs(state),
       user,
       userLoading,
       userError,
@@ -63,7 +59,13 @@ export default defineComponent({
       postLoading,
       postError,
       AppRoutes,
+      me,
     }
+  },
+  computed: {
+    isOwner() {
+      return this.user?.getUserById?._id === this.me?.me?._id
+    },
   },
 })
 </script>
@@ -78,14 +80,21 @@ export default defineComponent({
       :name="user?.getUserById?.name || ''"
       :isLoading="userLoading"
       :isOwner="isOwner">
-      <router-link :to="AppRoutes.SETTINGS">
-        <Button
-          text="Edit Profile"
-          variant="outline"
-          v-if="isOwner"
-          buttonClass="-text-fs-1"
+      <section v-if="!userLoading">
+        <router-link
+          :to="AppRoutes.SETTINGS"
+          v-if="isOwner">
+          <Button
+            text="Edit Profile"
+            variant="outline"
+            buttonClass="-text-fs-1"
+            class="mt-11" />
+        </router-link>
+        <FollowOrUnfollowBtn
+          :userId="user?.getUserById?._id"
+          v-else
           class="mt-11" />
-      </router-link>
+      </section>
     </ProfileHeader>
   </header>
   <section class="profile-section-grid">
@@ -99,15 +108,14 @@ export default defineComponent({
         variant="bg" />
     </aside>
     <div>
-      <PostCardList
+      <PostList
         :posts="posts?.getPostsByUser"
         :loading="postLoading"
         :columnsOnLgScreens="2"
         :columnsOnMdScreens="2"
-        :isPostForProfile="true"
-        v-if="posts?.getPostsByUser" />
+        :isPostForProfile="true" />
       <EmptyState
-        v-if="posts?.getPostsByUser.length === 0"
+        v-if="!postLoading && posts?.getPostsByUser.length === 0"
         title="You haven't made any posts yet"
         height="h-80"
         description="Click the 'Add Post' button to share something with your followers."
