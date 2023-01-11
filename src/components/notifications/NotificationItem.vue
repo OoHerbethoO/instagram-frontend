@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import Avatar from '../reusable/Avatar.vue'
 import FollowOrUnfollowBtn from '../reusable/FollowOrUnfollowBtn.vue'
 import { AppRoutes } from '@/constants/routes.constant'
@@ -17,7 +17,8 @@ export default defineComponent({
     },
   },
   setup() {
-    return { AppRoutes }
+    const isHovered = ref(false)
+    return { AppRoutes, isHovered }
   },
   computed: {
     route() {
@@ -40,14 +41,25 @@ export default defineComponent({
     timeAgo() {
       return moment(this.notification.createdAt).fromNow()
     },
+    isSeen() {
+      return this.notification?.isSeen
+    },
   },
 })
 </script>
 
 <template>
-  <div class="notification-item">
+  <div
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false"
+    class="notification-item"
+    :class="{
+      'bg-gray-100': !isSeen,
+    }">
     <router-link :to="route">
-      <Avatar :src="notification?.sender?.avatar" />
+      <Avatar
+        :src="notification?.sender?.avatar"
+        :className="!isSeen || isHovered ? 'bg-gray-300' : 'bg-gray-100'" />
     </router-link>
     <aside class="notification-item-content">
       <div>
@@ -59,7 +71,7 @@ export default defineComponent({
             {{ text }}
           </span>
         </div>
-        <span class="-text-fs-2 text-gray-600">{{ timeAgo }}</span>
+        <span class="-text-fs-3 text-gray-600">{{ timeAgo }}</span>
       </div>
       <FollowOrUnfollowBtn
         :userId="notification?.sender?._id"
