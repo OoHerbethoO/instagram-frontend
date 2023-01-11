@@ -4,7 +4,6 @@ export const GetNotificationsQuery = gql`
   query GetNotifications {
     getNotifications {
       _id
-      isRead
       type
       createdAt
       isSeen
