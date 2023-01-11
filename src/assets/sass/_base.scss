@@ -46,6 +46,22 @@ h6,
   @apply text-fs-1 font-medium text-gray-900;
 }
 
+.Vue-Toastification__container {
+  bottom: 14px !important;
+}
+
+.Vue-Toastification__toast--success {
+  background-color: var(--primary) !important;
+  max-height: 62px !important;
+  min-height: 62px !important;
+  width: max-content !important;
+  border-radius: 8px !important;
+  max-width: max-content;
+  margin: 0 auto !important;
+  margin-bottom: 0rem !important;
+  padding: 18px 20px !important;
+}
+
 .Vue-Toastification__progress-bar {
   opacity: 0 !important;
 }
