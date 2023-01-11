@@ -33,6 +33,11 @@ const router = createRouter({
           path: `${AppRoutes.BOOKMARKS}`,
           component: () => import('../views/private/Bookmarks.vue'),
         },
+        {
+          name: 'Explore',
+          path: `${AppRoutes.EXPLORE}`,
+          component: () => import('../views/private/Explore.vue'),
+        },
       ],
     },
     {
