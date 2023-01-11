@@ -41,8 +41,9 @@ export type IMutation = {
   likeComment: Scalars['Boolean'];
   likePost: Scalars['Boolean'];
   login?: Maybe<IAuthData>;
+  markAsRead: INotification;
+  markAsSeen: INotification;
   register?: Maybe<IRegisterResponse>;
-  searchUsersByName?: Maybe<Array<Maybe<IUser>>>;
   updateProfile?: Maybe<Scalars['Boolean']>;
   uploadPhoto: Scalars['String'];
 };
@@ -97,15 +98,20 @@ export type IMutationLoginArgs = {
 };
 
 
+export type IMutationMarkAsReadArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type IMutationMarkAsSeenArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type IMutationRegisterArgs = {
   email: Scalars['String'];
   name: Scalars['String'];
   password: Scalars['String'];
-};
-
-
-export type IMutationSearchUsersByNameArgs = {
-  name: Scalars['String'];
 };
 
 
@@ -137,13 +143,23 @@ export type IPost = {
 };
 
 export type IQuery = {
+  countUnSeenNotifications: Scalars['Int'];
+  explorePosts: Array<Maybe<IPost>>;
   getAllPosts: Array<Maybe<IPost>>;
   getBookmarkedPosts: Array<Maybe<IPost>>;
   getComments: Array<IComment>;
+  getNotifications: Array<INotification>;
   getPostById: IPost;
   getPostsByUser: Array<Maybe<IPost>>;
   getUserById?: Maybe<IUser>;
   me?: Maybe<IUser>;
+  searchUsersByName?: Maybe<Array<Maybe<IUser>>>;
+};
+
+
+export type IQueryExplorePostsArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -166,6 +182,11 @@ export type IQueryGetUserByIdArgs = {
   id: Scalars['ID'];
 };
 
+
+export type IQuerySearchUsersByNameArgs = {
+  name: Scalars['String'];
+};
+
 export type IRegisterInput = {
   email: Scalars['String'];
   name: Scalars['String'];
@@ -174,6 +195,10 @@ export type IRegisterInput = {
 
 export type IRegisterResponse = {
   message: Scalars['String'];
+};
+
+export type ISubscription = {
+  newNotification: INotification;
 };
 
 export type IUser = {
@@ -189,11 +214,23 @@ export type IUser = {
   isVerified?: Maybe<Scalars['Boolean']>;
   location?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  notifications?: Maybe<Array<Maybe<Scalars['ID']>>>;
   posts?: Maybe<Array<Maybe<Scalars['ID']>>>;
   profession?: Maybe<Scalars['String']>;
   totalMessages?: Maybe<Scalars['Int']>;
   totalNotifications?: Maybe<Scalars['Int']>;
   website?: Maybe<Scalars['String']>;
+};
+
+export type INotification = {
+  _id: Scalars['ID'];
+  createdAt: Scalars['Date'];
+  isRead: Scalars['Boolean'];
+  isSeen: Scalars['Boolean'];
+  post?: Maybe<IPost>;
+  receiver: IUser;
+  sender: IUser;
+  type: Scalars['String'];
 };
 
 export type ICommentFragment = { content: string, _id: string, createdAt: any, likes: Array<string | null>, post: { _id: string }, user: { _id: string, avatar?: string | null, name: string } };
@@ -239,6 +276,13 @@ export type IDeletePostMutationVariables = Exact<{
 
 
 export type IDeletePostMutationResult = { deletePost: boolean };
+
+export type IFollowOrUnfollowUserMutationVariables = Exact<{
+  userId: Scalars['ID'];
+}>;
+
+
+export type IFollowOrUnfollowUserMutationResult = { followOrUnfollowUser?: boolean | null };
 
 export type ILikeCommentMutationVariables = Exact<{
   commentId: Scalars['ID'];
@@ -292,6 +336,21 @@ export type IUploadPhotoMutationVariables = Exact<{
 
 export type IUploadPhotoMutationResult = { uploadPhoto: string };
 
+export type ISearchUsersByNameQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type ISearchUsersByNameQueryResult = { searchUsersByName?: Array<{ _id: string, avatar?: string | null, name: string } | null> | null };
+
+export type IExplorePostsQueryVariables = Exact<{
+  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type IExplorePostsQueryResult = { explorePosts: Array<{ _id: string, content?: string | null, photo?: string | null, createdAt?: any | null, likes?: Array<string | null> | null, comments?: Array<string | null> | null, isPublic?: boolean | null, user?: { name: string, _id: string, avatar?: string | null } | null } | null> };
+
 export type IGetAllPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -308,6 +367,11 @@ export type IGetCommentsQueryVariables = Exact<{
 
 
 export type IGetCommentsQueryResult = { getComments: Array<{ content: string, _id: string, createdAt: any, likes: Array<string | null>, post: { _id: string }, user: { _id: string, avatar?: string | null, name: string } }> };
+
+export type IGetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IGetNotificationsQueryResult = { getNotifications: Array<{ _id: string, isRead: boolean, type: string, createdAt: any, isSeen: boolean, post?: { _id: string, photo?: string | null } | null, receiver: { _id: string, avatar?: string | null, name: string }, sender: { _id: string, avatar?: string | null, name: string } }> };
 
 export type IGetUserByIdQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -523,6 +587,33 @@ export function useDeletePostMutation(options: VueApolloComposable.UseMutationOp
   return VueApolloComposable.useMutation<IDeletePostMutationResult, IDeletePostMutationVariables>(DeletePostDocument, options);
 }
 export type DeletePostMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<IDeletePostMutationResult, IDeletePostMutationVariables>;
+export const FollowOrUnfollowUserDocument = gql`
+    mutation FollowOrUnfollowUser($userId: ID!) {
+  followOrUnfollowUser(userId: $userId)
+}
+    `;
+
+/**
+ * __useFollowOrUnfollowUserMutation__
+ *
+ * To run a mutation, you first call `useFollowOrUnfollowUserMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useFollowOrUnfollowUserMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useFollowOrUnfollowUserMutation({
+ *   variables: {
+ *     userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useFollowOrUnfollowUserMutation(options: VueApolloComposable.UseMutationOptions<IFollowOrUnfollowUserMutationResult, IFollowOrUnfollowUserMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<IFollowOrUnfollowUserMutationResult, IFollowOrUnfollowUserMutationVariables>>) {
+  return VueApolloComposable.useMutation<IFollowOrUnfollowUserMutationResult, IFollowOrUnfollowUserMutationVariables>(FollowOrUnfollowUserDocument, options);
+}
+export type FollowOrUnfollowUserMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<IFollowOrUnfollowUserMutationResult, IFollowOrUnfollowUserMutationVariables>;
 export const LikeCommentDocument = gql`
     mutation LikeComment($commentId: ID!) {
   likeComment(commentId: $commentId)
@@ -708,6 +799,69 @@ export function useUploadPhotoMutation(options: VueApolloComposable.UseMutationO
   return VueApolloComposable.useMutation<IUploadPhotoMutationResult, IUploadPhotoMutationVariables>(UploadPhotoDocument, options);
 }
 export type UploadPhotoMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<IUploadPhotoMutationResult, IUploadPhotoMutationVariables>;
+export const SearchUsersByNameDocument = gql`
+    query SearchUsersByName($name: String!) {
+  searchUsersByName(name: $name) {
+    _id
+    avatar
+    name
+  }
+}
+    `;
+
+/**
+ * __useSearchUsersByNameQuery__
+ *
+ * To run a query within a Vue component, call `useSearchUsersByNameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchUsersByNameQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useSearchUsersByNameQuery({
+ *   name: // value for 'name'
+ * });
+ */
+export function useSearchUsersByNameQuery(variables: ISearchUsersByNameQueryVariables | VueCompositionApi.Ref<ISearchUsersByNameQueryVariables> | ReactiveFunction<ISearchUsersByNameQueryVariables>, options: VueApolloComposable.UseQueryOptions<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>(SearchUsersByNameDocument, variables, options);
+}
+export function useSearchUsersByNameLazyQuery(variables: ISearchUsersByNameQueryVariables | VueCompositionApi.Ref<ISearchUsersByNameQueryVariables> | ReactiveFunction<ISearchUsersByNameQueryVariables>, options: VueApolloComposable.UseQueryOptions<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>(SearchUsersByNameDocument, variables, options);
+}
+export type SearchUsersByNameQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>;
+export const ExplorePostsDocument = gql`
+    query ExplorePosts($skip: Int, $limit: Int) {
+  explorePosts(skip: $skip, limit: $limit) {
+    ...post
+  }
+}
+    ${PostFragmentDoc}`;
+
+/**
+ * __useExplorePostsQuery__
+ *
+ * To run a query within a Vue component, call `useExplorePostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExplorePostsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useExplorePostsQuery({
+ *   skip: // value for 'skip'
+ *   limit: // value for 'limit'
+ * });
+ */
+export function useExplorePostsQuery(variables: IExplorePostsQueryVariables | VueCompositionApi.Ref<IExplorePostsQueryVariables> | ReactiveFunction<IExplorePostsQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<IExplorePostsQueryResult, IExplorePostsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IExplorePostsQueryResult, IExplorePostsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IExplorePostsQueryResult, IExplorePostsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<IExplorePostsQueryResult, IExplorePostsQueryVariables>(ExplorePostsDocument, variables, options);
+}
+export function useExplorePostsLazyQuery(variables: IExplorePostsQueryVariables | VueCompositionApi.Ref<IExplorePostsQueryVariables> | ReactiveFunction<IExplorePostsQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<IExplorePostsQueryResult, IExplorePostsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IExplorePostsQueryResult, IExplorePostsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IExplorePostsQueryResult, IExplorePostsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<IExplorePostsQueryResult, IExplorePostsQueryVariables>(ExplorePostsDocument, variables, options);
+}
+export type ExplorePostsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IExplorePostsQueryResult, IExplorePostsQueryVariables>;
 export const GetAllPostsDocument = gql`
     query GetAllPosts {
   getAllPosts {
@@ -792,6 +946,51 @@ export function useGetCommentsLazyQuery(variables: IGetCommentsQueryVariables | 
   return VueApolloComposable.useLazyQuery<IGetCommentsQueryResult, IGetCommentsQueryVariables>(GetCommentsDocument, variables, options);
 }
 export type GetCommentsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IGetCommentsQueryResult, IGetCommentsQueryVariables>;
+export const GetNotificationsDocument = gql`
+    query GetNotifications {
+  getNotifications {
+    _id
+    isRead
+    type
+    createdAt
+    isSeen
+    post {
+      _id
+      photo
+    }
+    receiver {
+      _id
+      avatar
+      name
+    }
+    sender {
+      _id
+      avatar
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetNotificationsQuery__
+ *
+ * To run a query within a Vue component, call `useGetNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotificationsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGetNotificationsQuery();
+ */
+export function useGetNotificationsQuery(options: VueApolloComposable.UseQueryOptions<IGetNotificationsQueryResult, IGetNotificationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>(GetNotificationsDocument, {}, options);
+}
+export function useGetNotificationsLazyQuery(options: VueApolloComposable.UseQueryOptions<IGetNotificationsQueryResult, IGetNotificationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>(GetNotificationsDocument, {}, options);
+}
+export type GetNotificationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>;
 export const GetUserByIdDocument = gql`
     query GetUserById($id: ID!) {
   getUserById(id: $id) {
