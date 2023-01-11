@@ -19,6 +19,10 @@ export default defineComponent({
       type: Object as () => IUser,
       required: true,
     },
+    postUserId: {
+      type: String,
+      required: true,
+    },
   },
 
   setup(props) {
@@ -108,6 +112,9 @@ export default defineComponent({
     isCommentOwner() {
       return this.comment.user._id === this.me._id
     },
+    isPostOwner() {
+      return this.postUserId === this.me._id
+    },
     timeAgo() {
       return moment(this.comment.createdAt).fromNow()
     },
@@ -143,9 +150,9 @@ export default defineComponent({
         <div class="flex gap-x-1">
           <Button
             icon="mdi:trash-can"
-            v-if="isCommentOwner && isHovered"
+            v-if="(isCommentOwner || isPostOwner) && isHovered"
             :loading="deleteCommentLoading"
-            button-class="justify-start font-normal -text-fs-1"
+            button-class="font-normal -text-fs-1"
             size="sm"
             radius="rounded-full"
             @click="actions.deleteComment"
