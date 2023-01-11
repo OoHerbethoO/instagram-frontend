@@ -27,6 +27,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    radius: {
+      type: String,
+      default: 'rounded-full',
+    },
     isLoading: Boolean,
     time: String,
   },
@@ -45,7 +49,10 @@ export default defineComponent({
       <img
         v-if="src"
         :src="src"
-        class="rounded-full border border-gray-200" />
+        class="border border-gray-200"
+        :class="{
+          [`${radius}`]: radius,
+        }" />
       <span v-else>
         <Icon
           icon="gridicons:user"
@@ -66,6 +73,12 @@ export default defineComponent({
         }">
         {{ text }}
       </p>
+      <p
+        v-if="isLoading"
+        class="avatar-text h-5 w-28 skeleton rounded"
+        :class="{
+          'mt-8 h-7 w-36': size === 'lg',
+        }"></p>
       <p
         class="text-[12px] text-gray-600"
         v-if="time">
