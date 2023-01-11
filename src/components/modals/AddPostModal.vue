@@ -78,6 +78,7 @@ export default defineComponent({
     @open="isModalOpen = true"
     :is-open="isModalOpen"
     :modalHeight="'h-max'"
+    class="relative"
     modalFooterClass="block">
     <template v-slot:trigger>
       <Button
@@ -113,7 +114,7 @@ export default defineComponent({
             <Button
               icon="ion:close"
               size="sm"
-              button-class="absolute top-3 right-3 bg-black bg-opacity-40"
+              button-class="absolute top-3 right-3 bg-[#19191c6a] "
               radius="rounded-full"
               @click="cancelImage" />
           </div>
