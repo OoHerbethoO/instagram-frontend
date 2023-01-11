@@ -107,7 +107,7 @@ export default defineComponent({
         :loading="postLoading"
         :columnsOnLgScreens="2"
         :columnsOnMdScreens="2"
-        :isPostForProfile="true" />
+        :isCardPhotoOnly="true" />
       <EmptyState
         v-if="!postLoading && posts?.getPostsByUser.length === 0"
         title="You haven't made any posts yet"

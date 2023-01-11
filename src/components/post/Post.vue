@@ -36,7 +36,7 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    isPostForProfile: {
+    isCardPhotoOnly: {
       type: Boolean,
       default: false,
     },
@@ -45,21 +45,10 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup() {
     const state = reactive({
-      isCurrentUserPost: false,
       isHovered: false,
     })
-
-    watch(
-      () => [props.post, props.me],
-      () => {
-        if (props.me) {
-          state.isCurrentUserPost = props.post.user._id === props.me._id
-        }
-      },
-      { immediate: true }
-    )
 
     return { ...toRefs(state), AppRoutes, moment }
   },
@@ -74,12 +63,12 @@ export default defineComponent({
     <article
       class="post-card"
       :class="{
-        'gap-0': isPostForProfile && !post?.photo,
-        'gap-3': isPostForProfile && post?.photo,
+        'gap-0': isCardPhotoOnly && !post?.photo,
+        'gap-3': isCardPhotoOnly && post?.photo,
       }">
       <PostHeader
         :post="post"
-        v-if="!isPostForProfile"
+        v-if="!isCardPhotoOnly"
         :me="me" />
       <PostContent
         @openModal="$emit('openModal')"
@@ -93,7 +82,7 @@ export default defineComponent({
           :photo="post?.photo"
           @click="$emit('openModal')" />
         <footer
-          v-if="isHovered && isPostForProfile"
+          v-if="isHovered && isCardPhotoOnly"
           class="overlay absolute top-0 grid place-items-center">
           <PostFooter
             :post="post"
@@ -103,7 +92,7 @@ export default defineComponent({
         </footer>
       </figure>
       <PostFooter
-        v-if="!isPostForProfile"
+        v-if="!isCardPhotoOnly"
         @openModal="$emit('openModal')"
         :post="post"
         :me="me" />

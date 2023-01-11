@@ -19,7 +19,7 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
-    isPostForProfile: {
+    isCardPhotoOnly: {
       type: Boolean,
       default: false,
     },
@@ -108,7 +108,7 @@ export default defineComponent({
       }">
       <PostSkeleton
         v-for="i in 4"
-        :variant="isPostForProfile ? 'photo' : 'card'"
+        :variant="isCardPhotoOnly ? 'photo' : 'card'"
         :key="i" />
     </div>
     <div
@@ -123,7 +123,7 @@ export default defineComponent({
           v-for="post in column1"
           :key="post._id"
           @openModal="handlePostClick(post)"
-          :isPostForProfile="isPostForProfile"
+          :isCardPhotoOnly="isCardPhotoOnly"
           :me="meData?.me"
           :post="post" />
       </div>
@@ -133,7 +133,7 @@ export default defineComponent({
           :key="post._id"
           @openModal="handlePostClick(post)"
           :me="meData?.me"
-          :isPostForProfile="isPostForProfile"
+          :isCardPhotoOnly="isCardPhotoOnly"
           :post="post" />
       </div>
       <div
@@ -144,7 +144,7 @@ export default defineComponent({
           :key="post._id"
           @openModal="handlePostClick(post)"
           :me="meData?.me"
-          :isPostForProfile="isPostForProfile"
+          :isCardPhotoOnly="isCardPhotoOnly"
           :post="post" />
       </div>
     </div>

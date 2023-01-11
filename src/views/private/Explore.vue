@@ -53,7 +53,7 @@ export default defineComponent({
       :columnsOnLgScreens="3"
       :columnsOnMdScreens="3"
       :columnsOnSmScreens="2"
-      :isPostForProfile="true"
+      :isCardPhotoOnly="true"
       v-if="explorePostsData?.explorePosts" />
   </div>
 </template>
