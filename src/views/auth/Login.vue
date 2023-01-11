@@ -69,9 +69,8 @@ export default defineComponent({
           :placeholder="item.placeholder"
           :variant="item.variant"
           :name="item.name"
-          :value="state[item.name].value"
+          v-model:value="state[item.name].value"
           :error="state[item.name].error"
-          @onChange="handleChange"
           :type="item.type" />
         <button
           class="btn neobrutalism left"
