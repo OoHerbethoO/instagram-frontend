@@ -26,8 +26,16 @@ export default defineComponent({
       type: Object as () => IPost,
       required: true,
     },
+    isPrevBtnDisabled: {
+      type: Boolean,
+      default: false,
+    },
+    isNextBtnDisabled: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ['close', 'open'],
+  emits: ['close', 'open', 'next', 'prev'],
   setup(props, { emit }) {
     const { result: meData, loading: meLoading } = useMeQuery()
 
@@ -35,7 +43,7 @@ export default defineComponent({
       () => props.post,
       () => {
         if (!props.post) {
-          emit('close')
+          emit('next')
         }
       }
     )
@@ -54,7 +62,7 @@ export default defineComponent({
     class="relative"
     :is-open="isModalOpen">
     <template v-slot:modal-body>
-      <section class="md:flex h-full gap-8">
+      <section class="md:flex h-full gap-8 relative">
         <Post
           class="flex-1 overflow-auto"
           height="100%"
@@ -66,6 +74,7 @@ export default defineComponent({
         <aside class="flex-1 flex flex-col justify-between mt-5 md:mt-0">
           <CommentList
             class="mb-3"
+            :key="post._id"
             :post="post" />
           <CreateComment
             class="sticky bottom-0 bg-white"
@@ -73,10 +82,27 @@ export default defineComponent({
         </aside>
       </section>
     </template>
-    <Button
-      icon="ph:arrow-circle-right-fill"
-      variant="transparent"
-      radius="rounded-full"
-      class="absolute center-right right-[-31px] z-[9911]" />
+    <template v-slot:modal-aside>
+      <Button
+        icon="ic:round-keyboard-arrow-left"
+        radius="rounded-full"
+        variant="secondary"
+        size="sm"
+        iconClass="text-fs-7"
+        buttonClass="border border-gray-300"
+        @click="$emit('prev')"
+        :disabled="isPrevBtnDisabled"
+        class="absolute center-left md:left-[-20px] z-[1199]" />
+      <Button
+        icon="ic:round-keyboard-arrow-right"
+        radius="rounded-full"
+        size="sm"
+        variant="secondary"
+        iconClass="text-fs-7"
+        buttonClass="border border-gray-300"
+        :disabled="isNextBtnDisabled"
+        @click="$emit('next')"
+        class="absolute center-right md:right-[-20px] z-[1199]" />
+    </template>
   </Modal>
 </template>
