@@ -1,0 +1,14 @@
+.offcanvas {
+  @apply fixed top-0 bg-white right-0 z-[1999]  border max-w-[430px] w-full max-h-screen h-screen overflow-hidden rounded-tl-3xl rounded-bl-3xl;
+  box-shadow: -27px 1px 44px -4px rgb(73 74 76 / 25%) !important;
+
+  .offcanvas-header {
+    @apply flex justify-between items-center px-5 pt-4 pb-3 bg-white sticky top-0 z-[1] border-b border-gray-300;
+  }
+  .header-title {
+    @apply text-fs-4 font-medium;
+  }
+  .offcanvas-body {
+    @apply flex-1 overflow-auto;
+  }
+}
