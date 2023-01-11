@@ -23,16 +23,16 @@ export default defineComponent({
 </script>
 
 <template>
-  <div
+  <main
     class="gray"
+    v-if="post.content"
     :class="{ 'card-content': post.photo === null }">
     <div class="relative">
       <span
         class="card-title"
         :class="{
           'trim-text': trimText,
-        }"
-        v-if="post.content">
+        }">
         {{ post.content }}
       </span>
       <span
@@ -42,5 +42,5 @@ export default defineComponent({
         ...Read more
       </span>
     </div>
-  </div>
+  </main>
 </template>
