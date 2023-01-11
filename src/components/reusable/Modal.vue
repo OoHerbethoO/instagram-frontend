@@ -55,17 +55,18 @@ export default defineComponent({
     :class="modalClass"
     v-if="isOpen">
     <section
-      class="modal-content"
-      :class="modalContentClass"
       ref="modalRef"
+      class="modal-content relative"
+      :class="modalContentClass"
       v-on-click-outside.bubble="modalHandler">
       <header class="modal-header">
         <h5 class="header-title">{{ title }}</h5>
         <Button
-          icon="ion:close"
+          icon="maki:cross"
           data-close-button="#postModal"
           @click.stop="$emit('close')"
           variant="transparent"
+          size="sm"
           radius="rounded-full" />
       </header>
       <main
@@ -79,7 +80,7 @@ export default defineComponent({
         :class="modalFooterClass">
         <slot name="modal-footer"></slot>
       </footer>
-      <slot></slot>
+      <slot name="modal-aside"></slot>
     </section>
   </section>
 </template>
