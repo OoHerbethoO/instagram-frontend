@@ -2,8 +2,8 @@
 import type { IPost } from '@/types/graphql.types'
 import { useGetCommentsQuery, useMeQuery } from '@/types/graphql.types'
 import { defineComponent, watch } from 'vue'
-import CommentItem from './CommentItem.vue'
 import CommentItemSkeleton from '../skeletons/CommentItemSkeleton.vue'
+import CommentItem from './CommentItem.vue'
 
 export default defineComponent({
   name: 'CommentList',
@@ -15,15 +15,24 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { result: meData } = useMeQuery()
+
     const {
       result: commentsData,
       loading: commentsLoading,
-      error: commentsError,
+      refetch: commentsRefetch,
     } = useGetCommentsQuery({
       comments: props.post.comments,
     })
 
-    const { result: meData, loading: meLoading, error: meError } = useMeQuery()
+    watch(
+      () => props.post._id,
+      () => {
+        commentsRefetch({
+          comments: props.post.comments,
+        })
+      }
+    )
 
     return {
       commentsData,
@@ -49,9 +58,9 @@ export default defineComponent({
           v-for="comment in commentsData?.getComments"
           :key="comment?._id"
           :comment="comment"
-          :me="meData?.me" />
+          :me="meData?.me"
+          :postUserId="post?.user._id" />
       </template>
-
       <p
         class="w-full text-center text-gray-400 -text-fs-1 my-2"
         v-if="commentsData?.getComments.length === 0">
