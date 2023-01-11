@@ -2,7 +2,11 @@
   @apply flex h-screen;
 
   .app-sidebar {
-    @apply fixed w-[250px] h-full border-r border-gray-300 lg:flex hidden py-4 px-4 z-[9299] bg-white;
+    @apply fixed w-[250px] h-full border-r border-gray-300 lg:flex hidden py-4 px-4 z-[9299] lg:z-[0] bg-white md:shadow-none;
+    box-shadow: 27px 1px 48px -4px rgba(78, 80, 80, 0.177) !important;
+    @screen lg {
+      box-shadow: none !important;
+    }
   }
 
   .app-header {
@@ -13,6 +17,6 @@
   }
 
   .app-main {
-    @apply pl-6 pr-6 lg:pl-[280px] h-full pt-[60px] pb-2;
+    @apply pl-6 pr-6 lg:pl-[280px] h-full pt-[66px] pb-2;
   }
 }
