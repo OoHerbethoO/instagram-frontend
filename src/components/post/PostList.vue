@@ -31,6 +31,10 @@ export default defineComponent({
       type: Number,
       default: 2,
     },
+    columnsOnSmScreens: {
+      type: Number,
+      default: 1,
+    },
   },
 
   setup(props) {
@@ -38,6 +42,7 @@ export default defineComponent({
     const { column1, column2, column3, setData } = useGallery(props.posts, {
       columnsOnLgScreens: props.columnsOnLgScreens,
       columnsOnMdScreens: props.columnsOnMdScreens,
+      columnsOnSmScreens: props.columnsOnSmScreens,
       stateSuffix: 'column',
     })
 
@@ -51,10 +56,22 @@ export default defineComponent({
       state.isModalOpen = true
     }
 
+    const handlePrevPost = () => {
+      const index = props.posts.findIndex((post) => post._id === state.selectedPost?._id)
+      if (index === 0) return
+      state.selectedPost = props.posts[index - 1]
+    }
+
+    const handleNextPost = () => {
+      const index = props.posts.findIndex((post) => post._id === state.selectedPost?._id)
+      if (index === props.posts.length - 1) return
+      state.selectedPost = props.posts[index + 1]
+    }
+
     watch(
       () => props.posts,
       () => {
-        if (!props.posts) {
+        if (props.posts.length == 0) {
           state.selectedPost = null
           state.isModalOpen = false
           return
@@ -71,6 +88,8 @@ export default defineComponent({
       meData,
       meLoading,
       handlePostClick,
+      handlePrevPost,
+      handleNextPost,
       column1: column1 as IPost,
       column2: column2 as IPost,
       column3: column3 as IPost,
@@ -82,13 +101,14 @@ export default defineComponent({
 <template>
   <div>
     <div
-      v-if="meLoading"
+      v-if="loading"
       class="card-gallery"
       :class="{
         'profile-page-gallery': columnsOnLgScreens === 2,
       }">
       <PostSkeleton
         v-for="i in 4"
+        :variant="isPostForProfile ? 'photo' : 'card'"
         :key="i" />
     </div>
     <div
@@ -96,6 +116,7 @@ export default defineComponent({
       class="card-gallery"
       :class="{
         'profile-page-gallery': columnsOnLgScreens === 2,
+        'explore-page-gallery': columnsOnSmScreens === 2,
       }">
       <div class="gallery-item">
         <Post
@@ -131,6 +152,10 @@ export default defineComponent({
       :isModalOpen="isModalOpen"
       @close="isModalOpen = false"
       :post="selectedPost"
+      @prev="handlePrevPost"
+      @next="handleNextPost"
+      :isPrevBtnDisabled="!selectedPost || selectedPost._id === posts[0]._id"
+      :isNextBtnDisabled="!selectedPost || selectedPost._id === posts[posts.length - 1]._id"
       @open="isModalOpen = true" />
   </div>
 </template>
