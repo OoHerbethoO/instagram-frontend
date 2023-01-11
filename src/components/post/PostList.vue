@@ -1,11 +1,11 @@
 <script lang="ts">
-import { useMeQuery } from '@/types/graphql.types'
-import type { IPost } from '@/types/graphql.types'
-import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
-import Post from './Post.vue'
-import PostSkeleton from '../skeletons/PostSkeleton.vue'
-import ViewPostModal from '../modals/ViewPostModal.vue'
 import useGallery from '@/hooks/useGallery'
+import type { IPost } from '@/types/graphql.types'
+import { useMeQuery } from '@/types/graphql.types'
+import { defineComponent, reactive, toRefs, watch } from 'vue'
+import ViewPostModal from '../modals/ViewPostModal.vue'
+import PostSkeleton from '../skeletons/PostSkeleton.vue'
+import Post from './Post.vue'
 
 export default defineComponent({
   name: 'PostList',

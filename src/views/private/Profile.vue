@@ -1,22 +1,16 @@
 <script lang="ts">
-import Avatar from '@/components/reusable/Avatar.vue'
+import PostList from '@/components/post/PostList.vue'
 import CoverPhoto from '@/components/profile/CoverPhoto.vue'
 import ProfileHeader from '@/components/profile/ProfileHeader.vue'
-import UserStats from '@/components/profile/UserStats.vue'
 import UserAbout from '@/components/profile/UserAbout.vue'
+import UserStats from '@/components/profile/UserStats.vue'
+import Avatar from '@/components/reusable/Avatar.vue'
 import Button from '@/components/reusable/Button.vue'
-import FollowOrUnfollowBtn from '@/components/reusable/FollowOrUnfollowBtn.vue'
-import {
-  useGetPostsByUserQuery,
-  useGetUserByIdQuery,
-  useMeQuery,
-  useFollowOrUnfollowUserMutation,
-} from '@/types/graphql.types'
-import type { IPost } from '@/types/graphql.types'
-import { defineComponent, reactive, toRefs, watch } from 'vue'
-import { AppRoutes } from '@/constants/routes.constant'
 import EmptyState from '@/components/reusable/EmptyState.vue'
-import PostList from '@/components/post/PostList.vue'
+import FollowOrUnfollowBtn from '@/components/reusable/FollowOrUnfollowBtn.vue'
+import { AppRoutes } from '@/constants/routes.constant'
+import { useGetPostsByUserQuery, useGetUserByIdQuery, useMeQuery } from '@/types/graphql.types'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {
