@@ -19,7 +19,7 @@ export default defineComponent({
   setup(props) {
     const isCopied = ref(false)
     const { mutate: deletePost } = useDeletePostMutation({
-      refetchQueries: ['Me', 'GetAllPosts', 'GetPostsByUser'],
+      refetchQueries: ['Me', 'GetAllPosts', 'GetPostsByUser', 'ExplorePosts'],
     })
 
     const handleDeletePost = () =>
