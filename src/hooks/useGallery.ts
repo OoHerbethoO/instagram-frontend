@@ -3,6 +3,7 @@ import { onMounted, reactive, toRefs } from 'vue'
 interface Props {
   columnsOnLgScreens: number
   columnsOnMdScreens: number
+  columnsOnSmScreens: number
   stateSuffix: string
 }
 
@@ -56,9 +57,21 @@ const useGallery = (data: unknown[], props: Props) => {
   }
 
   const displaySmScreenData = () => {
-    state[`${props.stateSuffix}${1}`] = state.data
-    for (let i = 2; i <= props.columnsOnLgScreens; i++) {
-      state[`${props.stateSuffix}${i}`] = []
+    for (let i = 0; i <= props.columnsOnSmScreens; i++) {
+      setTimeout(() => {
+        state[`${props.stateSuffix}${i + 1}`] = state.data
+          .map((data: unknown, index: number) =>
+            index % props.columnsOnSmScreens === i ? data : null
+          )
+          .filter(Boolean)
+      }, 0)
+    }
+
+    if (props.columnsOnMdScreens > props.columnsOnSmScreens) {
+      console.log('here')
+      for (let i = props.columnsOnSmScreens + 1; i <= props.columnsOnMdScreens; i++) {
+        state[`${props.stateSuffix}${i}`] = []
+      }
     }
   }
 
