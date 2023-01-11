@@ -1,37 +1,63 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import Input from './Input.vue'
 import AddPostModal from '../modals/AddPostModal.vue'
 import Button from './Button.vue'
+import UserSearchInput from '../search/UserSearchInput.vue'
+import NotificationOffCanvas from '../notifications/NotificationnOffCanvas.vue'
 
 export default defineComponent({
   name: 'PageHeader',
-  components: { Input, Button, AddPostModal },
+  components: { Input, Button, AddPostModal, UserSearchInput, NotificationOffCanvas },
+  emits: ['openSidebar'],
+  setup() {
+    const state = reactive({
+      showInput: false,
+    })
+
+    return { ...toRefs(state) }
+  },
 })
 </script>
 
 <template>
-  <header class="sticky top-0 py-3 z-[999] flex items-center justify-between bg-white">
-    <Input
-      placeholder="Search"
-      slotDirection="left"
-      className="pl-1  w-60 ">
+  <header class="app-header no-animation">
+    <section class="flex items-center flex-1 no-animation">
       <Button
-        icon="charm:search"
+        icon="fa6-solid:bars-staggered"
         variant="transparent"
-        size="md"
-        buttonClass="ml-1 mr-0"
-        iconClass="text-fs-2" />
-    </Input>
-    <aside class="flex gap-x-4">
+        class="mr-2 ml-[-5px] lg:hidden no-animation"
+        :class="{
+          'hidden md:flex': showInput,
+        }"
+        @click="$emit('openSidebar')" />
+      <UserSearchInput
+        :showInput="showInput"
+        class="w-full lg:w-[400px] no-animation">
+        <Button
+          :icon="!showInput ? 'charm:search' : 'material-symbols:arrow-back-rounded'"
+          variant="secondary"
+          class="mr-0 md:hidden no-animation"
+          radius="rounded-full"
+          iconClass="text-fs-2"
+          :class="{
+            'ml-[-5px]': showInput,
+          }"
+          @click="showInput = !showInput"
+          buttonClass="ml-1 mr-0" />
+      </UserSearchInput>
+    </section>
+    <aside
+      class="flex gap-x-4"
+      :class="{
+        'hidden md:flex': showInput,
+        flex: showInput,
+      }">
       <Button
         icon="jam:messages-f"
         radius="rounded-full"
         variant="transparent" />
-      <Button
-        icon="fa-solid:bell"
-        radius="rounded-full"
-        variant="transparent" />
+      <NotificationOffCanvas />
       <AddPostModal />
     </aside>
   </header>
