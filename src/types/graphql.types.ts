@@ -41,8 +41,7 @@ export type IMutation = {
   likeComment: Scalars['Boolean'];
   likePost: Scalars['Boolean'];
   login?: Maybe<IAuthData>;
-  markAsRead: INotification;
-  markAsSeen: INotification;
+  markAllNotificationsSeen: Scalars['Boolean'];
   register?: Maybe<IRegisterResponse>;
   updateProfile?: Maybe<Scalars['Boolean']>;
   uploadPhoto: Scalars['String'];
@@ -95,16 +94,6 @@ export type IMutationLikePostArgs = {
 export type IMutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
-};
-
-
-export type IMutationMarkAsReadArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type IMutationMarkAsSeenArgs = {
-  id: Scalars['ID'];
 };
 
 
@@ -225,7 +214,6 @@ export type IUser = {
 export type INotification = {
   _id: Scalars['ID'];
   createdAt: Scalars['Date'];
-  isRead: Scalars['Boolean'];
   isSeen: Scalars['Boolean'];
   post?: Maybe<IPost>;
   receiver: IUser;
@@ -306,6 +294,11 @@ export type ILoginMutationVariables = Exact<{
 
 export type ILoginMutationResult = { login?: { token: string } | null };
 
+export type IMarkAllNotificationsSeenMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IMarkAllNotificationsSeenMutationResult = { markAllNotificationsSeen: boolean };
+
 export type IRegisterMutationVariables = Exact<{
   name: Scalars['String'];
   email: Scalars['String'];
@@ -343,6 +336,11 @@ export type ISearchUsersByNameQueryVariables = Exact<{
 
 export type ISearchUsersByNameQueryResult = { searchUsersByName?: Array<{ _id: string, avatar?: string | null, name: string } | null> | null };
 
+export type ICountUnSeenNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ICountUnSeenNotificationsQueryResult = { countUnSeenNotifications: number };
+
 export type IExplorePostsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -371,7 +369,7 @@ export type IGetCommentsQueryResult = { getComments: Array<{ content: string, _i
 export type IGetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IGetNotificationsQueryResult = { getNotifications: Array<{ _id: string, isRead: boolean, type: string, createdAt: any, isSeen: boolean, post?: { _id: string, photo?: string | null } | null, receiver: { _id: string, avatar?: string | null, name: string }, sender: { _id: string, avatar?: string | null, name: string } }> };
+export type IGetNotificationsQueryResult = { getNotifications: Array<{ _id: string, type: string, createdAt: any, isSeen: boolean, post?: { _id: string, photo?: string | null } | null, receiver: { _id: string, avatar?: string | null, name: string }, sender: { _id: string, avatar?: string | null, name: string } }> };
 
 export type IGetUserByIdQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -698,6 +696,29 @@ export function useLoginMutation(options: VueApolloComposable.UseMutationOptions
   return VueApolloComposable.useMutation<ILoginMutationResult, ILoginMutationVariables>(LoginDocument, options);
 }
 export type LoginMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<ILoginMutationResult, ILoginMutationVariables>;
+export const MarkAllNotificationsSeenDocument = gql`
+    mutation MarkAllNotificationsSeen {
+  markAllNotificationsSeen
+}
+    `;
+
+/**
+ * __useMarkAllNotificationsSeenMutation__
+ *
+ * To run a mutation, you first call `useMarkAllNotificationsSeenMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useMarkAllNotificationsSeenMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useMarkAllNotificationsSeenMutation();
+ */
+export function useMarkAllNotificationsSeenMutation(options: VueApolloComposable.UseMutationOptions<IMarkAllNotificationsSeenMutationResult, IMarkAllNotificationsSeenMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<IMarkAllNotificationsSeenMutationResult, IMarkAllNotificationsSeenMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<IMarkAllNotificationsSeenMutationResult, IMarkAllNotificationsSeenMutationVariables>(MarkAllNotificationsSeenDocument, options);
+}
+export type MarkAllNotificationsSeenMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<IMarkAllNotificationsSeenMutationResult, IMarkAllNotificationsSeenMutationVariables>;
 export const RegisterDocument = gql`
     mutation Register($name: String!, $email: String!, $password: String!) {
   register(name: $name, email: $email, password: $password) {
@@ -831,6 +852,31 @@ export function useSearchUsersByNameLazyQuery(variables: ISearchUsersByNameQuery
   return VueApolloComposable.useLazyQuery<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>(SearchUsersByNameDocument, variables, options);
 }
 export type SearchUsersByNameQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<ISearchUsersByNameQueryResult, ISearchUsersByNameQueryVariables>;
+export const CountUnSeenNotificationsDocument = gql`
+    query CountUnSeenNotifications {
+  countUnSeenNotifications
+}
+    `;
+
+/**
+ * __useCountUnSeenNotificationsQuery__
+ *
+ * To run a query within a Vue component, call `useCountUnSeenNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCountUnSeenNotificationsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCountUnSeenNotificationsQuery();
+ */
+export function useCountUnSeenNotificationsQuery(options: VueApolloComposable.UseQueryOptions<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables>(CountUnSeenNotificationsDocument, {}, options);
+}
+export function useCountUnSeenNotificationsLazyQuery(options: VueApolloComposable.UseQueryOptions<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables>(CountUnSeenNotificationsDocument, {}, options);
+}
+export type CountUnSeenNotificationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables>;
 export const ExplorePostsDocument = gql`
     query ExplorePosts($skip: Int, $limit: Int) {
   explorePosts(skip: $skip, limit: $limit) {
@@ -950,7 +996,6 @@ export const GetNotificationsDocument = gql`
     query GetNotifications {
   getNotifications {
     _id
-    isRead
     type
     createdAt
     isSeen
