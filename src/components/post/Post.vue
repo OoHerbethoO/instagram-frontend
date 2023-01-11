@@ -86,7 +86,9 @@ export default defineComponent({
         :post="post"
         :isModalOpen="isModalOpen"
         :trimText="trimText" />
-      <figure class="cursor-pointer relative">
+      <figure
+        class="cursor-pointer relative"
+        v-if="post?.photo">
         <PostImage
           :photo="post?.photo"
           @click="$emit('openModal')" />
