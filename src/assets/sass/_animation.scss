@@ -47,3 +47,12 @@
     opacity: 0;
   }
 }
+
+.no-animation {
+  -webkit-animation-name: none;
+  animation-name: none;
+  -webkit-animation-duration: 0s;
+  animation-duration: 0s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
