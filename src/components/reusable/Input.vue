@@ -2,7 +2,7 @@
 import { defineComponent, computed, ref } from 'vue'
 export default defineComponent({
   name: 'Input',
-  emits: ['onChange'],
+  emits: ['update:value'],
   props: {
     value: String,
     error: String,
@@ -12,10 +12,6 @@ export default defineComponent({
     disabled: Boolean,
     required: Boolean,
     className: String,
-    slotDirection: {
-      type: String as () => 'left' | 'right',
-      default: 'right',
-    },
     type: {
       type: String as () => 'text' | 'email' | 'password' | 'number' | 'date' | 'textarea',
       default: 'text',
@@ -56,9 +52,7 @@ export default defineComponent({
         error: error,
         'h-24': type === 'textarea',
       }">
-      <div
-        v-if="slotDirection === 'left'"
-        class="slot">
+      <div class="slot">
         <slot></slot>
       </div>
       <input
@@ -74,8 +68,8 @@ export default defineComponent({
         @focus="onFocus"
         :class="className"
         @blur="onBlur"
-        v-model="value"
-        @input="$emit('onChange', $event)" />
+        :value="value"
+        @input="$emit('update:value', $event.target['value'])" />
       <textarea
         ref="input"
         class="input textarea"
@@ -88,12 +82,10 @@ export default defineComponent({
         @focus="onFocus"
         :class="className"
         @blur="onBlur"
-        v-model="value"
-        @input="$emit('onChange', $event)" />
-      <div
-        v-if="slotDirection === 'right'"
-        class="slot">
-        <slot></slot>
+        :value="value"
+        @input="$emit('update:value', $event.target['value'])" />
+      <div class="slot">
+        <slot name="right"></slot>
       </div>
     </div>
     <p
