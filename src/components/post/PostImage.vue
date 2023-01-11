@@ -13,7 +13,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <figure v-if="photo">
+  <figure class="bg-gray-300 rounded-md">
     <img
       :src="photo || ''"
       class="card-image"
