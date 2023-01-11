@@ -14,6 +14,7 @@ import PageSidebarSkeleton from '../skeletons/PageSidebarSkeleton.vue'
 export default defineComponent({
   name: 'PageSidebar',
   components: { Avatar, NavLink, Button, PageSidebarSkeleton, UserStats },
+  emits: ['closeSidebar'],
   setup() {
     const router = useRouter()
     const { result: MeData, loading } = useMeQuery()
@@ -42,7 +43,9 @@ export default defineComponent({
     v-else>
     <header class="w-full">
       <header class="bg-gray-200 p-2 py-3 w-full rounded h-max">
-        <router-link :to="`${AppRoutes.PROFILE}/${MeData?.me?._id}`">
+        <router-link
+          :to="`${AppRoutes.PROFILE}/${MeData?.me?._id}`"
+          @click="$emit('closeSidebar')">
           <Avatar
             :src="MeData?.me?.avatar || ''"
             className="bg-gray-300"
@@ -58,6 +61,7 @@ export default defineComponent({
           :key="item.text"
           :to="item.to"
           :icon="item.icon"
+          @click="$emit('closeSidebar')"
           :text="item.text" />
       </nav>
     </header>
