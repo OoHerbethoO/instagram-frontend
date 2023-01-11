@@ -110,7 +110,9 @@ export default defineComponent({
         :isCardPhotoOnly="true" />
       <EmptyState
         v-if="!postLoading && posts?.getPostsByUser.length === 0"
-        title="You haven't made any posts yet"
+        :title="`${isOwner ? 'You' : user?.getUserById?.name}
+        haven't shared anything yet.
+        `"
         height="h-80"
         description="Click the 'Add Post' button to share something with your followers."
         icon="/emptyFeed.svg" />
