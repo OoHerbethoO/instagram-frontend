@@ -71,7 +71,11 @@ export default defineComponent({
         class="icon"
         :class="iconClass" />
     </span>
-    <span v-if="text">{{ text }}</span>
+    <span
+      v-if="text"
+      class="whitespace-nowrap"
+      >{{ text }}</span
+    >
     <span v-if="icon && iconDirection === 'right'">
       <Icon
         :icon="icon"
