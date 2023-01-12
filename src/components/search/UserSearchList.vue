@@ -38,11 +38,13 @@ export default defineComponent({
             :src="''" />
         </template>
       </section>
-      <p
+      <div
         v-else-if="error"
-        class="text-center -text-fs-1">
-        {{ error }}
-      </p>
+        class="grid place-items-center pt-3">
+        <p class="text-center">
+          {{ error }}
+        </p>
+      </div>
       <section v-else>
         <router-link
           v-for="user in users"
