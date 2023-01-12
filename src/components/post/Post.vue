@@ -1,15 +1,15 @@
 <script lang="ts">
 import { AppRoutes } from '@/constants/routes.constant'
 import type { IPost, IUser } from '@/types/graphql.types'
-import { defineComponent, reactive, toRefs, watch } from 'vue'
+import moment from 'moment'
+import { defineComponent, reactive, toRefs } from 'vue'
 import Avatar from '../reusable/Avatar.vue'
 import Button from '../reusable/Button.vue'
 import PostActionsDropdown from './PostActionsDropdown.vue'
 import PostContent from './PostContent.vue'
-import PostImage from './PostImage.vue'
 import PostFooter from './PostFooter.vue'
 import PostHeader from './PostHeader.vue'
-import moment from 'moment'
+import PostImage from './PostImage.vue'
 
 export default defineComponent({
   name: 'Post',
