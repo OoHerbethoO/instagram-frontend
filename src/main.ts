@@ -1,12 +1,11 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import { createApp, h, provide } from 'vue'
-import App from './App.vue'
-import './assets/sass/main.scss'
-import router from './router'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+import App from './App.vue'
+import './assets/sass/main.scss'
 import apolloClient from './config/graphql.config'
+import router from './router'
 
 const app = createApp({
   setup() {
@@ -18,5 +17,7 @@ const app = createApp({
 
 app.use(router)
 app.mount('#app')
-const options = {}
+const options = {
+  position: 'bottom-center',
+}
 app.use(Toast, options)
