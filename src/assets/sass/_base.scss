@@ -47,19 +47,34 @@ h6,
 }
 
 .Vue-Toastification__container {
-  bottom: 14px !important;
+  top: 0% !important;
+  left: 50% !important;
+  z-index: 999 !important;
+  transform: translate(-50%, 0%) !important;
+  width: max-content !important;
+}
+
+@media (max-width: 600px) {
+  .Vue-Toastification__container {
+    padding-bottom: 10px !important;
+  }
+}
+
+.bottom-center {
+  bottom: 0% !important;
+  left: 50% !important;
+  z-index: 999 !important;
+  transform: translate(-50%, 0%) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
 }
 
 .Vue-Toastification__toast--success {
   background-color: var(--primary) !important;
-  max-height: 62px !important;
-  min-height: 62px !important;
-  width: max-content !important;
   border-radius: 8px !important;
-  max-width: max-content;
-  margin: 0 auto !important;
-  margin-bottom: 0rem !important;
-  padding: 18px 20px !important;
+  min-height: 60px !important;
+  max-height: 60px !important;
+  padding: 19px 20px !important;
 }
 
 .Vue-Toastification__progress-bar {
