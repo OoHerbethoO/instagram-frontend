@@ -1,26 +1,11 @@
 import gql from 'graphql-tag'
+import NotificationFragment from '../fragments/notification.fragment'
 
 export const GetNotificationsQuery = gql`
+  ${NotificationFragment}
   query GetNotifications {
     getNotifications {
-      _id
-      type
-      createdAt
-      isSeen
-      post {
-        _id
-        photo
-      }
-      receiver {
-        _id
-        avatar
-        name
-      }
-      sender {
-        _id
-        avatar
-        name
-      }
+      ...notification
     }
   }
 `
