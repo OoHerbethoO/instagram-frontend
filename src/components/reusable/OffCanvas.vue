@@ -29,12 +29,17 @@ export default defineComponent({
       $emit('close')
     })
 
+    const handleClose = () => {
+      isoffcanvasOpen.value = false
+      $emit('close')
+    }
+
     const openOffcanvas = () => {
       isoffcanvasOpen.value = true
       $emit('open')
     }
 
-    return { offcanvasRef, isoffcanvasOpen, offcanvasHandler, openOffcanvas }
+    return { offcanvasRef, isoffcanvasOpen, offcanvasHandler, openOffcanvas, handleClose }
   },
 })
 </script>
@@ -53,7 +58,7 @@ export default defineComponent({
       <Button
         icon="maki:cross"
         radius="rounded-full"
-        @click="isoffcanvasOpen = false"
+        @click="handleClose"
         size="sm"
         variant="transparent" />
     </header>
