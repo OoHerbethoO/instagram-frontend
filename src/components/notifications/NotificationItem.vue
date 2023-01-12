@@ -34,6 +34,8 @@ export default defineComponent({
           return 'commented on your post'
         case 'mention':
           return 'mentioned you in a post'
+        case 'like-comment':
+          return 'liked a comment on your post'
         default:
           return ''
       }
@@ -83,7 +85,8 @@ export default defineComponent({
         v-if="
           notification?.type === 'like' ||
           notification?.type === 'comment' ||
-          notification?.type === 'mention'
+          notification?.type === 'mention' ||
+          notification?.type === 'like-comment'
         " />
     </aside>
   </div>
