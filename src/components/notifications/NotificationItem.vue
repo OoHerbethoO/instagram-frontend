@@ -79,19 +79,20 @@ export default defineComponent({
         <span class="-text-fs-3 text-gray-600">{{ timeAgo }}</span>
       </div>
       <FollowOrUnfollowBtn
-        :userId="notification?.sender?._id"
         v-if="notification?.type === 'follow'"
+        :userId="notification?.sender?._id"
         size="sm" />
-      <router-link :to="postRoute">
+      <router-link
+        :to="postRoute"
+        v-if="
+          notification?.type === 'like' ||
+          notification?.type === 'comment' ||
+          notification?.type === 'mention' ||
+          notification?.type === 'like-comment'
+        ">
         <Avatar
           :src="notification?.post?.photo || '/textPostPhoto.png'"
-          radius="rounded"
-          v-if="
-            notification?.type === 'like' ||
-            notification?.type === 'comment' ||
-            notification?.type === 'mention' ||
-            notification?.type === 'like-comment'
-          " />
+          radius="rounded" />
       </router-link>
     </aside>
   </div>
