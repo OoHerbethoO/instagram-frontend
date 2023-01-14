@@ -79,6 +79,7 @@ export default defineComponent({
     :is-open="isModalOpen"
     :modalHeight="'h-max'"
     class="relative"
+    :modalContentClass="readAbleImage ? 'active' : ''"
     modalFooterClass="block">
     <template v-slot:trigger>
       <Button
@@ -93,11 +94,12 @@ export default defineComponent({
           <textarea
             ref="textareaRef"
             class="w-full text-area pt-2 theme"
+            :class="!text ? 'h-7' : ''"
             placeholder="What’s Happening ?"
             v-model="text"
             @input="handleText" />
           <p
-            class="text-right ml-auto -text-fs-2 text-gray-500 mb-1 h-8 flex items-center justify-center rounded-full w-8"
+            class="text-right ml-auto -text-fs-2 text-gray-500 h-8 flex items-center justify-center rounded-full w-8"
             :class="{
               'text-yellow-600': maxTextLength < 15 && maxTextLength >= 0,
               'text-danger border-danger': maxTextLength < 0,
@@ -105,16 +107,16 @@ export default defineComponent({
             {{ maxTextLength }}
           </p>
           <div
-            class="relative"
+            class="relative bg-gray-100 rounded-lg"
             v-if="readAbleImage">
             <img
               :src="readAbleImage"
-              class="w-full rounded-lg object-cover"
+              class="w-full rounded-lg object-contain aspect-square"
               alt="" />
             <Button
               icon="ion:close"
               size="sm"
-              button-class="absolute top-3 right-3 bg-[#19191c6a] "
+              button-class="absolute top-3 right-3 bg-[#1b1b1d40] "
               radius="rounded-full"
               @click="cancelImage" />
           </div>
@@ -129,8 +131,10 @@ export default defineComponent({
           @handleImage="handleImage" />
         <Button
           text="Post"
-          :disabled="(!readAbleImage && !text) || maxTextLength < 0"
           :isLoading="postLoading || uploadPhotoLoading"
+          :disabled="
+            (!readAbleImage && !text) || maxTextLength < 0 || postLoading || uploadPhotoLoading
+          "
           button-class="px-7"
           type="submit"
           size="md"
