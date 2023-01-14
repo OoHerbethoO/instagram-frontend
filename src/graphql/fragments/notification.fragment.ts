@@ -11,11 +11,6 @@ const NotificationFragment = gql`
       _id
       photo
     }
-    receiver {
-      _id
-      avatar
-      name
-    }
     sender {
       _id
       avatar
