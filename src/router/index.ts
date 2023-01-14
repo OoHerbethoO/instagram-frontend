@@ -38,6 +38,12 @@ const router = createRouter({
           path: `${AppRoutes.EXPLORE}`,
           component: () => import('../views/private/Explore.vue'),
         },
+        {
+          name: 'Post',
+          path: `${AppRoutes.POST}/:id`,
+          component: () => import('../views/private/Post.vue'),
+          props: true,
+        },
       ],
     },
     {
