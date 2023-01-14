@@ -120,6 +120,17 @@ export type IMutationUploadPhotoArgs = {
   file: Scalars['Upload'];
 };
 
+export type INotification = {
+  _id: Scalars['ID'];
+  createdAt: Scalars['Date'];
+  isRemoved: Scalars['Boolean'];
+  isSeen: Scalars['Boolean'];
+  post?: Maybe<IPost>;
+  receiver: IUser;
+  sender: IUser;
+  type: Scalars['String'];
+};
+
 export type IPost = {
   _id: Scalars['ID'];
   comments?: Maybe<Array<Maybe<Scalars['ID']>>>;
@@ -211,17 +222,9 @@ export type IUser = {
   website?: Maybe<Scalars['String']>;
 };
 
-export type INotification = {
-  _id: Scalars['ID'];
-  createdAt: Scalars['Date'];
-  isSeen: Scalars['Boolean'];
-  post?: Maybe<IPost>;
-  receiver: IUser;
-  sender: IUser;
-  type: Scalars['String'];
-};
-
 export type ICommentFragment = { content: string, _id: string, createdAt: any, likes: Array<string | null>, post: { _id: string }, user: { _id: string, avatar?: string | null, name: string } };
+
+export type INotificationFragment = { _id: string, type: string, createdAt: any, isSeen: boolean, isRemoved: boolean, post?: { _id: string, photo?: string | null } | null, sender: { _id: string, avatar?: string | null, name: string } };
 
 export type IPostFragment = { _id: string, content?: string | null, photo?: string | null, createdAt?: any | null, likes?: Array<string | null> | null, comments?: Array<string | null> | null, isPublic?: boolean | null, user?: { name: string, _id: string, avatar?: string | null } | null };
 
@@ -369,7 +372,7 @@ export type IGetCommentsQueryResult = { getComments: Array<{ content: string, _i
 export type IGetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type IGetNotificationsQueryResult = { getNotifications: Array<{ _id: string, type: string, createdAt: any, isSeen: boolean, post?: { _id: string, photo?: string | null } | null, receiver: { _id: string, avatar?: string | null, name: string }, sender: { _id: string, avatar?: string | null, name: string } }> };
+export type IGetNotificationsQueryResult = { getNotifications: Array<{ _id: string, type: string, createdAt: any, isSeen: boolean, isRemoved: boolean, post?: { _id: string, photo?: string | null } | null, sender: { _id: string, avatar?: string | null, name: string } }> };
 
 export type IGetUserByIdQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -390,6 +393,11 @@ export type IMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type IMeQueryResult = { me?: { _id: string, name: string, avatar?: string | null, location?: string | null, website?: string | null, cover?: string | null, bio?: string | null, profession?: string | null, dateOfBirth?: any | null, createdAt?: any | null, followers?: Array<string | null> | null, following?: Array<string | null> | null, posts?: Array<string | null> | null, bookmarks?: Array<string | null> | null, totalNotifications?: number | null, totalMessages?: number | null, isVerified?: boolean | null } | null };
 
+export type INewNotificationSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type INewNotificationSubscriptionResult = { newNotification: { _id: string, type: string, createdAt: any, isSeen: boolean, isRemoved: boolean, post?: { _id: string, photo?: string | null } | null, sender: { _id: string, avatar?: string | null, name: string } } };
+
 export const CommentFragmentDoc = gql`
     fragment comment on Comment {
   content
@@ -400,6 +408,24 @@ export const CommentFragmentDoc = gql`
     _id
   }
   user {
+    _id
+    avatar
+    name
+  }
+}
+    `;
+export const NotificationFragmentDoc = gql`
+    fragment notification on Notification {
+  _id
+  type
+  createdAt
+  isSeen
+  isRemoved
+  post {
+    _id
+    photo
+  }
+  sender {
     _id
     avatar
     name
@@ -995,27 +1021,10 @@ export type GetCommentsQueryCompositionFunctionResult = VueApolloComposable.UseQ
 export const GetNotificationsDocument = gql`
     query GetNotifications {
   getNotifications {
-    _id
-    type
-    createdAt
-    isSeen
-    post {
-      _id
-      photo
-    }
-    receiver {
-      _id
-      avatar
-      name
-    }
-    sender {
-      _id
-      avatar
-      name
-    }
+    ...notification
   }
 }
-    `;
+    ${NotificationFragmentDoc}`;
 
 /**
  * __useGetNotificationsQuery__
@@ -1123,3 +1132,27 @@ export function useMeLazyQuery(options: VueApolloComposable.UseQueryOptions<IMeQ
   return VueApolloComposable.useLazyQuery<IMeQueryResult, IMeQueryVariables>(MeDocument, {}, options);
 }
 export type MeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IMeQueryResult, IMeQueryVariables>;
+export const NewNotificationDocument = gql`
+    subscription NewNotification {
+  newNotification {
+    ...notification
+  }
+}
+    ${NotificationFragmentDoc}`;
+
+/**
+ * __useNewNotificationSubscription__
+ *
+ * To run a query within a Vue component, call `useNewNotificationSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNewNotificationSubscription` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the subscription, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/subscription.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useNewNotificationSubscription();
+ */
+export function useNewNotificationSubscription(options: VueApolloComposable.UseSubscriptionOptions<INewNotificationSubscriptionResult, INewNotificationSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<INewNotificationSubscriptionResult, INewNotificationSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<INewNotificationSubscriptionResult, INewNotificationSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<INewNotificationSubscriptionResult, INewNotificationSubscriptionVariables>(NewNotificationDocument, {}, options);
+}
+export type NewNotificationSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<INewNotificationSubscriptionResult, INewNotificationSubscriptionVariables>;
