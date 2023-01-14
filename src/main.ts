@@ -18,7 +18,7 @@ const app = createApp({
 app.use(router)
 app.mount('#app')
 const options = {
-  timeout: 1000,
+  timeout: 1500,
   position: 'bottom-center',
 }
 app.use(Toast, options)
