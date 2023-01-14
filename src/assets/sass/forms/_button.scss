@@ -108,8 +108,8 @@
     animation-duration: 0s;
     transition: all 0s;
     @apply cursor-wait gap-x-2;
-    --spinner-height: 1.1rem;
-    --spinner-width: 1.1rem;
+    --spinner-height: 0.9rem;
+    --spinner-width: 0.9rem;
     --spinner-border-color: theme('colors.gray.800');
     pointer-events: none;
     user-select: none;
@@ -139,7 +139,7 @@
         @apply ml-0 border-0 h-0 w-0;
       }
       &:before {
-        @apply border-[2.2px] static opacity-100 bg-transparent;
+        @apply border-[2.2px] mr-2 static opacity-100 bg-transparent;
       }
     }
 
@@ -152,8 +152,8 @@
     }
 
     &.lg {
-      --spinner-height: 1.3rem;
-      --spinner-width: 1.3rem;
+      --spinner-height: 1.2rem;
+      --spinner-width: 1.2rem;
     }
 
     &.sm {
