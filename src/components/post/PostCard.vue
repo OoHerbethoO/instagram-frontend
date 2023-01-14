@@ -2,17 +2,17 @@
 import { AppRoutes } from '@/constants/routes.constant'
 import type { IPost, IUser } from '@/types/graphql.types'
 import moment from 'moment'
-import { defineComponent, reactive, toRefs } from 'vue'
-import Avatar from '../reusable/Avatar.vue'
-import Button from '../reusable/Button.vue'
-import PostActionsDropdown from './PostActionsDropdown.vue'
-import PostContent from './PostContent.vue'
-import PostFooter from './PostFooter.vue'
+import { defineComponent, reactive, toRefs, defineAsyncComponent } from 'vue'
 import PostHeader from './PostHeader.vue'
-import PostImage from './PostImage.vue'
+const Avatar = defineAsyncComponent(() => import('../reusable/Avatar.vue'))
+const Button = defineAsyncComponent(() => import('../reusable/Button.vue'))
+const PostActionsDropdown = defineAsyncComponent(() => import('./PostActionsDropdown.vue'))
+const PostContent = defineAsyncComponent(() => import('./PostContent.vue'))
+const PostFooter = defineAsyncComponent(() => import('./PostFooter.vue'))
+const PostImage = defineAsyncComponent(() => import('./PostImage.vue'))
 
 export default defineComponent({
-  name: 'Post',
+  name: 'PostCard',
   components: {
     Avatar,
     Button,
@@ -41,6 +41,10 @@ export default defineComponent({
       default: false,
     },
     isModalOpen: {
+      type: Boolean,
+      default: false,
+    },
+    isAspectSquare: {
       type: Boolean,
       default: false,
     },
@@ -73,13 +77,15 @@ export default defineComponent({
       <PostContent
         @openModal="$emit('openModal')"
         :post="post"
-        :isModalOpen="isModalOpen"
+        :isModalOpen="false"
         :trimText="trimText" />
       <figure
-        class="cursor-pointer relative"
+        class="cursor-pointer relative h-max"
         v-if="post?.photo">
         <PostImage
           :photo="post?.photo"
+          :isCardPhotoOnly="isCardPhotoOnly"
+          :isAspectSquare="isModalOpen || isAspectSquare"
           @click="$emit('openModal')" />
         <footer
           v-if="isHovered && isCardPhotoOnly"
@@ -88,10 +94,12 @@ export default defineComponent({
             :post="post"
             variant="white"
             :isIconVariantSolid="true"
-            :hideBookmark="true" />
+            :hideBookmark="true">
+          </PostFooter>
         </footer>
       </figure>
       <PostFooter
+        class="sticky bottom-[-4px] bg-white py-1"
         v-if="!isCardPhotoOnly"
         @openModal="$emit('openModal')"
         :post="post"
