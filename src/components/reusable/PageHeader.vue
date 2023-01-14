@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, defineAsyncComponent } from 'vue'
+import Button from './Button.vue'
 const AddPostModal = defineAsyncComponent(() => import('../post/AddPostModal.vue'))
 const UserSearchInput = defineAsyncComponent(() => import('../search/UserSearchInput.vue'))
-const Button = defineAsyncComponent(() => import('./Button.vue'))
 const Input = defineAsyncComponent(() => import('./Input.vue'))
 const NotificationOffCanvas = defineAsyncComponent(
   () => import('../notifications/NotificationnOffCanvas.vue')
