@@ -1,6 +1,6 @@
 .offcanvas {
   @apply fixed top-0 bg-white right-0 z-[1999]  border max-w-[430px] w-full max-h-screen h-screen overflow-hidden rounded-tl-3xl rounded-bl-3xl;
-  box-shadow: -27px 1px 44px -4px rgb(73 74 76 / 25%) !important;
+  box-shadow: -24px 1px 24px -7px rgba(43, 44, 44, 0.06) !important;
 
   .offcanvas-header {
     @apply flex justify-between items-center px-5 pt-4 pb-3 bg-white sticky top-0 z-[1] border-b border-gray-300;
