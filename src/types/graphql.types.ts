@@ -374,6 +374,13 @@ export type IGetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type IGetNotificationsQueryResult = { getNotifications: Array<{ _id: string, type: string, createdAt: any, isSeen: boolean, isRemoved: boolean, post?: { _id: string, photo?: string | null } | null, sender: { _id: string, avatar?: string | null, name: string } }> };
 
+export type IGetPostByIdQueryVariables = Exact<{
+  postId: Scalars['ID'];
+}>;
+
+
+export type IGetPostByIdQueryResult = { getPostById: { _id: string, content?: string | null, photo?: string | null, createdAt?: any | null, likes?: Array<string | null> | null, comments?: Array<string | null> | null, isPublic?: boolean | null, user?: { name: string, _id: string, avatar?: string | null } | null } };
+
 export type IGetUserByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -1045,6 +1052,36 @@ export function useGetNotificationsLazyQuery(options: VueApolloComposable.UseQue
   return VueApolloComposable.useLazyQuery<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>(GetNotificationsDocument, {}, options);
 }
 export type GetNotificationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IGetNotificationsQueryResult, IGetNotificationsQueryVariables>;
+export const GetPostByIdDocument = gql`
+    query GetPostById($postId: ID!) {
+  getPostById(postId: $postId) {
+    ...post
+  }
+}
+    ${PostFragmentDoc}`;
+
+/**
+ * __useGetPostByIdQuery__
+ *
+ * To run a query within a Vue component, call `useGetPostByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostByIdQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGetPostByIdQuery({
+ *   postId: // value for 'postId'
+ * });
+ */
+export function useGetPostByIdQuery(variables: IGetPostByIdQueryVariables | VueCompositionApi.Ref<IGetPostByIdQueryVariables> | ReactiveFunction<IGetPostByIdQueryVariables>, options: VueApolloComposable.UseQueryOptions<IGetPostByIdQueryResult, IGetPostByIdQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IGetPostByIdQueryResult, IGetPostByIdQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IGetPostByIdQueryResult, IGetPostByIdQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<IGetPostByIdQueryResult, IGetPostByIdQueryVariables>(GetPostByIdDocument, variables, options);
+}
+export function useGetPostByIdLazyQuery(variables: IGetPostByIdQueryVariables | VueCompositionApi.Ref<IGetPostByIdQueryVariables> | ReactiveFunction<IGetPostByIdQueryVariables>, options: VueApolloComposable.UseQueryOptions<IGetPostByIdQueryResult, IGetPostByIdQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<IGetPostByIdQueryResult, IGetPostByIdQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<IGetPostByIdQueryResult, IGetPostByIdQueryVariables>> = {}) {
+  return VueApolloComposable.useLazyQuery<IGetPostByIdQueryResult, IGetPostByIdQueryVariables>(GetPostByIdDocument, variables, options);
+}
+export type GetPostByIdQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<IGetPostByIdQueryResult, IGetPostByIdQueryVariables>;
 export const GetUserByIdDocument = gql`
     query GetUserById($id: ID!) {
   getUserById(id: $id) {
