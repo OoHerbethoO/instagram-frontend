@@ -9,8 +9,8 @@ import {
   useMarkAllNotificationsSeenMutation,
   useNewNotificationSubscription,
 } from '@/types/graphql.types'
-
 import type { INotification } from '@/types/graphql.types'
+import EmptyState from '../reusable/EmptyState.vue'
 
 export default defineComponent({
   name: 'NotificationOffCanvas',
@@ -18,6 +18,7 @@ export default defineComponent({
     NotificationItem,
     Offcanvas,
     Button,
+    EmptyState,
   },
   setup() {
     const state = reactive({
@@ -122,7 +123,10 @@ export default defineComponent({
       <p
         class="w-full text-center text-gray-400 mt-6"
         v-else-if="notifications?.length === 0">
-        There are no notifications
+        <EmptyState
+          icon="/emptyNotfication.svg"
+          title="No notifications"
+          description="You don't have any notifications yet" />
       </p>
       <section
         class="notification-list"

@@ -2,14 +2,14 @@
 import useGallery from '@/hooks/useGallery'
 import type { IPost } from '@/types/graphql.types'
 import { useMeQuery } from '@/types/graphql.types'
-import { defineComponent, reactive, toRefs, watch } from 'vue'
-import PostSkeleton from '../skeletons/PostSkeleton.vue'
-import Post from './Post.vue'
-import ViewPostModal from './ViewPostModal.vue'
+import { defineComponent, reactive, toRefs, watch, defineAsyncComponent } from 'vue'
+import PostSkeleton from '@/components/skeletons/PostSkeleton.vue'
+const PostCard = defineAsyncComponent(() => import('./PostCard.vue'))
+const ViewPostModal = defineAsyncComponent(() => import('./ViewPostModal.vue'))
 
 export default defineComponent({
   name: 'PostList',
-  components: { Post, PostSkeleton, ViewPostModal },
+  components: { PostCard, PostSkeleton, ViewPostModal },
   props: {
     posts: {
       type: Array as () => Array<IPost>,
@@ -119,7 +119,7 @@ export default defineComponent({
         'explore-page-gallery': columnsOnSmScreens === 2,
       }">
       <div class="gallery-item">
-        <Post
+        <PostCard
           v-for="post in column1"
           :key="post._id"
           @openModal="handlePostClick(post)"
@@ -128,7 +128,7 @@ export default defineComponent({
           :post="post" />
       </div>
       <div class="gallery-item">
-        <Post
+        <PostCard
           v-for="post in column2"
           :key="post._id"
           @openModal="handlePostClick(post)"
@@ -139,7 +139,7 @@ export default defineComponent({
       <div
         class="gallery-item"
         v-if="columnsOnLgScreens === 3">
-        <Post
+        <PostCard
           v-for="post in column3"
           :key="post._id"
           @openModal="handlePostClick(post)"

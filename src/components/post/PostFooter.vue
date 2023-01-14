@@ -1,7 +1,7 @@
 <script lang="ts">
-import { useBookmarkPostMutation, useLikePostMutation } from '@/types/graphql.types'
 import type { IPost } from '@/types/graphql.types'
-import { defineComponent, reactive, watch, toRefs } from 'vue'
+import { useBookmarkPostMutation, useLikePostMutation } from '@/types/graphql.types'
+import { defineComponent } from 'vue'
 import Button from '../reusable/Button.vue'
 
 export default defineComponent({
@@ -23,11 +23,11 @@ export default defineComponent({
   },
   setup(props) {
     const { mutate: likePost, loading: likePostLoading } = useLikePostMutation({
-      refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts'],
+      refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts', 'GetPostById'],
     })
 
     const { mutate: bookmarkPost, loading: bookmarkPostLoading } = useBookmarkPostMutation({
-      refetchQueries: ['GetBookmarkedPosts', 'Me'],
+      refetchQueries: ['GetBookmarkedPosts', 'Me', 'GetPostById'],
     })
 
     const handleLikePost = () =>

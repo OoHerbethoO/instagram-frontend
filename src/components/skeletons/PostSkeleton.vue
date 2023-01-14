@@ -2,11 +2,15 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'PostCardSkeleton',
+  name: 'PostSkeleton',
   props: {
     variant: {
       type: String as () => 'card' | 'photo',
       default: 'card',
+    },
+    imgHeight: {
+      type: String,
+      default: 'h-64',
     },
   },
 })
@@ -26,6 +30,8 @@ export default defineComponent({
       <h1 class="h-3 w-full rounded skeleton mb-2"></h1>
       <h1 class="h-3 w-full rounded skeleton"></h1>
     </div>
-    <div class="card-image skeleton h-64"></div>
+    <div
+      class="card-image skeleton"
+      :class="imgHeight"></div>
   </article>
 </template>

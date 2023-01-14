@@ -1,10 +1,12 @@
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
-import NotificationOffCanvas from '../notifications/NotificationnOffCanvas.vue'
-import AddPostModal from '../post/AddPostModal.vue'
-import UserSearchInput from '../search/UserSearchInput.vue'
-import Button from './Button.vue'
-import Input from './Input.vue'
+import { defineComponent, reactive, toRefs, defineAsyncComponent } from 'vue'
+const AddPostModal = defineAsyncComponent(() => import('../post/AddPostModal.vue'))
+const UserSearchInput = defineAsyncComponent(() => import('../search/UserSearchInput.vue'))
+const Button = defineAsyncComponent(() => import('./Button.vue'))
+const Input = defineAsyncComponent(() => import('./Input.vue'))
+const NotificationOffCanvas = defineAsyncComponent(
+  () => import('../notifications/NotificationnOffCanvas.vue')
+)
 
 export default defineComponent({
   name: 'PageHeader',

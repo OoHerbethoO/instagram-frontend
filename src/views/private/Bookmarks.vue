@@ -1,8 +1,9 @@
 <script lang="ts">
+import { defineComponent, defineAsyncComponent } from 'vue'
 import { useGetBookmarkedPostsQuery } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
-import PostList from '@/components/post/PostList.vue'
 import EmptyState from '@/components/reusable/EmptyState.vue'
+const PostList = defineAsyncComponent(() => import('@/components/post/PostList.vue'))
+
 export default defineComponent({
   name: 'Bookmarks',
   components: { PostList, EmptyState },

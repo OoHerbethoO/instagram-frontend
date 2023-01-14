@@ -1,16 +1,18 @@
 <script lang="ts">
-import PostList from '@/components/post/PostList.vue'
-import CoverPhoto from '@/components/profile/CoverPhoto.vue'
-import ProfileHeader from '@/components/profile/ProfileHeader.vue'
-import UserAbout from '@/components/profile/UserAbout.vue'
-import UserStats from '@/components/profile/UserStats.vue'
-import Avatar from '@/components/reusable/Avatar.vue'
-import Button from '@/components/reusable/Button.vue'
-import EmptyState from '@/components/reusable/EmptyState.vue'
-import FollowOrUnfollowBtn from '@/components/reusable/FollowOrUnfollowBtn.vue'
 import { AppRoutes } from '@/constants/routes.constant'
 import { useGetPostsByUserQuery, useGetUserByIdQuery, useMeQuery } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
+const CoverPhoto = defineAsyncComponent(() => import('@/components/profile/CoverPhoto.vue'))
+const ProfileHeader = defineAsyncComponent(() => import('@/components/profile/ProfileHeader.vue'))
+const PostList = defineAsyncComponent(() => import('@/components/post/PostList.vue'))
+const UserAbout = defineAsyncComponent(() => import('@/components/profile/UserAbout.vue'))
+const UserStats = defineAsyncComponent(() => import('@/components/profile/UserStats.vue'))
+const Avatar = defineAsyncComponent(() => import('@/components/reusable/Avatar.vue'))
+const Button = defineAsyncComponent(() => import('@/components/reusable/Button.vue'))
+const EmptyState = defineAsyncComponent(() => import('@/components/reusable/EmptyState.vue'))
+const FollowOrUnfollowBtn = defineAsyncComponent(
+  () => import('@/components/reusable/FollowOrUnfollowBtn.vue')
+)
 
 export default defineComponent({
   components: {
@@ -107,6 +109,7 @@ export default defineComponent({
         :loading="postLoading"
         :columnsOnLgScreens="3"
         :columnsOnMdScreens="2"
+        :columnsOnSmScreens="2"
         :isCardPhotoOnly="true" />
       <EmptyState
         v-if="!postLoading && posts?.getPostsByUser.length === 0"

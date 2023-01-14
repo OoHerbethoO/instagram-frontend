@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import PageSidebar from '@/components/reusable/PageSidebar.vue'
-import PageHeader from '@/components/reusable/PageHeader.vue'
+import { defineComponent, ref, defineAsyncComponent } from 'vue'
+const PageHeader = defineAsyncComponent(() => import('@/components/reusable/PageHeader.vue'))
+const PageSidebar = defineAsyncComponent(() => import('@/components/reusable/PageSidebar.vue'))
 import { useMeQuery } from '@/types/graphql.types'
 import type { OnClickOutsideHandler } from '@vueuse/core'
 import { onClickOutside } from '@vueuse/core'

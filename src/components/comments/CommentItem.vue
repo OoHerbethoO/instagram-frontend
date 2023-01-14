@@ -1,12 +1,13 @@
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
 import Avatar from '@/components/reusable/Avatar.vue'
-import Button from '../reusable/Button.vue'
-import { useLikeCommentMutation, useDeleteCommentMutation } from '@/types/graphql.types'
-import type { IComment, IUser } from '@/types/graphql.types'
-import { useToast } from 'vue-toastification'
-import moment from 'moment'
 import { AppRoutes } from '@/constants/routes.constant'
+import type { IComment, IUser } from '@/types/graphql.types'
+import { useDeleteCommentMutation, useLikeCommentMutation } from '@/types/graphql.types'
+import moment from 'moment'
+import { defineComponent, reactive, toRefs } from 'vue'
+import { useToast } from 'vue-toastification'
+import Button from '../reusable/Button.vue'
+
 export default defineComponent({
   name: 'CommentItem',
   components: { Avatar, Button },

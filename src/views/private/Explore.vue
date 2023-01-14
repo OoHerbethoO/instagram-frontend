@@ -1,8 +1,8 @@
 <script lang="ts">
 import { useExplorePostsLazyQuery } from '@/types/graphql.types'
-import { defineComponent, onMounted, onUnmounted } from 'vue'
-import PostList from '@/components/post/PostList.vue'
+import { defineComponent, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
 import { useInfiniteScrollPagination } from '@/hooks/useInfiniteScrollPagination'
+const PostList = defineAsyncComponent(() => import('@/components/post/PostList.vue'))
 
 export default defineComponent({
   name: 'Explore',

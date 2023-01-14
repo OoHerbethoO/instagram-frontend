@@ -19,7 +19,7 @@ export default defineComponent({
   setup(props) {
     const isCopied = ref(false)
     const { mutate: deletePost } = useDeletePostMutation({
-      refetchQueries: ['Me', 'GetAllPosts', 'GetPostsByUser', 'ExplorePosts'],
+      refetchQueries: ['Me', 'GetAllPosts', 'GetPostsByUser', 'ExplorePosts', 'GetPostById'],
     })
 
     const handleDeletePost = () =>
@@ -28,7 +28,9 @@ export default defineComponent({
       })
 
     const handleCopyLink = () => {
-      navigator.clipboard.writeText(`http://localhost:3000/post/${props.postId}`)
+      const url = new URL(window.location.href)
+      const postLink = `${url.origin}/post/${props.postId}`
+      navigator.clipboard.writeText(postLink)
       isCopied.value = true
     }
 
@@ -42,7 +44,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <Dropdown>
+  <Dropdown @onClose="isCopied = false">
     <template v-slot:trigger>
       <Button
         icon="mdi:dots-horizontal"
@@ -67,12 +69,22 @@ export default defineComponent({
             : `material-symbols:content-copy-rounded`
         "
         :button-class="`w-full justify-start font-normal -text-fs-1 ${
-          isCopied && 'font-bold text-primary-dark'
+          isCopied && 'font-bold active-item'
         }`"
-        :icon-class="`${isCopied && 'text-primary-dark'}`"
+        :icon-class="`${isCopied && 'active-item'}`"
         size="md"
         @click="handleCopyLink"
         variant="transparent" />
+      <a
+        :href="`/post/${postId}`"
+        target="_blank">
+        <Button
+          text="Open in new tab"
+          icon="mdi:open-in-new"
+          button-class="justify-start font-normal -text-fs-1 w-full"
+          size="md"
+          variant="transparent" />
+      </a>
     </template>
   </Dropdown>
 </template>

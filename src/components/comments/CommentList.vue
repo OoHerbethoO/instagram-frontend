@@ -55,7 +55,7 @@ export default defineComponent({
 
       <template v-else>
         <CommentItem
-          v-for="comment in commentsData?.getComments"
+          v-for="comment in commentsData.getComments"
           :key="comment?._id"
           :comment="comment"
           :me="meData?.me"

@@ -6,4 +6,5 @@ export enum AppRoutes {
   SETTINGS = '/settings',
   PROFILE = '/profile',
   BOOKMARKS = '/bookmarks',
+  POST = '/post',
 }

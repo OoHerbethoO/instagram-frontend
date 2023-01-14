@@ -27,7 +27,7 @@ export default defineComponent({
 
 <template>
   <section
-    class="flex justify-center items-center flex-col gap-8 text-center"
+    class="flex justify-center items-center flex-col gap-6 text-center"
     :class="height">
     <img
       :src="icon"

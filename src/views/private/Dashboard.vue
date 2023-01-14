@@ -1,8 +1,9 @@
 <script lang="ts">
-import PostList from '@/components/post/PostList.vue'
+import { defineComponent, defineAsyncComponent } from 'vue'
+const PostList = defineAsyncComponent(() => import('@/components/post/PostList.vue'))
 import { useGetAllPostsQuery } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
 import EmptyState from '@/components/reusable/EmptyState.vue'
+
 export default defineComponent({
   name: 'Dashboard',
   components: { PostList, EmptyState },

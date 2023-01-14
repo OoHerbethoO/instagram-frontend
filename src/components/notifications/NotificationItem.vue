@@ -21,8 +21,11 @@ export default defineComponent({
     return { AppRoutes, isHovered }
   },
   computed: {
-    route() {
+    profileRoute() {
       return `${AppRoutes.PROFILE}/${this.notification?.sender?._id}`
+    },
+    postRoute() {
+      return `${AppRoutes.POST}/${this.notification?.post?._id}`
     },
     text() {
       switch (this.notification?.type) {
@@ -58,7 +61,7 @@ export default defineComponent({
     :class="{
       'bg-gray-100': !isSeen,
     }">
-    <router-link :to="route">
+    <router-link :to="profileRoute">
       <Avatar
         :src="notification?.sender?.avatar"
         :className="!isSeen || isHovered ? 'bg-gray-300' : 'bg-gray-100'" />
@@ -66,7 +69,7 @@ export default defineComponent({
     <aside class="notification-item-content">
       <div>
         <div>
-          <router-link :to="route"
+          <router-link :to="profileRoute"
             ><span class="h6 mr-2">{{ notification?.sender?.name }}</span>
           </router-link>
           <span>
@@ -79,15 +82,17 @@ export default defineComponent({
         :userId="notification?.sender?._id"
         v-if="notification?.type === 'follow'"
         size="sm" />
-      <Avatar
-        :src="notification?.post?.photo"
-        radius="rounded"
-        v-if="
-          notification?.type === 'like' ||
-          notification?.type === 'comment' ||
-          notification?.type === 'mention' ||
-          notification?.type === 'like-comment'
-        " />
+      <router-link :to="postRoute">
+        <Avatar
+          :src="notification?.post?.photo || '/textPostPhoto.png'"
+          radius="rounded"
+          v-if="
+            notification?.type === 'like' ||
+            notification?.type === 'comment' ||
+            notification?.type === 'mention' ||
+            notification?.type === 'like-comment'
+          " />
+      </router-link>
     </aside>
   </div>
 </template>

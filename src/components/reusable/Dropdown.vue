@@ -5,12 +5,16 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'Dropdown',
-  setup() {
+  emits: ['onClose'],
+  setup(props, { emit }) {
     const dropdownRef = ref(null)
     const isDropdownOpen = ref(false)
 
     const dropdownHandler: OnClickOutsideHandler = (event) => (isDropdownOpen.value = false)
-    onClickOutside(dropdownRef, (event) => (isDropdownOpen.value = false))
+    onClickOutside(dropdownRef, (event) => {
+      isDropdownOpen.value = false
+      emit('onClose')
+    })
 
     return {
       dropdownRef,

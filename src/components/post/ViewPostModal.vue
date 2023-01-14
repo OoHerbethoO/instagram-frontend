@@ -1,18 +1,18 @@
 <script lang="ts">
-import { defineComponent, reactive, watch } from 'vue'
-import Modal from '../reusable/Modal.vue'
+import { defineComponent, defineAsyncComponent, watch } from 'vue'
 import type { IPost } from '@/types/graphql.types'
-import Post from '../post/Post.vue'
 import { useMeQuery } from '@/types/graphql.types'
-import CommentList from '../comments/CommentList.vue'
-import CreateComment from '../comments/CreateComment.vue'
-import Button from '../reusable/Button.vue'
+const Modal = defineAsyncComponent(() => import('../reusable/Modal.vue'))
+const PostCard = defineAsyncComponent(() => import('./PostCard.vue'))
+const CommentList = defineAsyncComponent(() => import('../comments/CommentList.vue'))
+const CreateComment = defineAsyncComponent(() => import('../comments/CreateComment.vue'))
+const Button = defineAsyncComponent(() => import('../reusable/Button.vue'))
 
 export default defineComponent({
   name: 'ViewPostModal',
   components: {
     Modal,
-    Post,
+    PostCard,
     CommentList,
     CreateComment,
     Button,
@@ -63,7 +63,7 @@ export default defineComponent({
     :is-open="isModalOpen">
     <template v-slot:modal-body>
       <section class="md:flex h-full gap-8 relative">
-        <Post
+        <PostCard
           class="flex-1 overflow-auto"
           height="100%"
           :key="post._id"
