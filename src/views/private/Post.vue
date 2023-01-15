@@ -33,7 +33,7 @@ export default defineComponent({
       postId: props.id,
     })
 
-    const { skip, limit, loadMore } = useInfiniteScrollPagination()
+    const { limit, loadMore } = useInfiniteScrollPagination()
 
     const {
       load: loadExplorePosts,
@@ -41,7 +41,6 @@ export default defineComponent({
       loading: explorePostsLoading,
       error: explorePostsError,
     } = useExplorePostsLazyQuery({
-      skip: skip.value,
       limit: limit.value,
     })
 
@@ -77,7 +76,7 @@ export default defineComponent({
 <template>
   <div>
     <section class="md:flex gap-8 relative single-post-card">
-      <div class="w-[46.4%] overflow-auto">
+      <div class="md:w-[46.4%] overflow-auto">
         <PostCard
           :key="post?.getPostById?._id"
           :me="meData?.me"

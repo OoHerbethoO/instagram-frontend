@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'Explore',
   components: { PostList },
   setup() {
-    const { skip, limit, loadMore } = useInfiniteScrollPagination()
+    const { limit, loadMore } = useInfiniteScrollPagination()
 
     const {
       load: loadExplorePosts,
@@ -16,7 +16,6 @@ export default defineComponent({
       loading: explorePostsLoading,
       error: explorePostsError,
     } = useExplorePostsLazyQuery({
-      skip: skip.value,
       limit: limit.value,
     })
 

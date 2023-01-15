@@ -159,7 +159,6 @@ export type IQuery = {
 
 export type IQueryExplorePostsArgs = {
   limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -345,7 +344,6 @@ export type ICountUnSeenNotificationsQueryVariables = Exact<{ [key: string]: nev
 export type ICountUnSeenNotificationsQueryResult = { countUnSeenNotifications: number };
 
 export type IExplorePostsQueryVariables = Exact<{
-  skip?: InputMaybe<Scalars['Int']>;
   limit?: InputMaybe<Scalars['Int']>;
 }>;
 
@@ -911,8 +909,8 @@ export function useCountUnSeenNotificationsLazyQuery(options: VueApolloComposabl
 }
 export type CountUnSeenNotificationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<ICountUnSeenNotificationsQueryResult, ICountUnSeenNotificationsQueryVariables>;
 export const ExplorePostsDocument = gql`
-    query ExplorePosts($skip: Int, $limit: Int) {
-  explorePosts(skip: $skip, limit: $limit) {
+    query ExplorePosts($limit: Int) {
+  explorePosts(limit: $limit) {
     ...post
   }
 }
@@ -930,7 +928,6 @@ export const ExplorePostsDocument = gql`
  *
  * @example
  * const { result, loading, error } = useExplorePostsQuery({
- *   skip: // value for 'skip'
  *   limit: // value for 'limit'
  * });
  */
