@@ -1,6 +1,8 @@
-import { AppRoutes } from './../constants/routes.constant'
+import { useAuth } from '@/hooks/useAuth'
+import Cookies from '@/utils/cookies'
 import { createRouter, createWebHistory } from 'vue-router'
 import Root from '../views/Root.vue'
+import { AppRoutes } from './../constants/routes.constant'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,15 +50,26 @@ const router = createRouter({
     },
     {
       path: AppRoutes.LOGIN,
-      name: 'login',
+      name: 'Login',
       component: () => import('../views/auth/Login.vue'),
     },
     {
       path: AppRoutes.REGISTER,
-      name: 'register',
+      name: 'Register',
       component: () => import('../views/auth/Register.vue'),
     },
   ],
+})
+
+router.beforeEach(async (to, from, next) => {
+  const { authPromise } = useAuth()
+  const token = Cookies.getToken()
+  const isAuth = await authPromise
+  if (to.name === 'Login' || to.name === 'Register') {
+    token && isAuth ? next({ name: 'Dashboard' }) : next()
+  } else {
+    token && isAuth ? next() : next({ name: 'Login' })
+  }
 })
 
 export default router
