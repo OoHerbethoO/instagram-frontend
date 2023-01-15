@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'Dashboard',
   components: { PostList, EmptyState },
   setup() {
-    const { result, loading, error } = useGetAllPostsQuery({ fetchPolicy: 'network-only' })
+    const { result, loading, error } = useGetAllPostsQuery({ fetchPolicy: 'cache-and-network' })
     return { result, loading, error }
   },
 })
@@ -18,7 +18,7 @@ export default defineComponent({
   <div>
     <PostList
       :posts="result?.getAllPosts"
-      :loading="loading" />
+      :loading="false" />
     <EmptyState
       v-if="result?.getAllPosts.length === 0"
       title="Looks like there's nothing new here"
