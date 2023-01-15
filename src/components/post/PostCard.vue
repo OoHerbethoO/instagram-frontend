@@ -99,7 +99,7 @@ export default defineComponent({
         </footer>
       </figure>
       <PostFooter
-        class="sticky bottom-[-4px] bg-white py-1"
+        :class="isModalOpen || isAspectSquare ? 'sticky bottom-[-4px] bg-white py-1' : ''"
         v-if="!isCardPhotoOnly"
         @openModal="$emit('openModal')"
         :post="post"
