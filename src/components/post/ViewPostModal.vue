@@ -64,7 +64,7 @@ export default defineComponent({
     <template v-slot:modal-body>
       <section class="md:flex h-full gap-8 relative">
         <PostCard
-          class="flex-1 overflow-auto"
+          class="md:w-[46%] overflow-auto"
           height="100%"
           :key="post._id"
           :isModalOpen="isModalOpen"
