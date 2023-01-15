@@ -77,7 +77,7 @@ export default defineComponent({
       <PostContent
         @openModal="$emit('openModal')"
         :post="post"
-        :isModalOpen="false"
+        :isModalOpen="isModalOpen"
         :trimText="trimText" />
       <figure
         class="cursor-pointer relative h-max"
