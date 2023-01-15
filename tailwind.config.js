@@ -19,7 +19,7 @@ module.exports = {
             gray: {
               'gray-100': '#f5f6f7',
               'gray-200': '#f0f1f2',
-              'gray-300': '#e8e9ea',
+              'gray-300': '#e1e2e3',
               'gray-400': '#abadae',
               'gray-500': '#878A8C',
               'gray-600': '#7c7f80',
@@ -45,7 +45,7 @@ module.exports = {
             black: '#f5f6f7',
             gray: {
               'gray-100': '#1c1e1f',
-              'gray-200': '#18191a',
+              'gray-200': '#262829',
               'gray-300': '#28292a',
               'gray-400': '#404043',
               'gray-500': '#727374',

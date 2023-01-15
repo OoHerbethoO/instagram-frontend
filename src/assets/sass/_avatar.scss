@@ -49,3 +49,13 @@
     @apply h-[50px] w-[50px];
   }
 }
+
+.sidebar-avatar {
+  @apply bg-gray-200;
+}
+
+.dark {
+  .sidebar-avatar {
+    --gray-300: theme(colors.themes.dark.gray.gray-400);
+  }
+}

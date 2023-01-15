@@ -42,7 +42,7 @@ export default defineComponent({
     class="w-full flex flex-col justify-between faideIn"
     v-else>
     <header class="w-full">
-      <header class="bg-gray-200 p-2 py-3 w-full rounded h-max">
+      <header class="sidebar-avatar p-2 py-3 w-full rounded h-max">
         <router-link
           :to="`${AppRoutes.PROFILE}/${MeData?.me?._id}`"
           @click="$emit('closeSidebar')">
