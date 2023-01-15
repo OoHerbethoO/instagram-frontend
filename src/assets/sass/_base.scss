@@ -7,6 +7,34 @@
   letter-spacing: -0.01px;
 }
 
+html {
+  font-size: 16px;
+}
+
+@media screen and (min-width: 1500px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 1750px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1900px) {
+  html {
+    font-size: 23px;
+  }
+}
+
+@media screen and (min-width: 2300px) {
+  html {
+    font-size: 28px;
+  }
+}
+
 :root {
   scroll-behavior: smooth;
 }
