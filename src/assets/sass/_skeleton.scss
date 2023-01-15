@@ -1,5 +1,5 @@
 .skeleton {
-  @apply bg-[#ebedeeb8] animate-pulse;
+  @apply bg-gray-100 animate-pulse;
   &.circle {
     @apply rounded-full;
   }
