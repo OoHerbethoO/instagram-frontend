@@ -1,7 +1,7 @@
 .post-card {
   @apply flex flex-col gap-y-3 fadeIn;
   .card-image {
-    @apply w-full h-full   object-cover border border-gray-100 border-opacity-20;
+    @apply w-full h-full   object-cover;
   }
   .card-title {
     @apply text-gray-800  text-[13.7px] sm:text-[14.5px];

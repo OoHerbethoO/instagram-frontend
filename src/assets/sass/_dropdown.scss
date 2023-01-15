@@ -16,9 +16,11 @@
 
 .dark {
   .dropdown {
+    --white: theme(colors.themes.dark.gray.gray-300);
+    --gray-300: theme(colors.themes.dark.gray.gray-400);
     @apply relative inline-block;
     .dropdown-menu {
-      @apply dark:bg-gray-100 dark:shadow-none;
+      @apply dark:shadow-none;
       .btn {
         @apply hover:dark:bg-gray-300;
       }
