@@ -21,9 +21,9 @@
   }
 
   .card-content {
-    @apply px-10 py-10 min-h-[120px] flex  justify-center items-center rounded-md;
+    @apply px-6 py-6 min-h-[120px] flex  justify-center items-center rounded-md;
     .card-title {
-      @apply text-[13.5px] sm:text-fs-base;
+      @apply text-fs-base whitespace-normal break-words break-all;
     }
     .trim-text {
       @apply overflow-hidden;
@@ -33,7 +33,7 @@
     }
 
     &.gray {
-      @apply bg-[#e8e8e8] leading-7 text-black;
+      @apply bg-gray-100 leading-7 text-black;
     }
   }
 }
