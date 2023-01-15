@@ -35,10 +35,11 @@ export default defineComponent({
         }">
         {{ post.content }}
       </span>
+
       <span
         v-if="!isModalOpen && post.content.length > 400"
         @click="$emit('openModal')"
-        class="absolute bottom-0 right-0 bg-[#e8e8e8] pl-2 font-bold cursor-pointer text-gray-800">
+        class="absolute bottom-0 right-0 bg-gray-100 pl-2 font-bold cursor-pointer text-gray-800">
         ...Read more
       </span>
     </div>
