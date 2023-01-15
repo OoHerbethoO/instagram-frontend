@@ -93,7 +93,7 @@ export default defineComponent({
         <div class="flex-1">
           <textarea
             ref="textareaRef"
-            class="w-full text-area pt-2 theme"
+            class="w-full text-area pt-2 theme bg-transparent"
             :class="!text ? 'h-7' : ''"
             placeholder="What’s Happening ?"
             v-model="text"

@@ -12,6 +12,7 @@ import useForm from '@/hooks/useForm'
 import usePhotoUpload from '@/hooks/usePhotoUpload'
 import { useRouter } from 'vue-router'
 import { AppRoutes } from '@/constants/routes.constant'
+import ThemeDropdown from '@/components/settings/ThemeDropdown.vue'
 
 export default defineComponent({
   name: 'Settings',
@@ -21,6 +22,7 @@ export default defineComponent({
     CoverPhoto,
     ProfileHeader,
     SettingActionBtns,
+    ThemeDropdown,
   },
   setup() {
     const toast = useToast()
@@ -128,7 +130,7 @@ export default defineComponent({
           @handleSubmit="handleSubmit" />
       </ProfileHeader>
       <form class="mt-7">
-        <section class="grid md:grid-cols-2 gap-x-6 xl:gap-x-10 gap-y-7">
+        <section class="grid md:grid-cols-2 gap-x-6 xl:gap-x-10 gap-y-6">
           <template v-for="input in profileUpdateJson">
             <Input
               v-if="input.name !== 'name'"
@@ -141,6 +143,7 @@ export default defineComponent({
               :type="input.type"
               :placeholder="input.placeholder" />
           </template>
+          <ThemeDropdown />
         </section>
       </form>
       <SettingActionBtns

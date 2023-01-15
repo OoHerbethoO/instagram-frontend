@@ -44,7 +44,7 @@
 }
 
 .label {
-  @apply font-medium -text-fs-1 text-gray-800 mb-2 capitalize inline-block;
+  @apply font-medium -text-fs-1 text-gray-800 dark:text-gray-700 mb-2 capitalize inline-block;
 }
 
 .slot {
@@ -74,8 +74,28 @@
   }
 }
 
-input {
-  &::placeholder {
-    @apply text-gray-500 text-[14.4px] font-normal;
+::placeholder {
+  @apply text-gray-500 dark:text-gray-800 text-[14.4px] font-normal;
+}
+
+.dark {
+  ::placeholder {
+    @apply text-gray-500;
+  }
+
+  .neobrutalism {
+    @apply border-gray-400  overflow-hidden;
+    box-shadow: none;
+    &.focus {
+      box-shadow: none;
+    }
+  }
+  .btn.neobrutalism {
+    @apply bg-primary hover:bg-primary-dark border-0;
+    &:focus,
+    &:active {
+      @apply outline-primary border-primary;
+      box-shadow: none;
+    }
   }
 }

@@ -71,6 +71,7 @@ export default defineComponent({
           size="lg"
           :src="readAbleImage || avatar"
           :isLoading="isLoading"
+          classNameContainer="bg-gray-100 border border-gray-300"
           :text="!edit ? name : ''"
           textClassName="pt-10" />
         <UploadBtn
@@ -88,7 +89,7 @@ export default defineComponent({
           @input="$emit('handleName', $event)"
           name="name"
           placeholder="Please enter your name"
-          class="mt-10 edit-input avatar-text lg w-max"
+          class="mt-10 bg-transparent edit-input avatar-text lg w-max"
           type="text" />
         <p class="absolute mt-1 text-danger -text-fs-1">{{ error }}</p>
       </div>

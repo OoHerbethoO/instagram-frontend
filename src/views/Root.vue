@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, defineAsyncComponent } from 'vue'
+import { defineComponent, ref, defineAsyncComponent, onMounted } from 'vue'
 const PageHeader = defineAsyncComponent(() => import('@/components/reusable/PageHeader.vue'))
 const PageSidebar = defineAsyncComponent(() => import('@/components/reusable/PageSidebar.vue'))
 import { useMeQuery } from '@/types/graphql.types'
@@ -14,6 +14,7 @@ export default defineComponent({
   },
 
   setup() {
+    const theme = localStorage.getItem('theme') || 'light'
     const sidebarRef = ref(null)
     const isSidebarOpen = ref(false)
 
@@ -21,6 +22,13 @@ export default defineComponent({
     onClickOutside(sidebarRef, (event) => (isSidebarOpen.value = false))
 
     const { result, loading, error } = useMeQuery()
+
+    onMounted(() => {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark')
+      }
+    })
+
     return {
       result,
       loading,

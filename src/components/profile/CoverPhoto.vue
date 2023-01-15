@@ -42,7 +42,7 @@ export default defineComponent({
 <template>
   <figure
     class="h-52 w-full rounded-md relative border border-gray-100"
-    :class="isLoading ? 'skeleton' : 'bg-gray-200'">
+    :class="isLoading ? 'skeleton' : 'bg-gray-100'">
     <img
       v-if="cover || readAbleImage"
       :src="readAbleImage || cover"

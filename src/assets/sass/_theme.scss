@@ -11,8 +11,10 @@
   --primary-light: theme(colors.themes.light.primary.light);
   --primary: theme(colors.themes.light.primary.primary);
   --primary-dark: theme(colors.themes.light.primary.dark);
+  --primary-fg: theme(colors.themes.light.primary.fg);
   --danger-light: theme(colors.themes.light.danger.light);
   --danger: theme(colors.themes.light.danger.danger);
+  --danger-fg: theme(colors.themes.light.danger.fg);
   --danger-dark: theme(colors.themes.light.danger.dark);
   --black: theme(colors.themes.light.black);
   --white: theme(colors.themes.light.white);
@@ -31,9 +33,11 @@
   --primary-light: theme(colors.themes.dark.primary.light);
   --primary: theme(colors.themes.dark.primary.primary);
   --primary-dark: theme(colors.themes.dark.primary.dark);
+  --primary-fg: theme(colors.themes.dark.primary.fg);
   --danger-light: theme(colors.themes.dark.danger.light);
   --danger: theme(colors.themes.dark.danger.danger);
   --danger-dark: theme(colors.themes.dark.danger.dark);
+  --danger-fg: theme(colors.themes.dark.danger.fg);
   --black: theme(colors.themes.dark.black);
   --white: theme(colors.themes.dark.white);
 }

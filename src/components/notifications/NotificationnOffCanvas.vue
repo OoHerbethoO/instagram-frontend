@@ -113,7 +113,7 @@ export default defineComponent({
           variant="transparent" />
         <div
           v-if="!countUnSeenNotificationsLoading && countUnSeenNotifications > 0"
-          class="absolute top-0 -right-1 bg-danger -text-fs-3 font-bold h-5 w-5 rounded-full grid place-items-center text-white">
+          class="absolute top-0 -right-1 bg-danger text-danger-fg -text-fs-3 font-bold h-5 w-5 rounded-full grid place-items-center">
           {{ countUnSeenNotifications }}
         </div>
       </div>

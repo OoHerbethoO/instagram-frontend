@@ -19,6 +19,10 @@ export default defineComponent({
       type: String as () => 'sm' | 'md' | 'default' | 'lg',
       default: 'default',
     },
+    classNameContainer: {
+      type: String,
+      default: '',
+    },
     className: {
       type: String,
       default: 'bg-gray-100',
@@ -43,6 +47,7 @@ export default defineComponent({
       class="avatar grid place-items-center rounded-full"
       :class="{
         [`${size}`]: size,
+        [`${classNameContainer}`]: classNameContainer,
         [`${className}`]: className,
         skeleton: isLoading,
       }">

@@ -1,14 +1,26 @@
 .dropdown {
   @apply relative inline-block;
   .dropdown-menu {
-    @apply absolute min-w-[160px] right-0 mt-2  rounded-lg p-2 bg-white z-50 border border-gray-100;
-    box-shadow: 0px 4px 16px -4px rgba(97, 101, 107, 0.15);
+    @apply absolute min-w-[160px] right-0 mt-2  rounded-lg p-2 bg-white  z-50 border border-gray-100 shadow-dropdown;
+
     * {
-      color: var(--gray-800);
+      @apply text-gray-800 dark:text-gray-700;
     }
     .active-item {
       * {
-        color: var(--primary-dark) !important;
+        @apply text-primary dark:text-[#1eaf85];
+      }
+    }
+  }
+}
+
+.dark {
+  .dropdown {
+    @apply relative inline-block;
+    .dropdown-menu {
+      @apply dark:bg-gray-100 dark:shadow-none;
+      .btn {
+        @apply hover:dark:bg-gray-300;
       }
     }
   }
