@@ -33,7 +33,7 @@ export default defineComponent({
     }
 
     onDone(() => {
-      toast.success('Login successful')
+      toast.success('Account created successfully')
       router.push(AppRoutes.LOGIN)
     })
 
