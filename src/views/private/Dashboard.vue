@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'Dashboard',
   components: { PostList, EmptyState },
   setup() {
-    const { result, loading, error } = useGetAllPostsQuery()
+    const { result, loading, error } = useGetAllPostsQuery({ fetchPolicy: 'network-only' })
     return { result, loading, error }
   },
 })
