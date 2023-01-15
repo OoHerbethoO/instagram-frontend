@@ -108,7 +108,7 @@ export default defineComponent({
         :posts="posts?.getPostsByUser"
         :loading="postLoading"
         :columnsOnLgScreens="3"
-        :columnsOnMdScreens="2"
+        :columnsOnMdScreens="3"
         :columnsOnSmScreens="2"
         :isCardPhotoOnly="true" />
       <EmptyState

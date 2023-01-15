@@ -60,7 +60,7 @@
     @apply w-screen  overflow-hidden bg-[#19191c7b];
 
     .modal-content {
-      @apply xl:max-w-[80vw] max-w-[1000px] my-0 md:my-7 h-screen mx-0 md:mx-5 rounded-none md:rounded-xl;
+      @apply xl:max-w-[70vw] max-w-[950px] my-0 md:my-7 h-screen mx-0 md:mx-5 rounded-none md:rounded-xl;
 
       @screen md {
         height: calc(100% - 43px * 1.3);
