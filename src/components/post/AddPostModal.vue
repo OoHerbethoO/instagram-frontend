@@ -93,13 +93,14 @@ export default defineComponent({
         <div class="flex-1">
           <textarea
             ref="textareaRef"
+            autofocus
             class="w-full text-area pt-2 theme bg-transparent"
-            :class="!text ? 'h-7' : ''"
+            :class="!text ? 'h-11' : ''"
             placeholder="What’s Happening ?"
             v-model="text"
             @input="handleText" />
           <p
-            class="text-right ml-auto -text-fs-2 text-gray-500 h-8 flex items-center justify-center rounded-full w-8"
+            class="text-right ml-auto -text-fs-2 text-gray-500 flex items-center justify-center rounded-full w-8"
             :class="{
               'text-yellow-600': maxTextLength < 15 && maxTextLength >= 0,
               'text-danger border-danger': maxTextLength < 0,
@@ -107,7 +108,7 @@ export default defineComponent({
             {{ maxTextLength }}
           </p>
           <div
-            class="relative bg-gray-100 rounded-lg"
+            class="relative bg-gray-100 mt-2 rounded-lg"
             v-if="readAbleImage">
             <img
               :src="readAbleImage"
@@ -124,7 +125,9 @@ export default defineComponent({
       </main>
     </template>
     <template v-slot:modal-footer>
-      <footer class="flex gap-x-2 justify-end items-center">
+      <footer
+        class="flex gap-x-2 justify-end items-center pb-1"
+        :class="readAbleImage ? 'mt-2' : '-mt-2 '">
         <UploadBtn
           buttonClass="border-none md"
           icon="ph:image-square-fill"
