@@ -77,7 +77,11 @@ export default defineComponent({
   <div>
     <section class="md:flex gap-8 relative single-post-card">
       <div class="md:w-[46.4%] overflow-auto">
+        <PostCardSkeleton
+          v-if="postLoading"
+          imgHeight="aspect-square" />
         <PostCard
+          v-else
           :key="post?.getPostById?._id"
           :me="meData?.me"
           :isAspectSquare="true"
@@ -86,7 +90,9 @@ export default defineComponent({
       </div>
       <aside
         class="flex-1 flex flex-col justify-between mt-5 md:mt-0 aspect-square md:overflow-auto">
-        <div class="flex-1">
+        <div
+          class="flex-1 aspect-square"
+          v-if="post?.getPostById?._id">
           <CommentList
             class="mb-3"
             :key="post?.getPostById?._id"
