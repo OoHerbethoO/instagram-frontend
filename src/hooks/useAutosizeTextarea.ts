@@ -8,14 +8,14 @@ export function useAutosizeTextarea(minRows = 1) {
     const textarea = textareaRef.value
     if (textarea) {
       textarea.style.height = 'auto'
-      textarea.style.height = `${textarea.scrollHeight}px`
+      textarea.style.height = `${textarea.scrollHeight - 8}px`
     }
   })
 
   function updateSize() {
     if (textareaRef.value) {
       textareaRef.value.style.height = 'auto'
-      textareaRef.value.style.height = textareaRef.value.scrollHeight + 'px'
+      textareaRef.value.style.height = textareaRef.value.scrollHeight - 8 + 'px'
     }
   }
 
