@@ -108,7 +108,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <section class="flex gap-x-10 lg:gap-x-20">
+  <section class="flex gap-x-10 lg:gap-x-20 pb-10">
     <section class="flex-1">
       <CoverPhoto
         :cover="me?.me?.cover || ''"
