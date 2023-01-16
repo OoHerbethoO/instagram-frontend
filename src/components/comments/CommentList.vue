@@ -53,14 +53,16 @@ export default defineComponent({
           :key="i" />
       </template>
 
-      <template v-else>
+      <div
+        v-else
+        class="w-full">
         <CommentItem
           v-for="comment in commentsData.getComments"
           :key="comment?._id"
           :comment="comment"
           :me="meData?.me"
           :postUserId="post?.user._id" />
-      </template>
+      </div>
       <p
         class="w-full text-center text-gray-400 -text-fs-1 my-2"
         v-if="commentsData?.getComments.length === 0">
