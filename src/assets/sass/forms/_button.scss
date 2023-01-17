@@ -201,15 +201,15 @@
       }
     }
     &.md {
-      @apply min-w-md w-md h-md;
+      @apply min-w-D sm:min-w-md w-D sm:w-md h-D sm:h-md;
       svg {
         @apply text-fs-3;
       }
     }
     &.lg {
-      @apply min-w-lg w-lg h-lg;
+      @apply min-w-D sm:min-w-lg w-D sm:w-lg h-D sm:h-lg;
       svg {
-        @apply text-fs-5;
+        @apply text-fs-2 sm:text-fs-4;
       }
     }
   }

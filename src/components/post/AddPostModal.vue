@@ -84,6 +84,7 @@ export default defineComponent({
     <template v-slot:trigger>
       <Button
         text="Add Post"
+        button-class="h-[2.7353293413173652rem] sm:h-[3rem]"
         @click="isModalOpen = true"
         icon="ion:add-circle" />
     </template>
