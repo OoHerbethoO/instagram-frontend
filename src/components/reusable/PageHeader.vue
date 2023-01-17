@@ -43,7 +43,7 @@ export default defineComponent({
           radius="rounded-full"
           iconClass="text-fs-2"
           :class="{
-            'sm:ml-[-5px]': showInput,
+            'ml-[-5px]': showInput,
           }"
           @click="showInput = !showInput"
           buttonClass="ml-1 mr-0" />
