@@ -104,13 +104,13 @@ module.exports = {
       },
       minHeight: {
         D: '46px',
-        sm: rem(36),
+        sm: rem(39),
         md: rem(42),
         lg: rem(50),
       },
       minWidth: {
         D: rem(46),
-        sm: rem(36),
+        sm: rem(39),
         md: rem(42),
         lg: rem(50),
       },
