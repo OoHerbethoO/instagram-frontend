@@ -50,7 +50,7 @@ export default defineComponent({
       </UserSearchInput>
     </section>
     <aside
-      class="flex gap-x-4"
+      class="flex gap-x-2 sm:gap-x-4"
       :class="{
         'hidden md:flex': showInput,
         flex: showInput,
