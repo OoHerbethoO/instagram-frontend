@@ -118,3 +118,9 @@ h6,
 .icon {
   @apply text-gray-600;
 }
+
+.dark {
+  .icon {
+    @apply text-gray-700;
+  }
+}
