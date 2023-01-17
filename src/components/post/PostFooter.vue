@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { IPost } from '@/types/graphql.types'
 import { useBookmarkPostMutation, useLikePostMutation } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import Button from '../reusable/Button.vue'
 
 export default defineComponent({
@@ -22,6 +22,11 @@ export default defineComponent({
     hideBookmark: Boolean,
   },
   setup(props) {
+    const state = reactive({
+      likes: props.post.likes,
+      bookmarks: props.me?.bookmarks,
+    })
+
     const { mutate: likePost, loading: likePostLoading } = useLikePostMutation({
       refetchQueries: ['GetAllPosts', 'GetPostsByUser', 'GetBookmarkedPosts', 'GetPostById'],
     })
@@ -30,17 +35,26 @@ export default defineComponent({
       refetchQueries: ['GetBookmarkedPosts', 'Me', 'GetPostById'],
     })
 
-    const handleLikePost = () =>
+    const handleLikePost = () => {
+      state.likes = state.likes.includes(props.me?._id)
+        ? state.likes.filter((id) => id !== props.me?._id)
+        : [...state.likes, props.me?._id]
       likePost({
         postId: props.post._id,
       })
+    }
 
-    const handleBookmarkPost = () =>
+    const handleBookmarkPost = () => {
+      state.bookmarks = state.bookmarks.includes(props.post._id)
+        ? state.bookmarks.filter((id) => id !== props.post._id)
+        : [...state.bookmarks, props.post._id]
       bookmarkPost({
         postId: props.post._id,
       })
+    }
 
     return {
+      ...toRefs(state),
       handleLikePost,
       handleBookmarkPost,
       bookmarkPostLoading,
@@ -49,13 +63,13 @@ export default defineComponent({
   },
   computed: {
     isPostLikedByMe() {
-      return this.post.likes.includes(this.me?._id)
+      return this.likes.includes(this.me?._id)
     },
     isBookmark() {
-      return this.me?.bookmarks.includes(this.post._id)
+      return this.bookmarks.includes(this.post._id)
     },
     totalLikes() {
-      return this.post.likes.length
+      return this.likes.length
     },
     totalComments() {
       return this.post.comments.length
@@ -79,7 +93,6 @@ export default defineComponent({
           button-class="font-normal"
           size="md"
           radius="rounded-full"
-          :disabled="likePostLoading"
           :variant="isPostLikedByMe ? 'like' : 'transparent'"
           @click="handleLikePost" />
         <span :class="isPostLikedByMe ? 'text-danger' : 'btn-text'">{{ totalLikes }}</span>
@@ -102,7 +115,6 @@ export default defineComponent({
       radius="rounded-full"
       size="md"
       :loading="bookmarkPostLoading"
-      :disabled="bookmarkPostLoading"
       @click="handleBookmarkPost"
       variant="transparent" />
   </footer>
