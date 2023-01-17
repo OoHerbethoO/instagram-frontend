@@ -33,8 +33,8 @@ export default defineComponent({
       :src="icon"
       alt="Empty state icon" />
     <div>
-      <h4 class="font-medium text-fs-5 mb-1">{{ title }}</h4>
-      <p class="-text-fs-1 text-gray-600">{{ description }}</p>
+      <h4 class="font-medium text-fs-3 sm:text-fs-5 mb-1">{{ title }}</h4>
+      <p class="-text-fs-2 sm:-text-fs-1 text-gray-600">{{ description }}</p>
     </div>
   </section>
 </template>
