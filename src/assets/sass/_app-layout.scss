@@ -26,6 +26,7 @@
 
 .dark {
   .app-sidebar {
+    @apply border-r-0;
     box-shadow: 27px 1px 48px -4px rgba(14, 15, 15, 0.221) !important;
     --white: theme(colors.themes.dark.gray.gray-200);
     --gray-100: theme(colors.themes.dark.gray.gray-300);
