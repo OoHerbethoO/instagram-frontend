@@ -1,5 +1,5 @@
 .btn {
-  @apply bg-gray-200 min-h-D h-D px-4 rounded flex gap-x-3 justify-center items-center text-fs-base text-gray-800 font-medium cursor-pointer;
+  @apply bg-gray-200  min-h-sm h-sm px-3  sm:min-h-D sm:h-D sm:px-4 rounded flex gap-x-3 justify-center items-center text-fs-base text-gray-800 font-medium cursor-pointer;
   position: relative;
   overflow: hidden;
   transition: all 0.4s ease-out;
@@ -170,15 +170,15 @@
     }
   }
   &.md {
-    @apply min-h-md h-md;
+    @apply min-h-D h-D sm:min-h-md sm:h-md;
     svg {
       @apply text-fs-2;
     }
   }
   &.lg {
-    @apply min-h-lg h-lg px-6 text-fs-1;
+    @apply h-D min-h-D sm:min-h-lg sm:h-lg px-4 sm:px-6 text-fs-base sm:text-fs-1;
     svg {
-      @apply text-fs-4;
+      @apply text-fs-2 sm:text-fs-4;
     }
   }
 
