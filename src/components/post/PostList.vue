@@ -1,9 +1,9 @@
 <script lang="ts">
+import PostSkeleton from '@/components/skeletons/PostSkeleton.vue'
 import useGallery from '@/hooks/useGallery'
 import type { IPost } from '@/types/graphql.types'
 import { useMeQuery } from '@/types/graphql.types'
-import { defineComponent, reactive, toRefs, watch, defineAsyncComponent } from 'vue'
-import PostSkeleton from '@/components/skeletons/PostSkeleton.vue'
+import { defineAsyncComponent, defineComponent, reactive, toRefs, watch } from 'vue'
 const PostCard = defineAsyncComponent(() => import('./PostCard.vue'))
 const ViewPostModal = defineAsyncComponent(() => import('./ViewPostModal.vue'))
 
@@ -38,7 +38,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const { result: meData, loading: meLoading } = useMeQuery()
+    const { result: meData, loading: meLoading, onResult: onMeResult } = useMeQuery()
     const { column1, column2, column3, setData } = useGallery(props.posts, {
       columnsOnLgScreens: props.columnsOnLgScreens,
       columnsOnMdScreens: props.columnsOnMdScreens,
@@ -50,6 +50,11 @@ export default defineComponent({
       isModalOpen: false,
       selectedPost: null as IPost | null,
       posts: props.posts,
+      me: {} as any,
+    })
+
+    onMeResult((data: any) => {
+      state.me = data.data.me
     })
 
     const handlePostClick = (post: IPost) => {
@@ -63,6 +68,12 @@ export default defineComponent({
       state.selectedPost = state.posts[index - 1]
     }
 
+    const handleNextPost = () => {
+      const index = state.posts.findIndex((post) => post._id === state.selectedPost?._id)
+      if (index === state.posts.length - 1) return
+      state.selectedPost = state.posts[index + 1]
+    }
+
     const handleDeletePost = (id) => {
       console.log('handleDelete', id)
       state.posts = state.posts.filter((post) => post._id !== id)
@@ -72,10 +83,32 @@ export default defineComponent({
       }
     }
 
-    const handleNextPost = () => {
-      const index = state.posts.findIndex((post) => post._id === state.selectedPost?._id)
-      if (index === state.posts.length - 1) return
-      state.selectedPost = state.posts[index + 1]
+    const handleLikePost = (id) => {
+      state.posts = state.posts.map((post: IPost) => {
+        const newPost: IPost = { ...post }
+        if (post._id === id) {
+          if (!post.likes.length) {
+            newPost.likes = [meData?.value.me._id]
+            return newPost
+          }
+          const index = post.likes.findIndex((like) => like === meData?.value.me._id)
+          if (index === -1) {
+            newPost.likes = [...post.likes, meData?.value.me._id]
+          } else {
+            newPost.likes = post.likes.filter((like) => like !== meData?.value.me._id)
+          }
+          return newPost
+        }
+        return post
+      })
+    }
+
+    const handleBookmarkPost = (id) => {
+      const bookmarks = state.me.bookmarks.includes(id)
+        ? state.me.bookmarks.filter((bookmark) => bookmark !== id)
+        : [...state.me.bookmarks, id]
+      state.me = { ...state.me, bookmarks }
+      console.log('me', state.me.bookmarks)
     }
 
     watch(
@@ -112,6 +145,8 @@ export default defineComponent({
       handlePrevPost,
       handleNextPost,
       handleDeletePost,
+      handleLikePost,
+      handleBookmarkPost,
       column1: column1 as IPost,
       column2: column2 as IPost,
       column3: column3 as IPost,
@@ -144,10 +179,12 @@ export default defineComponent({
         <PostCard
           v-for="post in column1"
           :key="post._id"
-          @openModal="handlePostClick(post)"
           @handleDeletePost="handleDeletePost"
+          @handleLikePost="handleLikePost"
+          @handleBookmarkPost="handleBookmarkPost"
+          @openModal="handlePostClick(post)"
           :isCardPhotoOnly="isCardPhotoOnly"
-          :me="meData?.me"
+          :me="me"
           :post="post" />
       </div>
       <div class="gallery-item">
@@ -155,8 +192,10 @@ export default defineComponent({
           v-for="post in column2"
           :key="post._id"
           @handleDeletePost="handleDeletePost"
+          @handleLikePost="handleLikePost"
+          @handleBookmarkPost="handleBookmarkPost"
           @openModal="handlePostClick(post)"
-          :me="meData?.me"
+          :me="me"
           :isCardPhotoOnly="isCardPhotoOnly"
           :post="post" />
       </div>
@@ -167,8 +206,10 @@ export default defineComponent({
           v-for="post in column3"
           :key="post._id"
           @handleDeletePost="handleDeletePost"
+          @handleLikePost="handleLikePost"
+          @handleBookmarkPost="handleBookmarkPost"
           @openModal="handlePostClick(post)"
-          :me="meData?.me"
+          :me="me"
           :isCardPhotoOnly="isCardPhotoOnly"
           :post="post" />
       </div>
@@ -176,10 +217,13 @@ export default defineComponent({
     <ViewPostModal
       :isModalOpen="isModalOpen"
       @handleDeletePost="handleDeletePost"
+      @handleBookmarkPost="handleBookmarkPost"
+      @handleLikePost="handleLikePost"
       @close="isModalOpen = false"
       :post="selectedPost"
       @prev="handlePrevPost"
       @next="handleNextPost"
+      :me="me"
       :isPrevBtnDisabled="!selectedPost || selectedPost._id === posts[0]._id"
       :isNextBtnDisabled="!selectedPost || selectedPost._id === posts[posts.length - 1]._id"
       @open="isModalOpen = true" />

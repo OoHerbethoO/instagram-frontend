@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { IPost } from '@/types/graphql.types'
+import type { IPost, IUser } from '@/types/graphql.types'
 import { useBookmarkPostMutation, useLikePostMutation } from '@/types/graphql.types'
 import { defineComponent, reactive, toRefs } from 'vue'
 import Button from '../reusable/Button.vue'
@@ -9,21 +9,21 @@ export default defineComponent({
   components: {
     Button,
   },
-  emits: ['openModal'],
+  emits: ['openModal', 'handleLikePost', 'handleBookmarkPost'],
   props: {
     post: {
       type: Object as () => IPost,
       required: true,
     },
     me: {
-      type: Object as () => IPost['user'] | null,
+      type: Object as () => IUser | null,
+      required: true,
     },
     isIconVariantSolid: Boolean,
     hideBookmark: Boolean,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const state = reactive({
-      likes: props.post.likes,
       bookmarks: props.me?.bookmarks,
     })
 
@@ -36,18 +36,14 @@ export default defineComponent({
     })
 
     const handleLikePost = () => {
-      state.likes = state.likes.includes(props.me?._id)
-        ? state.likes.filter((id) => id !== props.me?._id)
-        : [...state.likes, props.me?._id]
+      emit('handleLikePost')
       likePost({
         postId: props.post._id,
       })
     }
 
     const handleBookmarkPost = () => {
-      state.bookmarks = state.bookmarks.includes(props.post._id)
-        ? state.bookmarks.filter((id) => id !== props.post._id)
-        : [...state.bookmarks, props.post._id]
+      emit('handleBookmarkPost')
       bookmarkPost({
         postId: props.post._id,
       })
@@ -63,13 +59,13 @@ export default defineComponent({
   },
   computed: {
     isPostLikedByMe() {
-      return this.likes.includes(this.me?._id)
+      return this.post.likes.includes(this.me?._id)
     },
     isBookmark() {
-      return this.bookmarks.includes(this.post._id)
+      return this.me.bookmarks.includes(this.post._id)
     },
     totalLikes() {
-      return this.likes.length
+      return this.post.likes.length
     },
     totalComments() {
       return this.post.comments.length

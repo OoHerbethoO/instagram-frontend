@@ -22,7 +22,7 @@ export default defineComponent({
     PostContent,
     PostImage,
   },
-  emits: ['handleDeletePost', 'openModal'],
+  emits: ['handleDeletePost', 'handleLikePost', 'handleBookmarkPost', 'openModal'],
   props: {
     post: {
       type: Object as () => IPost,
@@ -104,6 +104,8 @@ export default defineComponent({
         :class="isModalOpen || isAspectSquare ? 'sticky bottom-[-4px] bg-white py-1' : ''"
         v-if="!isCardPhotoOnly"
         @openModal="$emit('openModal')"
+        @handleLikePost="$emit('handleLikePost', post._id)"
+        @handleBookmarkPost="$emit('handleBookmarkPost', post._id)"
         :post="post"
         :me="me" />
     </article>

@@ -1,7 +1,6 @@
 <script lang="ts">
-import { defineComponent, defineAsyncComponent, watch } from 'vue'
-import type { IPost } from '@/types/graphql.types'
-import { useMeQuery } from '@/types/graphql.types'
+import type { IPost, IUser } from '@/types/graphql.types'
+import { defineAsyncComponent, defineComponent, watch } from 'vue'
 const Modal = defineAsyncComponent(() => import('../reusable/Modal.vue'))
 const PostCard = defineAsyncComponent(() => import('./PostCard.vue'))
 const CommentList = defineAsyncComponent(() => import('../comments/CommentList.vue'))
@@ -34,11 +33,21 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    me: {
+      type: Object as () => IUser | null,
+      required: true,
+    },
   },
-  emits: ['close', 'open', 'next', 'prev', 'handleDeletePost'],
+  emits: [
+    'close',
+    'open',
+    'next',
+    'prev',
+    'handleDeletePost',
+    'handleLikePost',
+    'handleBookmarkPost',
+  ],
   setup(props, { emit }) {
-    const { result: meData, loading: meLoading } = useMeQuery()
-
     watch(
       () => props.post,
       () => {
@@ -47,8 +56,6 @@ export default defineComponent({
         }
       }
     )
-
-    return { meData }
   },
 })
 </script>
@@ -68,8 +75,10 @@ export default defineComponent({
           height="100%"
           :key="post._id"
           :isModalOpen="isModalOpen"
-          :me="meData?.me"
+          :me="me"
           @handleDeletePost="$emit('handleDeletePost', post._id)"
+          @handleLikePost="$emit('handleLikePost', post._id)"
+          @handleBookmarkPost="$emit('handleBookmarkPost', post._id)"
           :trimText="false"
           :post="post" />
         <aside class="flex-1 flex flex-col justify-between mt-5 md:mt-0">
