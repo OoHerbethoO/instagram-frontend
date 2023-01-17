@@ -88,6 +88,7 @@ export default defineComponent({
           <Button
             class="flex mt-11 sm:hidden"
             icon="material-symbols:edit-rounded"
+            size="sm"
             variant="outline"
             radius="rounded-full"
             buttonClass="-text-fs-1" />
