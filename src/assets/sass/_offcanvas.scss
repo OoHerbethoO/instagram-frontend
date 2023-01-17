@@ -18,7 +18,7 @@
 }
 
 .offcanvas {
-  @apply fixed top-0 bg-white right-0 z-[1999]  border max-w-[430px] w-full max-h-screen h-screen overflow-hidden rounded-tl-3xl rounded-bl-3xl shadow-offcanvas;
+  @apply fixed top-0 bg-white right-0 z-[1999]  border max-w-[430px] w-full max-h-screen h-screen overflow-hidden sm:rounded-tl-3xl sm:rounded-bl-3xl shadow-offcanvas;
 
   .offcanvas-header {
     @apply flex justify-between items-center px-5 pt-4 pb-3 bg-white sticky top-0 z-[1] border-b border-gray-300;
