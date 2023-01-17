@@ -5,6 +5,7 @@ import Button from '../reusable/Button.vue'
 import Dropdown from '../reusable/Dropdown.vue'
 export default defineComponent({
   name: 'PostActionsDropdown',
+  emits: ['handleDeletePost'],
   props: {
     postId: {
       type: String,
@@ -16,16 +17,18 @@ export default defineComponent({
     },
   },
   components: { Button, Dropdown },
-  setup(props) {
+  setup(props, { emit }) {
     const isCopied = ref(false)
     const { mutate: deletePost } = useDeletePostMutation({
       refetchQueries: ['Me', 'GetAllPosts', 'GetPostsByUser', 'ExplorePosts', 'GetPostById'],
     })
 
-    const handleDeletePost = () =>
+    const handleDeletePost = () => {
+      emit('handleDeletePost', props.postId)
       deletePost({
         postId: props.postId,
       })
+    }
 
     const handleCopyLink = () => {
       const url = new URL(window.location.href)

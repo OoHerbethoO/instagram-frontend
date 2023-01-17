@@ -35,7 +35,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['close', 'open', 'next', 'prev'],
+  emits: ['close', 'open', 'next', 'prev', 'handleDeletePost'],
   setup(props, { emit }) {
     const { result: meData, loading: meLoading } = useMeQuery()
 
@@ -69,6 +69,7 @@ export default defineComponent({
           :key="post._id"
           :isModalOpen="isModalOpen"
           :me="meData?.me"
+          @handleDeletePost="$emit('handleDeletePost', post._id)"
           :trimText="false"
           :post="post" />
         <aside class="flex-1 flex flex-col justify-between mt-5 md:mt-0">

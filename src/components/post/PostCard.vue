@@ -22,6 +22,7 @@ export default defineComponent({
     PostContent,
     PostImage,
   },
+  emits: ['handleDeletePost', 'openModal'],
   props: {
     post: {
       type: Object as () => IPost,
@@ -71,6 +72,7 @@ export default defineComponent({
         'gap-3': isCardPhotoOnly && post?.photo,
       }">
       <PostHeader
+        @handleDeletePost="$emit('handleDeletePost', post._id)"
         :post="post"
         v-if="!isCardPhotoOnly"
         :me="me" />

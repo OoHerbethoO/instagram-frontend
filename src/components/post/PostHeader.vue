@@ -10,6 +10,7 @@ import PostActionsDropdown from './PostActionsDropdown.vue'
 export default defineComponent({
   name: 'PostHeader',
   components: { Avatar, Button, PostActionsDropdown },
+  emits: ['handleDeletePost'],
   props: {
     post: {
       type: Object as () => IPost,
@@ -46,6 +47,7 @@ export default defineComponent({
     </router-link>
     <PostActionsDropdown
       :postId="post._id"
+      @handleDeletePost="$emit('handleDeletePost')"
       :isCurrentUserPost="isCurrentUserPost" />
   </header>
 </template>

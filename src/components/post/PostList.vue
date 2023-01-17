@@ -49,6 +49,7 @@ export default defineComponent({
     const state = reactive({
       isModalOpen: false,
       selectedPost: null as IPost | null,
+      posts: props.posts,
     })
 
     const handlePostClick = (post: IPost) => {
@@ -57,29 +58,49 @@ export default defineComponent({
     }
 
     const handlePrevPost = () => {
-      const index = props.posts.findIndex((post) => post._id === state.selectedPost?._id)
+      const index = state.posts.findIndex((post) => post._id === state.selectedPost?._id)
       if (index === 0) return
-      state.selectedPost = props.posts[index - 1]
+      state.selectedPost = state.posts[index - 1]
+    }
+
+    const handleDeletePost = (id) => {
+      console.log('handleDelete', id)
+      state.posts = state.posts.filter((post) => post._id !== id)
+      if (state.isModalOpen) {
+        console.log('isModalOpen')
+        handleNextPost()
+      }
     }
 
     const handleNextPost = () => {
-      const index = props.posts.findIndex((post) => post._id === state.selectedPost?._id)
-      if (index === props.posts.length - 1) return
-      state.selectedPost = props.posts[index + 1]
+      const index = state.posts.findIndex((post) => post._id === state.selectedPost?._id)
+      if (index === state.posts.length - 1) return
+      state.selectedPost = state.posts[index + 1]
     }
 
     watch(
-      () => props.posts,
+      () => state.posts,
       () => {
-        if (props.posts.length == 0) {
+        console.log('state.posts changed')
+        if (state.posts.length == 0) {
           state.selectedPost = null
           state.isModalOpen = false
           return
         }
 
-        setData(props.posts)
-        state.selectedPost =
-          props.posts.find((post) => post._id === state.selectedPost?._id) || null
+        setData(state.posts)
+      }
+    )
+
+    watch(
+      () => props.posts,
+      () => {
+        if (state.posts) {
+          state.posts = state.posts.filter((post) => {
+            return props.posts.find((p) => p._id === post._id)
+          })
+        }
+        state.posts = props.posts
       }
     )
 
@@ -90,6 +111,7 @@ export default defineComponent({
       handlePostClick,
       handlePrevPost,
       handleNextPost,
+      handleDeletePost,
       column1: column1 as IPost,
       column2: column2 as IPost,
       column3: column3 as IPost,
@@ -123,6 +145,7 @@ export default defineComponent({
           v-for="post in column1"
           :key="post._id"
           @openModal="handlePostClick(post)"
+          @handleDeletePost="handleDeletePost"
           :isCardPhotoOnly="isCardPhotoOnly"
           :me="meData?.me"
           :post="post" />
@@ -131,6 +154,7 @@ export default defineComponent({
         <PostCard
           v-for="post in column2"
           :key="post._id"
+          @handleDeletePost="handleDeletePost"
           @openModal="handlePostClick(post)"
           :me="meData?.me"
           :isCardPhotoOnly="isCardPhotoOnly"
@@ -142,6 +166,7 @@ export default defineComponent({
         <PostCard
           v-for="post in column3"
           :key="post._id"
+          @handleDeletePost="handleDeletePost"
           @openModal="handlePostClick(post)"
           :me="meData?.me"
           :isCardPhotoOnly="isCardPhotoOnly"
@@ -150,6 +175,7 @@ export default defineComponent({
     </div>
     <ViewPostModal
       :isModalOpen="isModalOpen"
+      @handleDeletePost="handleDeletePost"
       @close="isModalOpen = false"
       :post="selectedPost"
       @prev="handlePrevPost"
