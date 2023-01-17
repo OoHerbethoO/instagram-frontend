@@ -74,7 +74,6 @@ export default defineComponent({
       const isValid = await doValidation()
       if (!isValid) return
       const photos = await upoadPhotos()
-      console.log('formState', formState)
       const formValues: any = {}
       for (const key in formState) {
         formValues[key] = formState[key].value

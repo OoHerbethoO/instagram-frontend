@@ -75,10 +75,8 @@ export default defineComponent({
     }
 
     const handleDeletePost = (id) => {
-      console.log('handleDelete', id)
       state.posts = state.posts.filter((post) => post._id !== id)
       if (state.isModalOpen) {
-        console.log('isModalOpen')
         handleNextPost()
       }
     }
@@ -108,13 +106,11 @@ export default defineComponent({
         ? state.me.bookmarks.filter((bookmark) => bookmark !== id)
         : [...state.me.bookmarks, id]
       state.me = { ...state.me, bookmarks }
-      console.log('me', state.me.bookmarks)
     }
 
     watch(
       () => state.posts,
       () => {
-        console.log('state.posts changed')
         if (state.posts.length == 0) {
           state.selectedPost = null
           state.isModalOpen = false

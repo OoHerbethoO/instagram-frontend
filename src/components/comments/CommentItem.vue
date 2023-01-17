@@ -109,7 +109,6 @@ export default defineComponent({
 
   computed: {
     totalLikes() {
-      console.log(this.comment.likes)
       return this.likes.length
     },
     isLiked() {

@@ -2,7 +2,6 @@ import { ref, onMounted, watch } from 'vue'
 
 export function useAutosizeTextarea(minRows = 1) {
   const textareaRef = ref(null)
-  console.log('textarea.scrollHeight')
 
   onMounted(() => {
     const textarea = textareaRef.value
@@ -23,7 +22,6 @@ export function useAutosizeTextarea(minRows = 1) {
     textareaRef,
     (textarea) => {
       if (textarea) {
-        console.log(textarea.scrollHeight)
         textarea.style.height = 'auto'
         textarea.style.height = `${textarea.scrollHeight}px`
       }

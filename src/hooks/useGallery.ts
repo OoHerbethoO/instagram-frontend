@@ -68,7 +68,6 @@ const useGallery = (data: unknown[], props: Props) => {
     }
 
     if (props.columnsOnMdScreens > props.columnsOnSmScreens) {
-      console.log('here')
       for (let i = props.columnsOnSmScreens + 1; i <= props.columnsOnMdScreens; i++) {
         state[`${props.stateSuffix}${i}`] = []
       }
