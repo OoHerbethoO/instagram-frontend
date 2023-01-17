@@ -30,7 +30,7 @@
     @apply -text-fs-1;
   }
   &.md {
-    @apply text-fs-base;
+    @apply text-fs-1 sm:text-fs-base;
   }
   &.lg {
     @apply text-fs-5;
