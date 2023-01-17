@@ -28,7 +28,7 @@ export default defineComponent({
       <Button
         icon="fa6-solid:bars-staggered"
         variant="transparent"
-        class="mr-2 ml-[-5px] lg:hidden no-animation"
+        class="sm:mr-2 ml-[-5px] lg:hidden no-animation"
         :class="{
           'hidden md:flex': showInput,
         }"
@@ -38,7 +38,7 @@ export default defineComponent({
         class="w-full lg:w-[400px] no-animation">
         <Button
           :icon="!showInput ? 'charm:search' : 'material-symbols:arrow-back-rounded'"
-          variant="secondary"
+          variant="transparent"
           class="mr-0 md:hidden no-animation"
           radius="rounded-full"
           iconClass="text-fs-2"
