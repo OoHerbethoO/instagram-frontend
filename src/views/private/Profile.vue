@@ -81,10 +81,16 @@ export default defineComponent({
           :to="AppRoutes.SETTINGS"
           v-if="isOwner">
           <Button
+            class="hidden mt-11 sm:flex"
             text="Edit Profile"
             variant="outline"
-            buttonClass="-text-fs-1"
-            class="mt-11" />
+            buttonClass="-text-fs-1" />
+          <Button
+            class="flex mt-11 sm:hidden"
+            icon="material-symbols:edit-rounded"
+            variant="outline"
+            radius="rounded-full"
+            buttonClass="-text-fs-1" />
         </router-link>
         <FollowOrUnfollowBtn
           :userId="user?.getUserById?._id"
