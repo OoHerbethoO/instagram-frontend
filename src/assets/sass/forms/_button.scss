@@ -147,7 +147,7 @@
     &.danger {
       &:after,
       &:before {
-        --spinner-border-color: theme('colors.white');
+        --spinner-border-color: var(--primary-fg);
       }
     }
 
