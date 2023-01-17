@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useFollowOrUnfollowUserMutation, useMeQuery } from '@/types/graphql.types'
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 import Button from './Button.vue'
 
 export default defineComponent({
@@ -19,7 +19,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { result: me, loading: meLoading, error: meError } = useMeQuery()
+    const { result: me, loading: meLoading, error: meError, onResult } = useMeQuery()
+    const state = reactive({
+      mefollowing: [],
+    })
+
+    onResult((result) => {
+      state.mefollowing = result.data?.me?.following
+    })
 
     const {
       mutate: followOrUnfollowUser,
@@ -30,12 +37,16 @@ export default defineComponent({
     })
 
     const handleFollowOrUnfollowUser = async () => {
+      state.mefollowing = state.mefollowing?.includes(props.userId)
+        ? state.mefollowing?.filter((following) => following !== props.userId)
+        : [...state.mefollowing, props.userId]
       followOrUnfollowUser({
         userId: props.userId,
       })
     }
 
     return {
+      ...toRefs(state),
       me,
       meLoading,
       meError,
@@ -50,12 +61,12 @@ export default defineComponent({
       text: string
       variant: 'primary' | 'outline'
     } {
-      return this.me?.me?.following?.includes(this.userId)
+      return this.mefollowing?.includes(this.userId)
         ? {
             text: 'Unfollow',
             variant: 'outline',
           }
-        : this.me?.me?.followers?.includes(this.userId)
+        : this.mefollowing?.includes(this.userId)
         ? {
             text: 'Follow Back',
             variant: 'primary',
@@ -74,6 +85,5 @@ export default defineComponent({
     :text="followOrUnfollowBtn.text"
     :variant="followOrUnfollowBtn.variant"
     :size="size"
-    :disabled="followOrUnfollowUserLoading"
     @click="handleFollowOrUnfollowUser" />
 </template>
