@@ -30,6 +30,7 @@ export default defineComponent({
     const toast = useToast()
     const state = reactive({
       isHovered: false,
+      likes: props.comment.likes,
     })
 
     const {
@@ -80,10 +81,14 @@ export default defineComponent({
         deleteComment({
           commentId: props.comment._id,
         }),
-      likeComment: () =>
+      likeComment: () => {
+        state.likes = state.likes.includes(props.me._id)
+          ? state.likes.filter((like) => like !== props.me._id)
+          : [...state.likes, props.me._id]
         likeComment({
           commentId: props.comment._id,
-        }),
+        })
+      },
     }
 
     likeCommentOnError((error) => {
@@ -105,10 +110,10 @@ export default defineComponent({
   computed: {
     totalLikes() {
       console.log(this.comment.likes)
-      return this.comment.likes.length
+      return this.likes.length
     },
     isLiked() {
-      return this.comment.likes.some((like) => like === this.me._id)
+      return this.likes.some((like) => like === this.me._id)
     },
     isCommentOwner() {
       return this.comment.user._id === this.me._id
@@ -164,7 +169,6 @@ export default defineComponent({
               button-class="font-normal"
               size="sm"
               :loading="likeCommentLoading"
-              :disabled="likeCommentLoading"
               @click="actions.likeComment"
               radius="rounded-full"
               :variant="isLiked ? 'like' : 'transparent'" />
